@@ -31,7 +31,7 @@ public class Order extends BaseEntity<String> {
     private String ward;
 
     @Column(name = "TotalPrice", precision = 19, scale = 4)
-    private double totalPrice;
+    private Double totalPrice;
 
     @Column(name = "Note")
     private String note;

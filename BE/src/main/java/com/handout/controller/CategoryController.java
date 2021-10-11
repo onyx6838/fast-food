@@ -1,9 +1,10 @@
 package com.handout.controller;
 
 import com.handout.entity.Category;
-import com.handout.entity.Combo;
 import com.handout.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,8 +22,8 @@ public class CategoryController {
     private ICategoryService service;
 
     @GetMapping()
-    public ResponseEntity<List<Category>> getAllCategories() {
-        List<Category> entities = service.getAllCategories();
+    public ResponseEntity<Page<Category>> getAllCategories(Pageable pageable) {
+        Page<Category> entities = service.getAllCategories(pageable);
         return new ResponseEntity<>(entities, HttpStatus.OK);
     }
 }

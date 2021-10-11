@@ -9,34 +9,37 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Table
-@Entity(name = "`Account`")
+@Entity(name = "`account`")
 public class Account extends BaseEntity<String> {
-    @Column(name = "ID")
+    @Column(name = "`ID`")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "Name", length = 50)
+    @Column(name = "`Name`", length = 50)
     private String name;
 
-    @Column(name = "Phone", length = 30)
+    @Column(name = "`Phone`", length = 30)
     private String phone;
 
-    @Column(name = "Email", length = 50)
+    @Column(name = "`Email`", length = 50)
     private String email;
 
-    @Column(name = "Password", length = 50)
+    @Column(name = "`Username`", length = 50)
+    private String username;
+
+    @Column(name = "`Password`", length = 50)
     private String password;
 
-    @Column(name = "Address")
+    @Column(name = "`Address`")
     private String address;
 
-    @Column(name = "Role", length = 50)
+    @Column(name = "`Role`", length = 50)
     private String role;
 
-    @OneToMany(mappedBy = "payerAccount", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "employeeAccount", fetch = FetchType.EAGER)
     private List<Order> employees;
 
-    @OneToMany(mappedBy = "receiverAccount", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "customerAccount", fetch = FetchType.EAGER)
     private List<Order> customers;
 }

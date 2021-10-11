@@ -24,7 +24,7 @@ public class Category extends BaseEntity<String> {
     private String slug;
 
     @Column(name = "OrderBy")
-    private int orderBy;
+    private Integer orderBy;
 
     @Column(name = "Image", length = 800)
     private String image;
@@ -33,6 +33,6 @@ public class Category extends BaseEntity<String> {
     @Enumerated(EnumType.ORDINAL)
     private Status status;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Product> products;
 }

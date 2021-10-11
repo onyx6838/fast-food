@@ -1,11 +1,11 @@
 package com.handout.service;
 
 import com.handout.entity.Category;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface ICategoryService {
-    List<Category> getAllCategories();
+    Page<Category> getAllCategories(Pageable pageable);
 
     Category getCategoryByID(int id);
 

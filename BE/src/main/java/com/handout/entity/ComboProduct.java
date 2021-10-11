@@ -16,19 +16,19 @@ public class ComboProduct extends BaseEntity<String> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ComboID")
     private Combo combo;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ProductID")
     private Product product;
 
     @Column(name = "Quantity")
-    private int quantity;
+    private Integer quantity;
 
     @Column(name = "Price", precision = 19, scale = 4)
-    private double price;
+    private Double price;
 
     @Column(name = "Status")
     @Enumerated(EnumType.ORDINAL)

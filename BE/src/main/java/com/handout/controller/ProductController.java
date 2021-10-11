@@ -20,7 +20,7 @@ public class ProductController {
     private IProductService productService;
 
     @GetMapping()
-    public ResponseEntity<Page<Product>> getAllDepartments(Pageable pageable) {
+    public ResponseEntity<Page<Product>> getAllProducts(Pageable pageable) {
         Page<Product> entitiesPage = productService.getAllProducts(pageable);
         return new ResponseEntity<>(entitiesPage, HttpStatus.OK);
     }

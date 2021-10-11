@@ -16,23 +16,23 @@ public class OrderDetail extends BaseEntity<String>{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @JoinColumn(name = "ComboID")
     private Combo combo;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @JoinColumn(name = "ProductID")
     private Product product;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @JoinColumn(name = "OrderID")
     private Order order;
 
     @Column(name = "Discount")
-    private int discount;
+    private Integer discount;
 
     @Column(name = "Quantity")
-    private int quantity;
+    private Integer quantity;
 
     @Column(name = "Status")
     @Enumerated(EnumType.ORDINAL)
