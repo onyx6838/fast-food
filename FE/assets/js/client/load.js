@@ -1,15 +1,19 @@
 $(function () {
-    //$(".home-slider").load("/assets/components/main-slider.html");
+    $(".home-slider").load("/assets/components/main-slider.html", () => {
+        sliderEffect();
+    });
     $("#navbar").load("/assets/components/navbar.html");
     $("#footer").load("/assets/components/footer.html");
     $(".page-title-area").load("/assets/components/slider-nd-page.html");
-    $("#category-list").load("/assets/components/category.html");
-    getFood();
+    getProduct();
+    getNewProduct();
+    getCombo();
+    getCategory();
     //navMenuClick();
 });
 
 function navMenuClick() {
-    getFood();
+    getProduct();
     // $("#main-menu").load("/assets/components/main-menu.html", () => {
     //     getFood();
     // });

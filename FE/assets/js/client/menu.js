@@ -1,55 +1,46 @@
-function getFood() {
-    //var url = "https://6123b178124d8800175683d7.mockapi.io/foods";
-    var url = "http://localhost:8080/api/v1/products";
-    $.ajax({
-        url: url,
-        type: 'GET',
-        contentType: "application/json",
-        dataType: 'json'
-    }).done(function (data) {
-        loadUI(data.content);
+/**
+ * GET Food in menu page
+ */
+function getProduct() {
+    var getProducts = jqxhr('GET', 'products');
+
+    getProducts.done(function (data) {
+        loadProduct(data.content);
     }).fail(function (jqXHR, textStatus, errorThrown) {
         console.log(textStatus + ': ' + errorThrown);
     });
 }
+/**
+ * GET Food with createDate desc main page
+ */
+function getNewProduct() {
+    var getNewProducts = jqxhr('GET', 'products?sort=CreatedDate,desc&size=4');
 
-function loadUI(data) {
-    $('.menu-list-tab .row').empty();
-    var pers;
-    data.forEach((item, index) => {
-        pers =
-            '<div class="col-lg-3 col-md-6">' +
-            '<div class="single-product">' +
-            '<div class="product-image">' +
-            '<a href="product-details.html">' +
-            '<img src="assets/img/shop/image1.jpg" alt="image">' +
-            '</a>' +
-            '<a href="cart.html" class="add-to-cart-btn">Add To Cart' +
-            '<i class="flaticon-shopping-cart"></i>' +
-            '</a>' +
-            '</div>' +
-            '<div class="product-content">' +
-            '<h3>' +
-            '<a href="product-details.html">' +
-            item.name +
-            '</a>' +
-            '</h3>' +
-            '<div class="price">' +
-            '<span class="new">$' + item.price + '</span>' +
-            // '<span class="old">$' + item.id + '</span>' +
-            '</div>' +
-            '<div class="rating">' +
-            '<i class="bx bxs-star"></i>' +
-            '<i class="bx bxs-star"></i>' +
-            '<i class="bx bxs-star"></i>' +
-            '<i class="bx bxs-star"></i>' +
-            '<i class="bx bxs-star"></i>' +
-            '</div>' +
-            '</div>' +
-            '</div>' + '</div>';
-        $('.menu-list-tab .row').append(pers);
+    getNewProducts.done(function (data) {
+        loadNewProduct(data.content);
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        console.log(textStatus + ': ' + errorThrown);
     });
-
-
-    console.log(data);
+}
+/**
+ * GET Combo in main page
+ */
+function getCombo(){
+    var getCombos = jqxhr('GET', 'combos');
+    getCombos.done(function (data) {
+        loadCombo(data);
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        console.log(textStatus + ': ' + errorThrown);
+    });
+}
+/**
+ * GET Category in menu page 
+ */
+function getCategory() {
+    var getCombos = jqxhr('GET', 'categories?size=5');
+    getCombos.done(function (data) {
+        loadCategory(data.content);
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        console.log(textStatus + ': ' + errorThrown);
+    });
 }
