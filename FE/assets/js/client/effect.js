@@ -33,7 +33,7 @@ function sliderEffect() {
 /**
  * Combo 
  */
-function comboEffect(params) {
+function comboEffect() {
     $('.burger-shop-slider').owlCarousel({
         loop: true,
         nav: false,

@@ -9,7 +9,7 @@ function loadProduct(data) {
             '<div class="col-lg-3 col-md-6">' +
             '<div class="single-product">' +
             '<div class="product-image">' +
-            '<a href="product-details.html">' +
+            '<a href="product-details.html" onclick="detailProductClick(' + item.id + ')">' +
             '<img src="assets/img/shop/image1.jpg" alt="image">' +
             '</a>' +
             '<a href="cart.html" class="add-to-cart-btn">Add To Cart' +
@@ -37,6 +37,17 @@ function loadProduct(data) {
             '</div>' + '</div>';
         $('.menu-list-tab .row').append(pers);
     });
+}
+/**
+ * Render UI Product by Id for Detail Page
+ */
+function loadProductById(data) {
+    $('.price').empty();
+    $('.price').append(
+        '<h3>' + data.name + '</h3>' + 
+        '<span class="new-price">$' + item.price + '</span>' +
+        '<p>' + item.description + '</p>'
+    )
 }
 /**
  * Render UI New Product for Main page

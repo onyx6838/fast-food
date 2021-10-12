@@ -23,6 +23,17 @@ function getNewProduct() {
     });
 }
 /**
+ * GET Food with id in detail page
+ */
+function getProductById(id) {
+    var getProductById = jqxhr('GET', 'products/' + id);
+    getProductById.done(function (data) {
+        loadProductById(data);
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        console.log(textStatus + ': ' + errorThrown);
+    });
+}
+/**
  * GET Combo in main page
  */
 function getCombo(){
