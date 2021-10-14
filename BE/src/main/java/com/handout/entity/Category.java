@@ -1,5 +1,7 @@
 package com.handout.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.handout.entity.enumerate.Status;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -33,6 +35,7 @@ public class Category extends BaseEntity<String> {
     @Enumerated(EnumType.ORDINAL)
     private Status status;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category")
+    @JsonManagedReference
     private List<Product> products;
 }

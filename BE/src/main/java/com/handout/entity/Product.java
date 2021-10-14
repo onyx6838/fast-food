@@ -1,5 +1,7 @@
 package com.handout.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.handout.entity.enumerate.Status;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -38,6 +40,7 @@ public class Product extends BaseEntity<String> {
     @Enumerated(EnumType.ORDINAL)
     private Status status;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "CategoryID")
     private Category category;

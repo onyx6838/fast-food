@@ -8,14 +8,18 @@ $(function () {
     getNewProduct();
     getCombo();
     getCategory();
-    getProduct();
+    getProductByCategory(1);
     //navMenuClick();
 });
 
 function navMenuClick() {
-    getProduct();
+    getProductByCategory(1);
 }
 
 function detailProductClick(id) {
     getProductById(id);
+}
+
+function detailComboClick(id){
+    getComboById(id);
 }

@@ -19,7 +19,7 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public Category getCategoryByID(int id) {
-        return repository.getById(id);
+        return repository.findById(id).get();
     }
 
     @Override

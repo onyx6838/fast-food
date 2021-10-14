@@ -28,7 +28,7 @@ public class ProductController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<DetailProductDto> getGroupByID(@PathVariable(name = "id") int id) {
+    public ResponseEntity<DetailProductDto> getProductByID(@PathVariable(name = "id") int id) {
         Product entity = productService.getProductById(id);
         DetailProductDto dto = modelMapper.map(entity, DetailProductDto.class);
         return new ResponseEntity<>(dto, HttpStatus.OK);

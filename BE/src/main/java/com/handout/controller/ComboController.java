@@ -24,4 +24,5 @@ public class ComboController {
         List<Combo> entities = service.getAllCombos();
         return new ResponseEntity<>(entities, HttpStatus.OK);
     }
+
 }
