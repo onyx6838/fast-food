@@ -11,7 +11,7 @@
  Target Server Version : 80025
  File Encoding         : 65001
 
- Date: 06/10/2021 01:02:14
+ Date: 15/10/2021 07:35:35
 */
 
 SET NAMES utf8mb4;
@@ -26,6 +26,7 @@ CREATE TABLE `account`  (
   `Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `Phone` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `Email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `Username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `Password` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `Address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `CreatedBy` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
@@ -39,8 +40,8 @@ CREATE TABLE `account`  (
 -- ----------------------------
 -- Records of account
 -- ----------------------------
-INSERT INTO `account` VALUES (1, 'ggg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `account` VALUES (2, 'nv1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `account` VALUES (1, 'ggg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `account` VALUES (2, 'nv1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for category
@@ -63,6 +64,11 @@ CREATE TABLE `category`  (
 -- ----------------------------
 -- Records of category
 -- ----------------------------
+INSERT INTO `category` VALUES (1, 'Burgers', NULL, NULL, 'flaticon-hamburger', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `category` VALUES (2, 'Chicken', NULL, NULL, 'flaticon-boiled', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `category` VALUES (3, 'Beverage', NULL, NULL, 'flaticon-frappe', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `category` VALUES (4, 'Coffee', NULL, NULL, 'flaticon-tea-cup', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `category` VALUES (5, 'Pizzas', NULL, NULL, 'flaticon-pizza-slice', NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for combo
@@ -80,13 +86,19 @@ CREATE TABLE `combo`  (
   `UpdatedDate` datetime(0) NULL DEFAULT NULL,
   `Status` int NULL DEFAULT NULL,
   PRIMARY KEY (`ComboID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of combo
 -- ----------------------------
 INSERT INTO `combo` VALUES (1, 'combo1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `combo` VALUES (2, 'combo2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `combo` VALUES (3, 'combo3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `combo` VALUES (4, 'combo4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `combo` VALUES (5, 'combo5', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `combo` VALUES (6, 'combo6', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `combo` VALUES (7, 'combo7', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `combo` VALUES (8, 'combo8', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for comboproduct
@@ -208,10 +220,10 @@ CREATE TABLE `product`  (
 -- ----------------------------
 -- Records of product
 -- ----------------------------
-INSERT INTO `product` VALUES (1, 'hot dog', NULL, NULL, NULL, NULL, 5.0000, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `product` VALUES (2, 'cake', NULL, NULL, NULL, NULL, 3.0000, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `product` VALUES (3, 'drink', NULL, NULL, NULL, NULL, 3.0000, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `product` VALUES (4, 'bun', NULL, NULL, NULL, NULL, 4.0000, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `product` VALUES (5, 'hot dog bun', NULL, NULL, NULL, NULL, 6.0000, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `product` VALUES (1, 'hot dog', NULL, NULL, '“Hot dog” means a whole, cured, cooked sausage that is skinless or stuffed in a casing, that may be known as a frankfurter, frank, furter, wiener, red hot, vienna, bologna, garlic bologna, or knockwurst, and that may be served in a bun or roll', 1, 5.0000, 0, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
+INSERT INTO `product` VALUES (2, 'cake', NULL, NULL, 'Cake is a form of sweet food made from flour, sugar, and other ingredients, that is usually baked. ... Cakes can also be filled with fruit preserves, nuts or dessert sauces (like pastry cream), iced with buttercream', 1, 3.0000, 3, NULL, NULL, '2021-10-05 23:07:36', NULL, NULL);
+INSERT INTO `product` VALUES (3, 'drink', NULL, NULL, 'The Coca-Cola Co. is the nonalcoholic beverage company, which engages in the manufacture, market, and sale of non-alcoholic beverages which include sparkling soft drinks, water, enhanced water and sports drinks, juice, dairy and pla', 1, 3.0000, 1, NULL, NULL, '2021-10-06 23:07:40', NULL, NULL);
+INSERT INTO `product` VALUES (4, 'bun', NULL, NULL, '“Hot dog” means a whole, cured, cooked sausage that is skinless or stuffed in a casing, that may be known as a frankfurter, frank, furter, wiener, red hot, vienna, bologna, garlic bologna, or knockwurst, and that may be served in a bun or roll', NULL, 4.0000, 2, NULL, NULL, '2021-10-11 23:07:44', NULL, NULL);
+INSERT INTO `product` VALUES (5, 'hot dog bun', NULL, NULL, '“Hot dog” means a whole, cured, cooked sausage that is skinless or stuffed in a casing, that may be known as a frankfurter, frank, furter, wiener, red hot, vienna, bologna, garlic bologna, or knockwurst, and that may be served in a bun or roll', NULL, 6.0000, 4, NULL, NULL, '2021-10-10 23:08:10', NULL, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
