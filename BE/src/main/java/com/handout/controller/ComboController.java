@@ -5,10 +5,7 @@ import com.handout.service.IComboService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,13 +13,23 @@ import java.util.List;
 @RequestMapping(value = "api/v1/combos")
 @CrossOrigin("*")
 public class ComboController {
+
+    private final IComboService comboService;
+
     @Autowired
-    private IComboService service;
+    public ComboController(IComboService comboService) {
+        this.comboService = comboService;
+    }
 
     @GetMapping()
     public ResponseEntity<List<Combo>> getAllCombos() {
-        List<Combo> entities = service.getAllCombos();
+        List<Combo> entities = comboService.getAllCombos();
         return new ResponseEntity<>(entities, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<?> getComboById(@PathVariable(name = "id") int id) {
+        Combo entity = comboService.getComboByID(id);
+        return new ResponseEntity<>(entity, HttpStatus.OK);
+    }
 }

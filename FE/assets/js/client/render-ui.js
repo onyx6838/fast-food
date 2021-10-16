@@ -1,88 +1,84 @@
 /**
- * Render UI Product for Main page
+ * Render UI Product Or Combo for Menu page
  */
-function loadProduct(data) {
+let loadProduct = (data, ...typeUI) => {
     $('.menu-list-tab .row').empty();
     var pers;
-    data.forEach((item, index) => {
-        pers =
-            '<div class="col-lg-3 col-md-6">' +
-            '<div class="single-product">' +
-            '<div class="product-image">' +
-            '<a  onclick="detailProductClick(' + item.id + ')">' +
-            '<img src="assets/img/shop/image1.jpg" alt="image">' +
-            '</a>' +
-            '<a href="cart.html" class="add-to-cart-btn">Add To Cart' +
-            '<i class="flaticon-shopping-cart"></i>' +
-            '</a>' +
-            '</div>' +
-            '<div class="product-content">' +
-            '<h3>' +
-            '<a >' +
-            item.name +
-            '</a>' +
-            '</h3>' +
-            '<div class="price">' +
-            '<span class="new">$' + item.price + '</span>' +
-            // '<span class="old">$' + item.id + '</span>' +
-            '</div>' +
-            '<div class="rating">' +
-            '<i class="bx bxs-star"></i>' +
-            '<i class="bx bxs-star"></i>' +
-            '<i class="bx bxs-star"></i>' +
-            '<i class="bx bxs-star"></i>' +
-            '<i class="bx bxs-star"></i>' +
-            '</div>' +
-            '</div>' +
-            '</div>' + '</div>';
+    data.forEach((item, _) => {
+        let price = typeUI.length == 0 ? item.price : item.totalPrice;
+        $('.product-image > :first-child').on("click", () => {
+            typeUI.length == 0 ? detailProductClick(item.id) : detailComboClick(item.id)
+        });
+        pers = `
+        <div class="col-lg-3 col-md-6">
+            <div class="single-product">
+                <div class="product-image">
+                    <a>
+                        <img src="assets/img/shop/image1.jpg" alt="image">
+                    </a>
+                    <a href="cart.html" class="add-to-cart-btn">Add To Cart
+                        <i class="flaticon-shopping-cart"></i>
+                    </a>
+                </div>
+                <div class="product-content">
+                    <h3><a>${item.name}</a></h3>
+                    <div class="price">
+                        <span class="new">$${price}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
         $('.menu-list-tab .row').append(pers);
     });
 }
 /**
  * Render UI Product by Id for Detail Page
  */
-function loadProductById(id, data) {
-    console.log(id);
-    console.log(data);
+let loadProductById = (data) => {
     $('.price').empty();
-    $('.price').append(
-        '<h3>' + data.name + '</h3>' +
-        '<span class="new-price">$' + item.price + '</span>' +
-        '<p>' + item.description + '</p>'
-    )
+    $('.price').append(`
+        <h3>${data.name}</h3>
+            <span class="new-price">$${data.price}</span>
+        <p>${data.description}</p>`)
 }
 /**
- * Render UI New Product for Menu page
+ * Render UI New Product for main page
  */
-function loadNewProduct(data) {
+let loadNewProduct = (data) => {
     $('.pizza-shop-area .row').empty();
+
     var pers;
     data.forEach((item, index) => {
-        pers = '<div class="col-lg-3 col-md-6">' +
-            '<div class="pizza-shop-item">' +
-            '<div class="image">' +
-            '<img src="assets/img/pizza-shop/4.png" alt="image">' +
-            '<div class="pizza-btn">' +
-            '<a href="shop.html" class="default-btn">Order Online' +
-            '<i class="flaticon-play-button"></i>' +
-            '<span></span>' +
-            '</a>' +
-            '</div>' +
-            '</div>' +
-            '<div class="content">' +
-            '<h3>' + item.name + '</h3>' +
-            '<p>Learning do amet contur dicivt suia non nuameius velit</p>' +
-            '<span>$' + item.price + '</span>' +
-            '</div>' +
-            '</div>' +
-            '</div>';
+        pers =
+            `
+        <div class="col-lg-3 col-md-6">
+            <div class="pizza-shop-item">
+                <div class="image">
+                    <img src="assets/img/pizza-shop/4.png" alt="image">
+                    <div class="pizza-btn">
+                        <a href="shop.html" class="default-btn">Order Online
+                            <i class="flaticon-play-button"></i>
+                            <span></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="content">
+                    <h3>${item.name}</h3>
+                    <p>Learning do amet contur dicivt suia non nuameius velit</p>
+                    <span>$${item.price}</span>
+                </div>
+            </div>
+        </div>
+        `;
         $('.pizza-shop-area .row').append(pers);
     });
 }
 /**
  * Render UI Combo for Main page
  */
-function loadCombo(data) {
+let loadCombo = (data) => {
+    $('.burger-shop-slider').empty();
     var pers = '';
 
     data.forEach((item, _) => {
@@ -110,7 +106,7 @@ function loadCombo(data) {
 /**
  * Render UI Category for Menu page
  */
-function loadCategory(data) {
+let loadCategory = (data) => {
     var pers = '';
     data.forEach((item, index) => {
         pers +=
@@ -132,44 +128,4 @@ function loadCategory(data) {
 
     $("#category-list ul").append(pers);
     categoryEffect();
-}
-/**
- * Render UI Combo for Menu page
- */
-function loadComboMenuPage(data){
-    $('.menu-list-tab .row').empty();
-    var pers;
-    data.forEach((item, index) => {
-        pers =
-            '<div class="col-lg-3 col-md-6">' +
-            '<div class="single-product">' +
-            '<div class="product-image">' +
-            '<a  onclick="detailComboClick(' + item.id + ')">' +
-            '<img src="assets/img/shop/image1.jpg" alt="image">' +
-            '</a>' +
-            '<a href="cart.html" class="add-to-cart-btn">Add To Cart' +
-            '<i class="flaticon-shopping-cart"></i>' +
-            '</a>' +
-            '</div>' +
-            '<div class="product-content">' +
-            '<h3>' +
-            '<a >' +
-            item.name +
-            '</a>' +
-            '</h3>' +
-            '<div class="price">' +
-            '<span class="new">$' + item.totalPrice + '</span>' +
-            // '<span class="old">$' + item.id + '</span>' +
-            '</div>' +
-            '<div class="rating">' +
-            '<i class="bx bxs-star"></i>' +
-            '<i class="bx bxs-star"></i>' +
-            '<i class="bx bxs-star"></i>' +
-            '<i class="bx bxs-star"></i>' +
-            '<i class="bx bxs-star"></i>' +
-            '</div>' +
-            '</div>' +
-            '</div>' + '</div>';
-        $('.menu-list-tab .row').append(pers);
-    });
 }

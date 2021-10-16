@@ -1,8 +1,6 @@
 package com.handout.controller;
 
-import com.handout.dto.ProductCategoryDto;
 import com.handout.entity.Category;
-import com.handout.entity.Product;
 import com.handout.service.ICategoryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,18 +10,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-
 @RestController
 @RequestMapping(value = "api/v1/categories")
 @CrossOrigin("*")
 public class CategoryController {
-    @Autowired
-    private ICategoryService categoryService;
+
+    private final ICategoryService categoryService;
+
+    private final ModelMapper modelMapper;
 
     @Autowired
-    private ModelMapper modelMapper;
+    public CategoryController(ICategoryService categoryService, ModelMapper modelMapper) {
+        this.categoryService = categoryService;
+        this.modelMapper = modelMapper;
+    }
 
     @GetMapping()
     public ResponseEntity<Page<Category>> getAllCategories(Pageable pageable) {

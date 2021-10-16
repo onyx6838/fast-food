@@ -10,16 +10,24 @@ $(function () {
     getCategory();
     getProductByCategory(1);
     //navMenuClick();
+    getDetailProduct();
 });
 
-function navMenuClick() {
-    getProductByCategory(1);
-}
+let navMenuClick = () => getProductByCategory(1);
 
-function detailProductClick(id) {
-    getProductById(id);
-}
+let detailProductClick = (id) => getProductById(id);
 
-function detailComboClick(id){
-    getComboById(id);
+let detailComboClick = (id) => getComboById(id);
+
+let getDetailProduct = () => {
+    if (typeof (Storage) !== "undefined") {
+        var data = JSON.parse(localStorage.getItem("product-detail"));
+        $('.price').empty();
+        $('.price').append(`
+            <h3>${data.name}</h3>
+                <span class="new-price">$${data.price}</span>
+            <p>${data.description}</p>`)
+    } else {
+        alert("Browser does not support Web Storage.");
+    }
 }

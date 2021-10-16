@@ -19,7 +19,7 @@ public class ComboService implements IComboService {
 
     @Override
     public Combo getComboByID(int id) {
-        return repository.getById(id);
+        return repository.findById(id).get();
     }
 
     @Override
