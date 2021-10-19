@@ -1,7 +1,8 @@
-package com.handout.service;
+package com.handout.service.impl;
 
 import com.handout.entity.Category;
 import com.handout.repository.ICategoryRepository;
+import com.handout.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,8 +1,13 @@
-$(function () {
+$(() => {
     $(".home-slider").load("/assets/components/main-slider.html", () => {
         sliderEffect();
     });
-    $("#navbar").load("/assets/components/navbar.html");
+    $("#navbar").load("/assets/components/navbar.html", () => {
+        if (localStorage.getItem("ID") != null && localStorage.getItem("ID") != undefined) {
+            $('#login-box').addClass('nav-item');
+            $('#login-box a').first().text(localStorage.getItem("FULL_NAME"));
+        }
+    });
     $("#footer").load("/assets/components/footer.html");
     $(".page-title-area").load("/assets/components/slider-nd-page.html");
     getNewProduct();
@@ -30,4 +35,13 @@ let getDetailProduct = () => {
     } else {
         alert("Browser does not support Web Storage.");
     }
+}
+
+let logout = () => {
+    localStorage.removeItem("ID");
+    localStorage.removeItem("FULL_NAME");
+    localStorage.removeItem("USERNAME");
+    localStorage.removeItem("ROLE");
+    localStorage.removeItem("TOKEN");
+    window.location.replace("sign-in.html");
 }

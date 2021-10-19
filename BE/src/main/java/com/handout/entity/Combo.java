@@ -1,13 +1,14 @@
 package com.handout.entity;
 
 import com.handout.entity.enumerate.Status;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table
 @Entity(name = "Combo")
 public class Combo extends BaseEntity<String> {

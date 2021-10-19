@@ -1,15 +1,20 @@
 package com.handout.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.handout.entity.enumerate.OrderStatus;
 import com.handout.entity.enumerate.PaymentStatus;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table
 @Entity(name = "Order")
 public class Order extends BaseEntity<String> {
@@ -47,10 +52,12 @@ public class Order extends BaseEntity<String> {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderDetail> orderDetails;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name="EmployeeID")
     private Account employeeAccount;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name="CustomerID")
     private Account customerAccount;

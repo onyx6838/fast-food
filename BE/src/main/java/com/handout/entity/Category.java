@@ -2,14 +2,15 @@ package com.handout.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.handout.entity.enumerate.Status;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table
 @Entity(name = "Category")
 public class Category extends BaseEntity<String> {

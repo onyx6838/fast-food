@@ -1,7 +1,8 @@
-package com.handout.service;
+package com.handout.service.impl;
 
 import com.handout.entity.Account;
 import com.handout.repository.IAccountRepository;
+import com.handout.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
@@ -30,7 +31,8 @@ public class AccountService implements IAccountService {
         if (account == null) {
             throw new UsernameNotFoundException(username);
         }
-        return new User(account.getName(), account.getPassword(),
+        return new User(account.getUsername(), account.getPassword(),
                 AuthorityUtils.createAuthorityList(account.getRole()));
     }
+
 }

@@ -11,7 +11,7 @@
  Target Server Version : 80025
  File Encoding         : 65001
 
- Date: 15/10/2021 07:35:35
+ Date: 19/10/2021 20:27:13
 */
 
 SET NAMES utf8mb4;
@@ -23,25 +23,26 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `account`;
 CREATE TABLE `account`  (
   `ID` int NOT NULL,
-  `Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `FullName` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `Phone` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `Email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `Username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `Password` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `Password` varchar(800) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `Address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `CreatedBy` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `UpdatedBy` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `CreatedDate` datetime(0) NULL DEFAULT NULL,
   `UpdatedDate` datetime(0) NULL DEFAULT NULL,
   `Role` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `Status` tinyint NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of account
 -- ----------------------------
-INSERT INTO `account` VALUES (1, 'ggg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `account` VALUES (2, 'nv1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `account` VALUES (1, 'ggg', NULL, NULL, 'minkgiang', '$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi', NULL, NULL, NULL, NULL, NULL, 'Admin', NULL);
+INSERT INTO `account` VALUES (2, 'nv1', NULL, NULL, 'onyxzt123', '$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi', NULL, NULL, NULL, NULL, NULL, 'Admin', NULL);
 
 -- ----------------------------
 -- Table structure for category
@@ -91,14 +92,14 @@ CREATE TABLE `combo`  (
 -- ----------------------------
 -- Records of combo
 -- ----------------------------
-INSERT INTO `combo` VALUES (1, 'combo1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `combo` VALUES (2, 'combo2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `combo` VALUES (3, 'combo3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `combo` VALUES (4, 'combo4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `combo` VALUES (5, 'combo5', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `combo` VALUES (6, 'combo6', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `combo` VALUES (7, 'combo7', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `combo` VALUES (8, 'combo8', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `combo` VALUES (1, 'combo1', 13, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `combo` VALUES (2, 'combo2', 12, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `combo` VALUES (3, 'combo3', 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `combo` VALUES (4, 'combo4', 9, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `combo` VALUES (5, 'combo5', 8, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `combo` VALUES (6, 'combo6', 8, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `combo` VALUES (7, 'combo7', 9, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `combo` VALUES (8, 'combo8', 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for comboproduct
@@ -225,5 +226,24 @@ INSERT INTO `product` VALUES (2, 'cake', NULL, NULL, 'Cake is a form of sweet fo
 INSERT INTO `product` VALUES (3, 'drink', NULL, NULL, 'The Coca-Cola Co. is the nonalcoholic beverage company, which engages in the manufacture, market, and sale of non-alcoholic beverages which include sparkling soft drinks, water, enhanced water and sports drinks, juice, dairy and pla', 1, 3.0000, 1, NULL, NULL, '2021-10-06 23:07:40', NULL, NULL);
 INSERT INTO `product` VALUES (4, 'bun', NULL, NULL, '“Hot dog” means a whole, cured, cooked sausage that is skinless or stuffed in a casing, that may be known as a frankfurter, frank, furter, wiener, red hot, vienna, bologna, garlic bologna, or knockwurst, and that may be served in a bun or roll', NULL, 4.0000, 2, NULL, NULL, '2021-10-11 23:07:44', NULL, NULL);
 INSERT INTO `product` VALUES (5, 'hot dog bun', NULL, NULL, '“Hot dog” means a whole, cured, cooked sausage that is skinless or stuffed in a casing, that may be known as a frankfurter, frank, furter, wiener, red hot, vienna, bologna, garlic bologna, or knockwurst, and that may be served in a bun or roll', NULL, 6.0000, 4, NULL, NULL, '2021-10-10 23:08:10', NULL, NULL);
+
+-- ----------------------------
+-- Table structure for token
+-- ----------------------------
+DROP TABLE IF EXISTS `token`;
+CREATE TABLE `token`  (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `Token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `AccountID` int NOT NULL,
+  `ExpiredDate` datetime(0) NOT NULL,
+  `Type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  PRIMARY KEY (`ID`) USING BTREE,
+  INDEX `fk_accountid_to_account`(`AccountID`) USING BTREE,
+  CONSTRAINT `fk_accountid_to_account` FOREIGN KEY (`AccountID`) REFERENCES `account` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of token
+-- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;

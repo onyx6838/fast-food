@@ -1,23 +1,28 @@
 package com.handout.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table
-@Entity(name = "`account`")
+@Entity(name = "account")
 public class Account extends BaseEntity<String> {
     @Column(name = "`ID`")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
-    @Column(name = "`Name`", length = 50)
-    private String name;
+    @Column(name = "`FullName`", length = 50)
+    private String fullName;
 
     @Column(name = "`Phone`", length = 30)
     private String phone;
@@ -28,7 +33,7 @@ public class Account extends BaseEntity<String> {
     @Column(name = "`Username`", length = 50)
     private String username;
 
-    @Column(name = "`Password`", length = 50)
+    @Column(name = "`Password`", length = 800)
     private String password;
 
     @Column(name = "`Address`")
@@ -37,9 +42,11 @@ public class Account extends BaseEntity<String> {
     @Column(name = "`Role`", length = 50)
     private String role;
 
-    @OneToMany(mappedBy = "employeeAccount", fetch = FetchType.EAGER)
+    @JsonManagedReference
+    @OneToMany(mappedBy = "employeeAccount", fetch = FetchType.LAZY)
     private List<Order> employees;
 
-    @OneToMany(mappedBy = "customerAccount", fetch = FetchType.EAGER)
+    @JsonManagedReference
+    @OneToMany(mappedBy = "customerAccount", fetch = FetchType.LAZY)
     private List<Order> customers;
 }

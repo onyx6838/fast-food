@@ -35,11 +35,6 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="nav-item">
-                                    <a href="shop.html" class="nav-link">
-                                        Shop List
-                                    </a>
-                                </li>
-                                <li class="nav-item">
                                     <a href="cart.html" class="nav-link">
                                         Cart
                                     </a>
@@ -49,26 +44,11 @@
                                         Checkout
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="product-details.html" class="nav-link">
-                                        Products Details
-                                    </a>
-                                </li>
                             </ul>
                         </li>
                         <li class="nav-item">
                             <a href="contact.html" class="nav-link">
                                 Contact
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="contact.html" class="nav-link">
-                                Sign In
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="contact.html" class="nav-link">
-                                Sign Up
                             </a>
                         </li>
                     </ul>
@@ -81,23 +61,22 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="option-item">
-                            <a href="shop.html" class="default-btn">
-                                Sign In
-                                <span></span>
-                            </a>
-                            <!-- <ul class="dropdown-menu" style="display: block;">
-                                <li>
-                                    <a href="https://jollibee.com.vn/profile">Profile</a>
-                                </li>
-                                <li class="change-pass"><a href="#">Đổi mật khẩu</a></li>
-                                <li>
-                                    <form action="https://jollibee.com.vn/logout" method="POST" class="form-inline ng-pristine ng-valid" role="form">
-                                        <input type="hidden" name="_token" value="wFkli4BLkXn1FwVZaDLdHREx4rfnvjR6xdC9xgL0">
-                                        <button class="btn btn-logout" type="submit">Đăng xuất</button>
-                                    </form>
-                                </li>
-                            </ul> -->
+                        <div class="navbar-nav">
+                            <!-- <div class="nav-item option-item"> -->
+                            <div class="option-item" id="login-box">
+                                <a href="sign-in.html" class="nav-link default-btn"
+                                    style="color: black;padding:15px 0 15px 0;">
+                                    Login
+                                    <!-- <i class='bx bx-chevron-down'></i> -->
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item">
+                                        <a href="sign-in.html" class="nav-link" onclick="logout()">
+                                            logout
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
