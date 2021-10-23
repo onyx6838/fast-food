@@ -1,4 +1,4 @@
-package com.handout.dto;
+package com.handout.dto.authentication;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +13,6 @@ public class LoginInfoDto {
     private int id;
     private String fullName;
     private String role;
-    private String jwt;
+    private String token; // token
     private String refreshToken;
 }

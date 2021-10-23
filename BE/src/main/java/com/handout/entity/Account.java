@@ -1,6 +1,7 @@
 package com.handout.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.handout.entity.enumerate.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,6 +42,10 @@ public class Account extends BaseEntity<String> {
 
     @Column(name = "`Role`", length = 50)
     private String role;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "`Status`", nullable = false)
+    private UserStatus status = UserStatus.NOT_ACTIVE;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "employeeAccount", fetch = FetchType.LAZY)

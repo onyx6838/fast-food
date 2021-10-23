@@ -1,13 +1,23 @@
 package com.handout.utils;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-
 @Component
-public class FileUtils {
+public class FileManager {
+
+    public boolean isFileOrFolderExist(String path) throws IOException {
+        return new File(path).exists();
+    }
+
+    public boolean isTypeFileImage(MultipartFile file) {
+        return file.getContentType().toLowerCase().contains("image");
+    }
 
     public void createNewMultiPartFile(String path, MultipartFile multipartFile)
             throws IllegalStateException, IOException {
@@ -19,10 +29,5 @@ public class FileUtils {
     public String getFormatFile(String input) {
         String[] results = input.split("\\.");
         return results[results.length - 1];
-    }
-
-    public String getNameFile(String input) {
-        int dotIndex = input.lastIndexOf(".");
-        return input.substring(0, dotIndex);
     }
 }

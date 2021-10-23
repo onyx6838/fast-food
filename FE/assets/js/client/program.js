@@ -49,7 +49,7 @@ let getCombo = () => {
 let getComboMenuPage = () => {
     var getCombos = jqxhr('GET', "combos");
     getCombos.done((data) => {
-        loadProduct(data, 'comboUI');
+        loadProduct(data, 'comboUI'); 
     }).fail((jqXHR, textStatus, errorThrown) => {
         console.log(textStatus + ': ' + errorThrown);
     });

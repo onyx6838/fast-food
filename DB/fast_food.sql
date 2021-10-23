@@ -11,7 +11,7 @@
  Target Server Version : 80025
  File Encoding         : 65001
 
- Date: 19/10/2021 20:27:13
+ Date: 24/10/2021 01:23:33
 */
 
 SET NAMES utf8mb4;
@@ -22,7 +22,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `account`;
 CREATE TABLE `account`  (
-  `ID` int NOT NULL,
+  `ID` int NOT NULL AUTO_INCREMENT,
   `FullName` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `Phone` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `Email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
@@ -43,6 +43,10 @@ CREATE TABLE `account`  (
 -- ----------------------------
 INSERT INTO `account` VALUES (1, 'ggg', NULL, NULL, 'minkgiang', '$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi', NULL, NULL, NULL, NULL, NULL, 'Admin', NULL);
 INSERT INTO `account` VALUES (2, 'nv1', NULL, NULL, 'onyxzt123', '$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi', NULL, NULL, NULL, NULL, NULL, 'Admin', NULL);
+INSERT INTO `account` VALUES (4, NULL, NULL, '', '', '$2a$10$NfpMz3q0WBSKb1//u4RjvehpIyhhlskO07CDGqyPrPM4rWZSR8n8S', NULL, 'not apply this time after security', 'not apply this time after security', '2021-10-24 01:15:33', '2021-10-24 01:15:33', 'User', 0);
+INSERT INTO `account` VALUES (5, NULL, NULL, '', '', '$2a$10$5.lMdjnDTnkKbfALvsK/7OH0zmYpOonNe5qJbXlq042o7GfMvtTOW', NULL, 'not apply this time after security', 'not apply this time after security', '2021-10-24 01:15:54', '2021-10-24 01:15:54', 'User', 0);
+INSERT INTO `account` VALUES (6, NULL, NULL, '', '', '$2a$10$s0QIvTP.ht0OnHuz1nayBODpeR6xjXwLyK2maAyvBXsZuCaNFGGOO', NULL, 'not apply this time after security', 'not apply this time after security', '2021-10-24 01:16:06', '2021-10-24 01:16:06', 'User', 0);
+INSERT INTO `account` VALUES (7, NULL, NULL, 'mink.giang@gmail.com', 'giangmink', '$2a$10$dsh3n0iDji1FQY69.cV9/eyhrEM2JSOc5LYe9veQkJK8dBXARHSle', NULL, 'not apply this time after security', 'not apply this time after security', '2021-10-24 01:16:34', '2021-10-24 01:16:58', 'User', 1);
 
 -- ----------------------------
 -- Table structure for category
@@ -224,8 +228,8 @@ CREATE TABLE `product`  (
 INSERT INTO `product` VALUES (1, 'hot dog', NULL, NULL, '“Hot dog” means a whole, cured, cooked sausage that is skinless or stuffed in a casing, that may be known as a frankfurter, frank, furter, wiener, red hot, vienna, bologna, garlic bologna, or knockwurst, and that may be served in a bun or roll', 1, 5.0000, 0, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
 INSERT INTO `product` VALUES (2, 'cake', NULL, NULL, 'Cake is a form of sweet food made from flour, sugar, and other ingredients, that is usually baked. ... Cakes can also be filled with fruit preserves, nuts or dessert sauces (like pastry cream), iced with buttercream', 1, 3.0000, 3, NULL, NULL, '2021-10-05 23:07:36', NULL, NULL);
 INSERT INTO `product` VALUES (3, 'drink', NULL, NULL, 'The Coca-Cola Co. is the nonalcoholic beverage company, which engages in the manufacture, market, and sale of non-alcoholic beverages which include sparkling soft drinks, water, enhanced water and sports drinks, juice, dairy and pla', 1, 3.0000, 1, NULL, NULL, '2021-10-06 23:07:40', NULL, NULL);
-INSERT INTO `product` VALUES (4, 'bun', NULL, NULL, '“Hot dog” means a whole, cured, cooked sausage that is skinless or stuffed in a casing, that may be known as a frankfurter, frank, furter, wiener, red hot, vienna, bologna, garlic bologna, or knockwurst, and that may be served in a bun or roll', NULL, 4.0000, 2, NULL, NULL, '2021-10-11 23:07:44', NULL, NULL);
-INSERT INTO `product` VALUES (5, 'hot dog bun', NULL, NULL, '“Hot dog” means a whole, cured, cooked sausage that is skinless or stuffed in a casing, that may be known as a frankfurter, frank, furter, wiener, red hot, vienna, bologna, garlic bologna, or knockwurst, and that may be served in a bun or roll', NULL, 6.0000, 4, NULL, NULL, '2021-10-10 23:08:10', NULL, NULL);
+INSERT INTO `product` VALUES (4, 'bun', NULL, NULL, '“Hot dog” means a whole, cured, cooked sausage that is skinless or stuffed in a casing, that may be known as a frankfurter, frank, furter, wiener, red hot, vienna, bologna, garlic bologna, or knockwurst, and that may be served in a bun or roll', 2, 4.0000, 2, NULL, NULL, '2021-10-11 23:07:44', NULL, NULL);
+INSERT INTO `product` VALUES (5, 'hot dog bun', NULL, NULL, '“Hot dog” means a whole, cured, cooked sausage that is skinless or stuffed in a casing, that may be known as a frankfurter, frank, furter, wiener, red hot, vienna, bologna, garlic bologna, or knockwurst, and that may be served in a bun or roll', 2, 6.0000, 4, NULL, NULL, '2021-10-10 23:08:10', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for token
@@ -240,10 +244,14 @@ CREATE TABLE `token`  (
   PRIMARY KEY (`ID`) USING BTREE,
   INDEX `fk_accountid_to_account`(`AccountID`) USING BTREE,
   CONSTRAINT `fk_accountid_to_account` FOREIGN KEY (`AccountID`) REFERENCES `account` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of token
 -- ----------------------------
+INSERT INTO `token` VALUES (3, 'a87a7a0c-bede-47dc-b02f-7ff509f70bd1', 4, '2021-10-24 01:45:33', 'RegistrationUserToken');
+INSERT INTO `token` VALUES (4, 'c73bc4cc-a59a-40f1-b370-e778878f2bf9', 5, '2021-10-24 01:45:54', 'RegistrationUserToken');
+INSERT INTO `token` VALUES (5, '1884a8ac-03ec-438b-975e-e1b103946f9b', 6, '2021-10-24 01:46:06', 'RegistrationUserToken');
+INSERT INTO `token` VALUES (7, 'a4a19ca6-4ebd-45fc-917e-497cb3baf3fd', 1, '2021-11-03 01:17:12', 'RefreshToken');
 
 SET FOREIGN_KEY_CHECKS = 1;

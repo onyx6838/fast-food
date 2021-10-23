@@ -3,7 +3,11 @@ package com.handout.service.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.handout.dto.LoginInfoDto;
+import com.handout.dto.authentication.TokenRefreshResponse;
 import com.handout.entity.Account;
+import com.handout.entity.authentication.RefreshToken;
+import com.handout.repository.IRefreshTokenRepository;
+import com.handout.repository.IResetPasswordTokenRepository;
 import com.handout.service.IAccountService;
 import com.handout.service.IJWTTokenService;
 import io.jsonwebtoken.Jwts;
@@ -24,10 +28,30 @@ import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
 import java.security.Key;
 import java.util.Date;
+import java.util.UUID;
 
 @Transactional
 @Service
 public class JWTTokenService implements IJWTTokenService {
+    private final ModelMapper modelMapper;
+
+    private final IAccountService accountService;
+
+    private final IRefreshTokenRepository refreshTokenRepository;
+
+    private final IResetPasswordTokenRepository resetPasswordTokenRepository;
+
+    @Autowired
+    public JWTTokenService(ModelMapper modelMapper,
+                           IAccountService accountService,
+                           IRefreshTokenRepository refreshTokenRepository,
+                           IResetPasswordTokenRepository resetPasswordTokenRepository) {
+        this.modelMapper = modelMapper;
+        this.accountService = accountService;
+        this.refreshTokenRepository = refreshTokenRepository;
+        this.resetPasswordTokenRepository = resetPasswordTokenRepository;
+    }
+
     @Value("${jwt.token.prefix}")
     private String tokenPrefix;
 
@@ -37,14 +61,11 @@ public class JWTTokenService implements IJWTTokenService {
     @Value("${jwt.token.expired-time}")
     private long tokenExpiredTime;
 
-    @Value("${jwt.token.secret}")   // key
+    @Value("${jwt.token.secret}")   // key encrypt
     private String tokenSecret;
 
-    @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
-    private IAccountService accountService;
+    @Value("${jwt.refresh-token.expired-time}")
+    private long refreshTokenExpiredTime;
 
     @Override
     public void addJWTTokenToHeader(HttpServletResponse response, String username) throws IOException {
@@ -52,9 +73,11 @@ public class JWTTokenService implements IJWTTokenService {
         Account account = accountService.getAccountByUsername(username);
         // get jwt code
         String jwt = generateJWTFromUsername(username);
+        String refreshToken = createNewRefreshToken(account);
         //convert account to dto
         LoginInfoDto userDto = modelMapper.map(account, LoginInfoDto.class);
         userDto.setJwt(jwt);
+        userDto.setRefreshToken(refreshToken);
         // convert to json
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = ow.writeValueAsString(userDto);
@@ -91,6 +114,44 @@ public class JWTTokenService implements IJWTTokenService {
                         AuthorityUtils.createAuthorityList(user.getRole())) :
                 null;
 
+    }
+
+    @Override
+    public boolean isValidRefreshToken(String refreshToken) {
+        return refreshTokenRepository.existsByTokenAndExpiredDateGreaterThan(refreshToken, new Date());
+    }
+
+    @Override
+    public boolean isValidResetPasswordToken(String resetPasswordToken) {
+        return resetPasswordTokenRepository.existsByTokenAndExpiredDateGreaterThan(resetPasswordToken, new Date());
+    }
+
+    @Override
+    public String createNewRefreshToken(Account account) {
+        // create new refresh token
+        String newToken = UUID.randomUUID().toString();
+        RefreshToken token = new RefreshToken(newToken, account, refreshTokenExpiredTime);
+
+        // create new token
+        refreshTokenRepository.save(token);
+
+        return newToken;
+    }
+
+    @Override
+    public TokenRefreshResponse refreshToken(String refreshToken) {
+        RefreshToken refreshTokenEntity = refreshTokenRepository.findByToken(refreshToken);
+        Account account = refreshTokenEntity.getAccount();
+
+        // create new token
+        String newToken = generateJWTFromUsername(account.getUsername());
+        String newRefreshToken = createNewRefreshToken(account);
+
+        // remove old Refresh Token if exists
+        refreshTokenRepository.deleteByToken(refreshToken);
+
+        return TokenRefreshResponse.builder().token(newToken).refreshToken(newRefreshToken).id(account.getId())
+                .fullName(account.getFullName()).role(account.getRole()).build();
     }
 
     private boolean isValidJwt(String jwt) {

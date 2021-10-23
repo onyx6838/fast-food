@@ -49,6 +49,43 @@ function login() {
     })
 }
 
+function register() {
+    var username = $('#register-username').val();
+    var firstname = $('#register-firstname').val();
+    var lastname = $('#register-lastname').val();
+    var email = $('#register-email').val();
+    var password = $('#register-password').val();
+
+    // TODO valid
+    $.ajax({
+        url: 'http://localhost:8080/api/v1/accounts',
+        type: 'POST',
+        data: JSON.stringify({
+            userName: username,
+            firstName: firstname,
+            lastName: lastname,
+            email: email,
+            password: password,
+            role: "User"
+        }),
+        contentType: "application/json ; charset=utf-8"
+    }).done(function (data, status, xhr) {
+        $('.toast').toast('show')
+        //alert("We have sent 1 email. Please check email to active account!");
+        setInterval(() => {
+            window.location.replace("sign-in.html");
+        }, 3000);
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        if (jqXHR.status == 401 || jqXHR.status == 415 || jqXHR.status == 500) {
+            showNameErrMsg("Regis fail!");
+        } else {
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+        }
+    })
+}
+
 function showNameErrMsg(message) {
     $('#name-err-msg').html(message);
     hideNameErrMsg('block');

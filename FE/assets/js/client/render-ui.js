@@ -1,19 +1,17 @@
 /**
  * Render UI Product Or Combo for Menu page
  */
-let loadProduct = (data, ...typeUI) => {
+let loadProduct = (data, typeUI) => {
     $('.menu-list-tab .row').empty();
     var pers;
-    data.forEach((item, _) => {
-        let price = typeUI.length == 0 ? item.price : item.totalPrice;
-        $('.product-image > :first-child').on("click", () => {
-            typeUI.length == 0 ? detailProductClick(item.id) : detailComboClick(item.id)
-        });
+    data.forEach((item, index) => {
+        let price = !typeUI ? item.price : item.totalPrice;
+        let click = !typeUI ? `detailProductClick(${item.id})` : `detailComboClick(${item.id})`;
         pers = `
         <div class="col-lg-3 col-md-6">
             <div class="single-product">
                 <div class="product-image">
-                    <a>
+                    <a onclick="${click}">
                         <img src="assets/img/shop/image1.jpg" alt="image">
                     </a>
                     <a href="cart.html" class="add-to-cart-btn">Add To Cart
@@ -29,7 +27,7 @@ let loadProduct = (data, ...typeUI) => {
             </div>
         </div>
         `;
-        $('.menu-list-tab .row').append(pers);
+        $(pers).appendTo($('.menu-list-tab .row'));
     });
 }
 /**

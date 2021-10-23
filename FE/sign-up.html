@@ -52,36 +52,61 @@
 
     </div>
 
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" style=" position:fixed;
+    top: 50%;left: 50%">
+        <!-- <div class="toast-header">
+            <img src="" class="rounded me-2" alt="...">
+            <strong class="me-auto">Bootstrap</strong>
+            <small>11 mins ago</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div> -->
+        <div class="toast-body">
+            Sign Up Success , Check your email and Login
+        </div>
+    </div>
+
     <div class="signup-area ptb-100">
         <div class="container">
             <div class="signup-form">
                 <h3>Create your Account</h3>
-                <form>
+                <form onsubmit="event.preventDefault();">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Username">
+                                <input type="text" class="form-control" id="register-username" placeholder="Username">
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Email">
+                                <input type="text" class="form-control" id="register-email" placeholder="Email">
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Password">
+                                <input type="password" class="form-control" id="register-password"
+                                    placeholder="Password">
                             </div>
                         </div>
                         <div class="col-lg-12">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="register-firstname"
+                                    placeholder="First Name">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="register-lastname" placeholder="Last Name">
+                            </div>
+                        </div>
+                        <!-- <div class="col-lg-12">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="checkme">
                                 <label class="form-check-label" for="checkme">Keep Me Sign Up</label>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-lg-12">
                             <div class="send-btn">
-                                <button type="#" class="default-btn">
+                                <button class="default-btn" onclick="register()">
                                     Sign Up Now
                                     <span></span>
                                 </button>
@@ -94,7 +119,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- Footer -->
     <div id="footer">
@@ -134,8 +158,16 @@
 
     <script src="assets/js/lib/wow.min.js"></script>
 
-    <script src="assets/js/lib/main.js"></script>
-
     <script src="assets/js/client/load.js"></script>
+
+    <script src="assets/js/client/program.js"></script>
+    <script src="assets/js/client/base-ajax.js"></script>
+    <script src="assets/js/client/render-ui.js"></script>
+
+    <script src="assets/js/lib/main.js"></script>
+    <script src="assets/js/client/effect.js"></script>
+
+    <script src="assets/js/client/login.js"></script>
 </body>
+
 </html>
