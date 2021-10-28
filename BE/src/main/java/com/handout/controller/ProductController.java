@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,7 +27,7 @@ public class ProductController {
     }
 
     @GetMapping()
-    public ResponseEntity<?> getAllProducts(Pageable pageable) {
+    public ResponseEntity<?> getAllProducts(@RequestParam(required = false) Pageable pageable) {
         Page<Product> entitiesPage = productService.getAllProducts(pageable);
         return new ResponseEntity<>(entitiesPage, HttpStatus.OK);
     }

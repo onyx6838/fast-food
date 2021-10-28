@@ -14,7 +14,7 @@ let loadProduct = (data, typeUI) => {
                     <a onclick="${click}">
                         <img src="assets/img/shop/image1.jpg" alt="image">
                     </a>
-                    <a href="cart.html" class="add-to-cart-btn">Add To Cart
+                    <a class="add-to-cart-btn" onclick="addToCart(${item.id})">Add To Cart
                         <i class="flaticon-shopping-cart"></i>
                     </a>
                 </div>
@@ -126,4 +126,52 @@ let loadCategory = (data) => {
 
     $("#category-list ul").append(pers);
     categoryEffect();
+}
+
+/**
+ * Render UI Product in Cart for Cart page
+ */
+let loadCart = (cartInfo) => {
+    $('.cart-table tbody').empty();
+    let products = JSON.parse(localStorage.getItem('prod'));
+    console.log(products);
+    console.log(cartInfo);
+    if (cartInfo.length > 0) {
+        cartInfo.forEach((item, _) => {
+            $('.cart-table tbody').append(
+                `
+                <tr>
+                    <td class="product-thumbnail">
+                        <a href="#">
+                            <img src="assets/img/shop/image1.jpg" alt="item">
+                        </a>
+                    </td>
+                    <td class="product-name">
+                        <a href="#">${products[item.id - 1].name}</a>
+                    </td>
+                    <td class="product-price">
+                        <span class="unit-amount">$${products[item.id - 1].price}</span>
+                    </td>
+                    <td class="product-quantity">
+                        <div class="input-counter">
+                            <span class="minus-btn">
+                                <i class='bx bx-minus'></i>
+                            </span>
+                            <input type="text" value="${item.qty}">
+                            <span class="plus-btn">
+                                <i class='bx bx-plus'></i>
+                            </span>
+                        </div>
+                    </td>
+                    <td class="product-subtotal">
+                        <span class="subtotal-amount">$${products[item.id - 1].price * item.qty}</span>
+                        <a href="#" class="remove">
+                            <i class='bx bx-trash'></i>
+                        </a>
+                    </td>
+                </tr>
+                `
+            );
+        })
+    }
 }

@@ -15,7 +15,12 @@ public class ProductService implements IProductService {
 
     @Override
     public Page<Product> getAllProducts(Pageable pageable) {
-        return productRepository.findAll(pageable);
+        if (null == pageable) {
+            Pageable wholePage = Pageable.unpaged();
+            return productRepository.findAll(wholePage);
+        } else {
+            return productRepository.findAll(pageable);
+        }
     }
 
     @Override

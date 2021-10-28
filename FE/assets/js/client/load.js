@@ -1,15 +1,15 @@
 $(() => {
-    $(".home-slider").load("/assets/components/main-slider.html", () => {
+    $(".home-slider").load("./assets/components/main-slider.html", () => {
         sliderEffect();
     });
-    $("#navbar").load("/assets/components/navbar.html", () => {
+    $("#navbar").load("./assets/components/navbar.html", () => {
         if (localStorage.getItem("ID") != null && localStorage.getItem("ID") != undefined) {
             $('#login-box').addClass('nav-item');
-            $('#login-box a').first().text(localStorage.getItem("FULL_NAME"));
+            $('#login-box a').first().text(localStorage.getItem("FULL_NAME").charAt(0));
         }
     });
-    $("#footer").load("/assets/components/footer.html");
-    $(".page-title-area").load("/assets/components/slider-nd-page.html");
+    $("#footer").load("./assets/components/footer.html");
+    $(".page-title-area").load("./assets/components/slider-nd-page.html");
     getNewProduct();
     getCombo();
     getCategory();
