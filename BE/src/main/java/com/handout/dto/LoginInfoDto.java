@@ -12,6 +12,7 @@ import lombok.Setter;
 public class LoginInfoDto {
     private int id;
     private String fullName;
+    private String username;
     private String role;
     private String jwt;
     private String refreshToken;

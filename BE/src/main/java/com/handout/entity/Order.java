@@ -16,15 +16,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table
-@Entity(name = "Order")
+@Entity(name = "`Order`")
 public class Order extends BaseEntity<String> {
     @Column(name = "OrderID")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "Description")
-    private String description;
+    @Column(name = "Address")
+    private String address;
 
     @Column(name = "Province", length = 50)
     private String province;

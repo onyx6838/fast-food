@@ -133,6 +133,7 @@ let loadCategory = (data) => {
  */
 let loadCart = (cartInfo) => {
     $('.cart-table tbody').empty();
+    $('.cart-totals b').empty();
     let products = JSON.parse(localStorage.getItem('prod'));
     console.log(products);
     console.log(cartInfo);
@@ -155,17 +156,17 @@ let loadCart = (cartInfo) => {
                     <td class="product-quantity">
                         <div class="input-counter">
                             <span class="minus-btn">
-                                <i class='bx bx-minus'></i>
+                                <i class='bx bx-minus' onclick="updateCartItem(${item.id}, -1)"></i>
                             </span>
                             <input type="text" value="${item.qty}">
                             <span class="plus-btn">
-                                <i class='bx bx-plus'></i>
+                                <i class='bx bx-plus' onclick="updateCartItem(${item.id}, 1)"></i>
                             </span>
                         </div>
                     </td>
                     <td class="product-subtotal">
                         <span class="subtotal-amount">$${products[item.id - 1].price * item.qty}</span>
-                        <a href="#" class="remove">
+                        <a class="remove" onclick="removeCartItem(${item.id})">
                             <i class='bx bx-trash'></i>
                         </a>
                     </td>
@@ -173,5 +174,11 @@ let loadCart = (cartInfo) => {
                 `
             );
         })
+        $('.cart-totals b').append(`${(cart.reduce((accu, item, i) => accu += item.qty * products[item.id-1].price, 0)).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`);
+    } else {
+        Swal.fire(
+            'Chưa có sản phẩm trong giỏ'
+        )
+        $('.cart-totals b').append('0');
     }
 }
