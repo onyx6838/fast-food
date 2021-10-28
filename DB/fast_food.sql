@@ -11,7 +11,7 @@
  Target Server Version : 80025
  File Encoding         : 65001
 
- Date: 24/10/2021 01:23:33
+ Date: 28/10/2021 23:50:07
 */
 
 SET NAMES utf8mb4;
@@ -36,17 +36,17 @@ CREATE TABLE `account`  (
   `Role` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `Status` tinyint NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of account
 -- ----------------------------
-INSERT INTO `account` VALUES (1, 'ggg', NULL, NULL, 'minkgiang', '$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi', NULL, NULL, NULL, NULL, NULL, 'Admin', NULL);
+INSERT INTO `account` VALUES (1, 'Đặng Thị Lan Hương   ádasdasd', NULL, NULL, 'minkgiang', '$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi', NULL, NULL, NULL, NULL, NULL, 'Admin', NULL);
 INSERT INTO `account` VALUES (2, 'nv1', NULL, NULL, 'onyxzt123', '$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi', NULL, NULL, NULL, NULL, NULL, 'Admin', NULL);
 INSERT INTO `account` VALUES (4, NULL, NULL, '', '', '$2a$10$NfpMz3q0WBSKb1//u4RjvehpIyhhlskO07CDGqyPrPM4rWZSR8n8S', NULL, 'not apply this time after security', 'not apply this time after security', '2021-10-24 01:15:33', '2021-10-24 01:15:33', 'User', 0);
 INSERT INTO `account` VALUES (5, NULL, NULL, '', '', '$2a$10$5.lMdjnDTnkKbfALvsK/7OH0zmYpOonNe5qJbXlq042o7GfMvtTOW', NULL, 'not apply this time after security', 'not apply this time after security', '2021-10-24 01:15:54', '2021-10-24 01:15:54', 'User', 0);
 INSERT INTO `account` VALUES (6, NULL, NULL, '', '', '$2a$10$s0QIvTP.ht0OnHuz1nayBODpeR6xjXwLyK2maAyvBXsZuCaNFGGOO', NULL, 'not apply this time after security', 'not apply this time after security', '2021-10-24 01:16:06', '2021-10-24 01:16:06', 'User', 0);
-INSERT INTO `account` VALUES (7, NULL, NULL, 'mink.giang@gmail.com', 'giangmink', '$2a$10$dsh3n0iDji1FQY69.cV9/eyhrEM2JSOc5LYe9veQkJK8dBXARHSle', NULL, 'not apply this time after security', 'not apply this time after security', '2021-10-24 01:16:34', '2021-10-24 01:16:58', 'User', 1);
+INSERT INTO `account` VALUES (8, NULL, NULL, 'mink.giang@gmail.com', 'giangmink', '$2a$10$u0O2RLOcBKPDPIuiez0wdO7YlkjW0luiAmJs5GhA6mxQIvyIXyoBK', NULL, 'not apply this time after security', 'not apply this time after security', '2021-10-24 23:45:24', '2021-10-24 23:45:39', 'User', 1);
 
 -- ----------------------------
 -- Table structure for category
@@ -141,7 +141,7 @@ INSERT INTO `comboproduct` VALUES (5, 2, 5, 1, NULL, NULL, NULL, NULL, NULL, NUL
 -- ----------------------------
 DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order`  (
-  `OrderID` int NOT NULL,
+  `OrderID` int NOT NULL AUTO_INCREMENT,
   `EmployeeID` int NULL DEFAULT NULL,
   `CustomerID` int NULL DEFAULT NULL,
   `Address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
@@ -167,13 +167,16 @@ CREATE TABLE `order`  (
 -- Records of order
 -- ----------------------------
 INSERT INTO `order` VALUES (1, 2, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `order` VALUES (2, 2, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `order` VALUES (4, NULL, 1, NULL, 'QN', NULL, NULL, 12022112.0000, 'cho nhieu duong', 'not apply this time after security', 'not apply this time after security', '2021-10-28 22:50:04', '2021-10-28 22:50:04', NULL, NULL);
+INSERT INTO `order` VALUES (10, NULL, 1, NULL, 'QN', NULL, NULL, 12022112.0000, 'cho nhieu duong', 'minkgiang', 'minkgiang', '2021-10-28 23:36:52', '2021-10-28 23:36:52', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for orderdetail
 -- ----------------------------
 DROP TABLE IF EXISTS `orderdetail`;
 CREATE TABLE `orderdetail`  (
-  `ID` int NOT NULL,
+  `ID` int NOT NULL AUTO_INCREMENT,
   `OrderID` int NULL DEFAULT NULL,
   `ProductID` int NULL DEFAULT NULL,
   `ComboID` int NULL DEFAULT NULL,
@@ -198,6 +201,8 @@ CREATE TABLE `orderdetail`  (
 -- ----------------------------
 INSERT INTO `orderdetail` VALUES (1, 1, 1, NULL, 5, 1, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `orderdetail` VALUES (2, 1, NULL, 1, 5, 1, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `orderdetail` VALUES (10, 10, NULL, 1, NULL, 2, 'minkgiang', 'minkgiang', '2021-10-28 23:36:52', '2021-10-28 23:36:52', NULL);
+INSERT INTO `orderdetail` VALUES (11, 10, 2, NULL, NULL, 2, 'minkgiang', 'minkgiang', '2021-10-28 23:36:52', '2021-10-28 23:36:52', NULL);
 
 -- ----------------------------
 -- Table structure for product
@@ -244,14 +249,19 @@ CREATE TABLE `token`  (
   PRIMARY KEY (`ID`) USING BTREE,
   INDEX `fk_accountid_to_account`(`AccountID`) USING BTREE,
   CONSTRAINT `fk_accountid_to_account` FOREIGN KEY (`AccountID`) REFERENCES `account` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of token
 -- ----------------------------
-INSERT INTO `token` VALUES (3, 'a87a7a0c-bede-47dc-b02f-7ff509f70bd1', 4, '2021-10-24 01:45:33', 'RegistrationUserToken');
-INSERT INTO `token` VALUES (4, 'c73bc4cc-a59a-40f1-b370-e778878f2bf9', 5, '2021-10-24 01:45:54', 'RegistrationUserToken');
-INSERT INTO `token` VALUES (5, '1884a8ac-03ec-438b-975e-e1b103946f9b', 6, '2021-10-24 01:46:06', 'RegistrationUserToken');
-INSERT INTO `token` VALUES (7, 'a4a19ca6-4ebd-45fc-917e-497cb3baf3fd', 1, '2021-11-03 01:17:12', 'RefreshToken');
+INSERT INTO `token` VALUES (10, 'ce17269f-5f83-498c-bcd1-d02c372eee32', 1, '2021-11-03 23:45:48', 'RefreshToken');
+INSERT INTO `token` VALUES (11, '72c24ff3-45e3-4714-8bd0-9b65e8d21595', 1, '2021-11-03 23:47:33', 'RefreshToken');
+INSERT INTO `token` VALUES (12, 'db7757ca-ea7c-47dc-b571-c2b65ef5ca37', 1, '2021-11-03 23:47:58', 'RefreshToken');
+INSERT INTO `token` VALUES (13, '50a02c39-3cf8-4bff-b764-1d9fd9762bba', 1, '2021-11-03 23:49:54', 'RefreshToken');
+INSERT INTO `token` VALUES (14, '7ffdbad0-a0e2-43e2-8eab-59ca0a67eed5', 1, '2021-11-07 21:38:19', 'RefreshToken');
+INSERT INTO `token` VALUES (15, '80e486da-45a4-43c1-a3a0-c5d010b213c0', 1, '2021-11-07 21:41:38', 'RefreshToken');
+INSERT INTO `token` VALUES (16, '175ba65c-9181-4cda-b27c-f9fbc6152735', 1, '2021-11-07 21:43:34', 'RefreshToken');
+INSERT INTO `token` VALUES (17, '8058f9e7-7b71-4f77-a623-d16c4bd658d5', 1, '2021-11-07 22:52:52', 'RefreshToken');
+INSERT INTO `token` VALUES (18, '173c49aa-8129-4de2-affa-41a824eab175', 1, '2021-11-07 23:39:41', 'RefreshToken');
 
 SET FOREIGN_KEY_CHECKS = 1;
