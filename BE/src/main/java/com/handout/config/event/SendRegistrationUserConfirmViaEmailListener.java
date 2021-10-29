@@ -1,10 +1,9 @@
 package com.handout.config.event;
 
+import com.handout.service.IEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
-
-import com.handout.service.IEmailService;
 
 @Component
 public class SendRegistrationUserConfirmViaEmailListener

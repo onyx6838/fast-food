@@ -1,16 +1,22 @@
+/**
+ * Api handler
+ */
 let ApiProducts = jqxhr('GET', 'products').then((result) => productsHandler(result.content));
 
-let products;
+let productsHandler = data => localStorage.setItem('prod', JSON.stringify([...data]));
 
-let productsHandler = (data) => {
-    products = [...data];
-    localStorage.setItem('prod', JSON.stringify(products));
-};
+let ApiCombos = jqxhr('GET', 'combos').then((result) => combosHandler(result));
 
+let combosHandler = data => localStorage.setItem('comb', JSON.stringify([...data]));
+
+/**
+ * Setup cart localstr
+ */
 let cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
 
-const getIndex = id => cart.indexOf(cart.find(item => item.id === id));
-
+/**
+ * UI handler
+ */
 const showCart = () => {
     loadCart(cart);
 }
@@ -19,25 +25,26 @@ const popCart = () => {
     $('div.cart-btn span').text(cart.reduce((accu, item) => accu += item.qty, 0));
 }
 
-popCart();
 
-const addToCart = id => {
-    Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Đã thêm vào giỏ hàng',
-        showConfirmButton: false,
-        timer: 1000
-    }).then(() => {
+popCart();
+/**
+ * Cart handler
+ */
+const getIndex = id => cart.indexOf(cart.find(item => item.id === id));
+
+const addToCart = (id, isCombo) => {
+    successSwal().then(() => {
         if (cart.length > 0) {
             getIndex(id) > -1 ? cart[getIndex(id)].qty += 1 : cart.push({
                 id,
-                qty: 1
+                qty: 1,
+                isCombo: isCombo
             });
         } else {
             cart.push({
                 id,
-                qty: 1
+                qty: 1,
+                isCombo: isCombo
             });
         }
         localStorage.setItem('cart', JSON.stringify(cart));
@@ -46,19 +53,9 @@ const addToCart = id => {
 }
 
 const updateCartItem = (id, stk) => {
-    console.log(getIndex(id));
-
     if (getIndex(id) > -1) {
         if (cart[getIndex(id)].qty == 1 && stk == -1) {
-            Swal.fire({
-                title: 'Xóa sản phẩm này trong giỏ hàng?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Xác nhận',
-                cancelButtonText: 'Hủy'
-            }).then((result) => {
+            deleteSwal().then((result) => {
                 if (result.isConfirmed) {
                     cart.splice(getIndex(id), 1);
                 }
@@ -73,22 +70,20 @@ const updateCartItem = (id, stk) => {
 }
 
 const removeCartItem = id => {
-    getIndex(id) > -1 ? cart.splice(getIndex(id), 1) : '';
-    localStorage.setItem('cart', JSON.stringify(cart));
-    popCart();
-    showCart();
+    if (getIndex(id) > -1) {
+        deleteSwal().then((result) => {
+            if (result.isConfirmed) {
+                cart.splice(getIndex(id), 1);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                popCart();
+                showCart();
+            }
+        })
+    }
 }
 
 const resetCart = () => {
-    Swal.fire({
-        title: 'Xóa tất cả sản phẩm trong giỏ hàng?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Xác nhận',
-        cancelButtonText: 'Hủy'
-    }).then((result) => {
+    deleteAllSwal().then((result) => {
         if (result.isConfirmed) {
             cart.splice(0, cart.length);
             localStorage.setItem('cart', cart);
@@ -96,4 +91,12 @@ const resetCart = () => {
             showCart();
         }
     })
+}
+/**
+ * Checkout handler
+ */
+const redCheckout = () => {
+    if (localStorage.getItem("ID") == null && localStorage.getItem("ID") == undefined) {
+        ignoreSwal().then(() => window.open("sign-in.html"));
+    }
 }

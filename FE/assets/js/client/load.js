@@ -7,6 +7,7 @@ $(() => {
             $('#login-box').addClass('nav-item');
             $('#login-box a').first().text(localStorage.getItem("FULL_NAME").charAt(0));
         }
+        popCart();
     });
     $("#footer").load("./assets/components/footer.html");
     $(".page-title-area").load("./assets/components/slider-nd-page.html");
@@ -16,6 +17,8 @@ $(() => {
     getProductByCategory(1);
     //navMenuClick();
     getDetailProduct();
+
+    
 });
 
 let navMenuClick = () => getProductByCategory(1);

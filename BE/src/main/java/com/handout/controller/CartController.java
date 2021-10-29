@@ -36,6 +36,6 @@ public class CartController {
         OrderForm form = modelMapper.map(dto.getOrder(), OrderForm.class);
         Order created = orderService.createOrder(order, form);
         orderDetailService.createOrderDetail(created, dto);
-        return new ResponseEntity<>("ok", HttpStatus.OK);
+        return new ResponseEntity<>("Successfully", HttpStatus.OK);
     }
 }

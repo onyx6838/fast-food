@@ -1,10 +1,10 @@
 package com.handout.service.impl;
 
-import com.handout.service.IAccountService;
-import com.handout.service.IEmailService;
 import com.handout.config.resourceproperties.ServerProperty;
 import com.handout.entity.Account;
 import com.handout.repository.IRegistrationAccountTokenRepository;
+import com.handout.service.IAccountService;
+import com.handout.service.IEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;

@@ -7,6 +7,7 @@ let loadProduct = (data, typeUI) => {
     data.forEach((item, index) => {
         let price = !typeUI ? item.price : item.totalPrice;
         let click = !typeUI ? `detailProductClick(${item.id})` : `detailComboClick(${item.id})`;
+        let isCombo = !typeUI ? false : true;
         pers = `
         <div class="col-lg-3 col-md-6">
             <div class="single-product">
@@ -14,7 +15,7 @@ let loadProduct = (data, typeUI) => {
                     <a onclick="${click}">
                         <img src="assets/img/shop/image1.jpg" alt="image">
                     </a>
-                    <a class="add-to-cart-btn" onclick="addToCart(${item.id})">Add To Cart
+                    <a class="add-to-cart-btn" onclick="addToCart(${item.id} , ${isCombo})">Add To Cart
                         <i class="flaticon-shopping-cart"></i>
                     </a>
                 </div>
@@ -135,8 +136,8 @@ let loadCart = (cartInfo) => {
     $('.cart-table tbody').empty();
     $('.cart-totals b').empty();
     let products = JSON.parse(localStorage.getItem('prod'));
-    console.log(products);
-    console.log(cartInfo);
+    let combos = JSON.parse(localStorage.getItem('comb'));
+
     if (cartInfo.length > 0) {
         cartInfo.forEach((item, _) => {
             $('.cart-table tbody').append(
@@ -148,10 +149,10 @@ let loadCart = (cartInfo) => {
                         </a>
                     </td>
                     <td class="product-name">
-                        <a href="#">${products[item.id - 1].name}</a>
+                        <a href="#">${item.isCombo ? combos[item.id - 1].name : products[item.id - 1].name}</a>
                     </td>
                     <td class="product-price">
-                        <span class="unit-amount">$${products[item.id - 1].price}</span>
+                        <span class="unit-amount">$${item.isCombo ? combos[item.id - 1].totalPrice : products[item.id - 1].price}</span>
                     </td>
                     <td class="product-quantity">
                         <div class="input-counter">
@@ -165,7 +166,7 @@ let loadCart = (cartInfo) => {
                         </div>
                     </td>
                     <td class="product-subtotal">
-                        <span class="subtotal-amount">$${products[item.id - 1].price * item.qty}</span>
+                        <span class="subtotal-amount">$${ (item.isCombo ?  combos[item.id - 1].totalPrice : products[item.id - 1].price) * item.qty}</span>
                         <a class="remove" onclick="removeCartItem(${item.id})">
                             <i class='bx bx-trash'></i>
                         </a>
@@ -174,7 +175,8 @@ let loadCart = (cartInfo) => {
                 `
             );
         })
-        $('.cart-totals b').append(`${(cart.reduce((accu, item, i) => accu += item.qty * products[item.id-1].price, 0)).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`);
+        $('.cart-totals b').append(`${(cart.reduce((accu, item, i) => accu += item.qty * 
+            (item.isCombo ? combos[item.id - 1].totalPrice : products[item.id - 1].price), 0)).toLocaleString('en-US')}`);
     } else {
         Swal.fire(
             'Chưa có sản phẩm trong giỏ'
