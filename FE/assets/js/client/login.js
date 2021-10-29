@@ -36,6 +36,8 @@ function login() {
         localStorage.setItem("USERNAME", username);
         localStorage.setItem("ROLE", data.role);
         localStorage.setItem("TOKEN", data.jwt);
+        localStorage.setItem("EMAIL", data.email);
+        localStorage.setItem("PHONE", data.phone);
 
         window.location.replace("index.html");
     }).fail((jqXHR, textStatus, errorThrown) => {

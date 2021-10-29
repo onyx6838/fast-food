@@ -100,3 +100,34 @@ const redCheckout = () => {
         ignoreSwal().then(() => window.open("sign-in.html"));
     }
 }
+
+const showCheckoutCart = () => {
+    loadCartCheckout(cart);
+}
+
+const showCheckoutOrder = () => {
+    loadCheckoutOrder();
+}
+
+const checkOut = () => {
+    let address = $('#ip-address').val();
+    let province = $('#ip-province').val();
+    let ward = $('#ip-ward').val();
+    let notes = $('#ip-notes').val();
+
+    let orderRequest = {
+        order: {
+            customerId: localStorage.getItem('ID'),
+            name: localStorage.getItem('FULL_NAME'),
+            address: address,
+            province: province,
+            ward: ward,
+            note: notes,
+            username: localStorage.getItem('USERNAME'),
+            totalPrice: cart.reduce((accu, item) => accu += item.qty, 0)
+        },
+        cart: cart
+    }
+
+    console.log(orderRequest);
+}

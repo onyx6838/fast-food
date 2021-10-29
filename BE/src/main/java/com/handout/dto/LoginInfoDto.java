@@ -16,4 +16,6 @@ public class LoginInfoDto {
     private String role;
     private String jwt;
     private String refreshToken;
+    private String email;
+    private String phone;
 }

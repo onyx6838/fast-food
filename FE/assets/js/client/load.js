@@ -17,8 +17,6 @@ $(() => {
     getProductByCategory(1);
     //navMenuClick();
     getDetailProduct();
-
-    
 });
 
 let navMenuClick = () => getProductByCategory(1);

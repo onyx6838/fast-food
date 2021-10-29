@@ -26,6 +26,11 @@ public class CheckoutDto {
         private String province;
 
         @NotNull
+        private String address;
+
+        private String ward;
+
+        @NotNull
         private String note;
 
         @NotNull

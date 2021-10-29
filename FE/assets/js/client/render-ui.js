@@ -184,3 +184,48 @@ let loadCart = (cartInfo) => {
         $('.cart-totals b').append('0');
     }
 }
+
+/**
+ * Render UI Cart for Checkout Page
+ */
+const loadCartCheckout = (cartInfo) => {
+    $('.order-details tbody').empty();
+    let products = JSON.parse(localStorage.getItem('prod'));
+    let combos = JSON.parse(localStorage.getItem('comb'));
+    cartInfo.forEach((item, _) => {
+        $('.order-details tbody').append(
+            `
+            <tr>
+                <td class="product-name">
+                    <a>${item.isCombo ? combos[item.id - 1].name : products[item.id - 1].name}</a>
+                </td>
+                <td class="product-total">
+                    <span class="subtotal-amount">$${ (item.isCombo ?  combos[item.id - 1].totalPrice : products[item.id - 1].price) * item.qty}</span>
+                </td>
+            </tr>
+            `
+        );
+    });
+    $('.order-details tbody').append(
+        `
+        <tr>
+            <td class="product-name">
+                <a>Tổng cộng</a>
+            </td>
+            <td class="product-total">
+                <span class="subtotal-amount">$${(cart.reduce((accu, item, i) => accu += item.qty * 
+                    (item.isCombo ? combos[item.id - 1].totalPrice : products[item.id - 1].price), 0)).toLocaleString('en-US')}</span>
+            </td>
+        </tr>
+        `
+    );
+}
+
+/**
+ * Render UI Order Info for Checkout Page
+ */
+const loadCheckoutOrder = () => {
+    $('#ip-fullName').val(localStorage.getItem('FULL_NAME'));
+    $('#ip-email').val(localStorage.getItem('EMAIL'));
+    $('#ip-phone').val(localStorage.getItem('PHONE'));
+}
