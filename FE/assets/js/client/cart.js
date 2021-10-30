@@ -25,7 +25,6 @@ const popCart = () => {
     $('div.cart-btn span').text(cart.reduce((accu, item) => accu += item.qty, 0));
 }
 
-
 popCart();
 /**
  * Cart handler
@@ -49,6 +48,7 @@ const addToCart = (id, isCombo) => {
         }
         localStorage.setItem('cart', JSON.stringify(cart));
         popCart();
+        getDetailProduct();
     })
 }
 
@@ -67,6 +67,7 @@ const updateCartItem = (id, stk) => {
     localStorage.setItem('cart', JSON.stringify(cart));
     popCart();
     showCart();
+    getDetailProduct();
 }
 
 const removeCartItem = id => {
@@ -96,8 +97,11 @@ const resetCart = () => {
  * Checkout handler
  */
 const redCheckout = () => {
-    if (localStorage.getItem("ID") == null && localStorage.getItem("ID") == undefined) {
-        ignoreSwal().then(() => window.open("sign-in.html"));
+    if (storage.getItem("ID") == null && storage.getItem("ID") == undefined) {
+        ignoreSwal().then(() => {
+            window.open("sign-in.html")
+            return;
+        });
     }
 }
 
@@ -110,24 +114,42 @@ const showCheckoutOrder = () => {
 }
 
 const checkOut = () => {
-    let address = $('#ip-address').val();
-    let province = $('#ip-province').val();
-    let ward = $('#ip-ward').val();
-    let notes = $('#ip-notes').val();
-
-    let orderRequest = {
-        order: {
-            customerId: localStorage.getItem('ID'),
-            name: localStorage.getItem('FULL_NAME'),
-            address: address,
-            province: province,
-            ward: ward,
-            note: notes,
-            username: localStorage.getItem('USERNAME'),
-            totalPrice: cart.reduce((accu, item) => accu += item.qty, 0)
-        },
-        cart: cart
+    if (storage.getItem("ID") == null && storage.getItem("ID") == undefined) {
+        ignoreSwal().then(() => {
+            window.open("sign-in.html")
+            return;
+        });
+    } else {
+        let address = $('#ip-address').val();
+        let province = $('#ip-province').val();
+        let ward = $('#ip-ward').val();
+        let notes = $('#ip-notes').val();
+    
+        let products = JSON.parse(localStorage.getItem('prod'));
+        let combos = JSON.parse(localStorage.getItem('comb'));
+    
+        let orderRequest = {
+            order: {
+                customerId: storage.getItem('ID'),
+                name: storage.getItem('FULL_NAME'),
+                address: address,
+                province: province,
+                ward: ward,
+                note: notes,
+                username: storage.getItem('USERNAME'),
+                totalPrice: cart.reduce((accu, item, i) => accu += item.qty * (item.isCombo ? combos[item.id - 1].totalPrice : products[item.id - 1].price), 0)
+            },
+            cart: cart
+        }
+    
+        $.ajax({
+            url: 'http://localhost:8080/api/v1/cart',
+            type: 'POST',
+            data: JSON.stringify(orderRequest),
+            contentType: "application/json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", "Bearer " + storage.getItem("TOKEN"));
+            }
+        }).done(() => successCheckoutSwal()).fail(() => ignoreCheckoutSwal());
     }
-
-    console.log(orderRequest);
 }

@@ -6,8 +6,8 @@ let loadProduct = (data, typeUI) => {
     var pers;
     data.forEach((item, index) => {
         let price = !typeUI ? item.price : item.totalPrice;
-        let click = !typeUI ? `detailProductClick(${item.id})` : `detailComboClick(${item.id})`;
         let isCombo = !typeUI ? false : true;
+        let click = !typeUI ? `detailProductClick(${item.id} , ${isCombo})` : `detailComboClick(${item.id} , ${isCombo})`;
         pers = `
         <div class="col-lg-3 col-md-6">
             <div class="single-product">
@@ -32,14 +32,44 @@ let loadProduct = (data, typeUI) => {
     });
 }
 /**
- * Render UI Product by Id for Detail Page
+ * Render UI Product or Combo Detail by Id for Detail Page
  */
-let loadProductById = (data) => {
-    $('.price').empty();
-    $('.price').append(`
-        <h3>${data.name}</h3>
-            <span class="new-price">$${data.price}</span>
-        <p>${data.description}</p>`)
+let loadDetailById = () => {
+    if (typeof (Storage) !== "undefined") {
+        let data = JSON.parse(localStorage.getItem("product-detail"));
+        let cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
+        let quantity = cart.length > 0 ? (
+            cart.find(item => item.isCombo === data.isCombo && item.id === data.id) === undefined ? 0 : 
+            cart.find(item => item.isCombo === data.isCombo && item.id === data.id).qty
+        ) : 0;
+        
+        $('.price-detail').empty();
+        $('.price-detail').append(`
+            <h3>${data.name}</h3>
+                <span class="new-price">$${data.isCombo ? data.totalPrice : data.price}</span>
+            <p>${data.description}</p>`)
+
+        $('.product-add-to-cart').empty();
+        $('.product-add-to-cart').append(
+            `
+            <div class="input-counter">
+                <span class="minus-btn">
+                <i class='bx bx-minus' onclick="updateCartItem(${data.id}, -1)"></i>
+                </span>
+                <input type="text" value="${quantity}">
+                <span class="plus-btn">
+                    <i class='bx bx-plus' onclick="updateCartItem(${data.id}, 1)"></i>
+                </span>
+            </div>
+            <button type="submit" class="default-btn" onclick="addToCart(${data.id} , ${data.isCombo})">
+                Add to cart
+                <span></span>
+            </button>
+            `
+        );
+    } else {
+        alert("Browser does not support Web Storage.");
+    }
 }
 /**
  * Render UI New Product for main page
@@ -56,7 +86,7 @@ let loadNewProduct = (data) => {
                 <div class="image">
                     <img src="assets/img/pizza-shop/4.png" alt="image">
                     <div class="pizza-btn">
-                        <a href="shop.html" class="default-btn">Order Online
+                        <a href="menu.html" class="default-btn">Order Online
                             <i class="flaticon-play-button"></i>
                             <span></span>
                         </a>
@@ -64,7 +94,7 @@ let loadNewProduct = (data) => {
                 </div>
                 <div class="content">
                     <h3>${item.name}</h3>
-                    <p>Learning do amet contur dicivt suia non nuameius velit</p>
+                    <p>${item.name}</p>
                     <span>$${item.price}</span>
                 </div>
             </div>
@@ -86,7 +116,7 @@ let loadCombo = (data) => {
             '<div class="image">' +
             '<img src="assets/img/burger-shop/4.png" alt="image">' +
             '<div class="burger-btn">' +
-            '<a href="shop.html" class="default-btn">Order Online' +
+            '<a href="menu.html" class="default-btn">Order Online' +
             '<i class="flaticon-play-button"></i>' +
             '<span></span>' +
             '</a>' +
@@ -225,7 +255,7 @@ const loadCartCheckout = (cartInfo) => {
  * Render UI Order Info for Checkout Page
  */
 const loadCheckoutOrder = () => {
-    $('#ip-fullName').val(localStorage.getItem('FULL_NAME'));
-    $('#ip-email').val(localStorage.getItem('EMAIL'));
-    $('#ip-phone').val(localStorage.getItem('PHONE'));
+    $('#ip-fullName').val(storage.getItem('FULL_NAME'));
+    $('#ip-email').val(storage.getItem('EMAIL'));
+    $('#ip-phone').val(storage.getItem('PHONE'));
 }

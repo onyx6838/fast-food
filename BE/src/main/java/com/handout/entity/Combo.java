@@ -29,7 +29,7 @@ public class Combo extends BaseEntity<String> {
     @Column(name = "Image", length = 800)
     private String image;
 
-    @Column(name = "Description", length = 50)
+    @Column(name = "Description")
     private String description;
 
     @Column(name = "Status")

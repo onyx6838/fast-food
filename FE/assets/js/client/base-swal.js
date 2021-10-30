@@ -33,3 +33,28 @@ const ignoreSwal = () => Swal.fire({
     showConfirmButton: false,
     timer: 1000
 })
+
+const successRegisSwal = () => Swal.fire({
+    position: 'top-end',
+    icon: 'success',
+    title: 'Đăng Kí Thành Công',
+    showConfirmButton: false,
+    timer: 1000
+})
+
+const successCheckoutSwal = () => Swal.fire({
+    position: 'top-end',
+    icon: 'success',
+    title: 'Đặt hàng thành công',
+    showConfirmButton: false,
+    timer: 1000
+})
+
+
+const ignoreCheckoutSwal = () => Swal.fire({
+    position: 'top-end',
+    icon: 'error',
+    title: 'Đặt hàng không thành công',
+    showConfirmButton: false,
+    timer: 1000
+})

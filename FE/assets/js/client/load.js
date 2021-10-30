@@ -3,9 +3,9 @@ $(() => {
         sliderEffect();
     });
     $("#navbar").load("./assets/components/navbar.html", () => {
-        if (localStorage.getItem("ID") != null && localStorage.getItem("ID") != undefined) {
+        if (storage.getItem("ID") != null && storage.getItem("ID") != undefined) {
             $('#login-box').addClass('nav-item');
-            $('#login-box a').first().text(localStorage.getItem("FULL_NAME").charAt(0));
+            $('#login-box a').first().text(storage.getItem("FULL_NAME").charAt(0));
         }
         popCart();
     });
@@ -21,28 +21,21 @@ $(() => {
 
 let navMenuClick = () => getProductByCategory(1);
 
-let detailProductClick = (id) => getProductById(id);
+let detailProductClick = (id, isCombo) => getProductById(id, isCombo);
 
-let detailComboClick = (id) => getComboById(id);
+let detailComboClick = (id, isCombo) => getComboById(id, isCombo);
 
 let getDetailProduct = () => {
-    if (typeof (Storage) !== "undefined") {
-        var data = JSON.parse(localStorage.getItem("product-detail"));
-        $('.price').empty();
-        $('.price').append(`
-            <h3>${data.name}</h3>
-                <span class="new-price">$${data.price}</span>
-            <p>${data.description}</p>`)
-    } else {
-        alert("Browser does not support Web Storage.");
-    }
+    loadDetailById();
 }
 
 let logout = () => {
-    localStorage.removeItem("ID");
-    localStorage.removeItem("FULL_NAME");
-    localStorage.removeItem("USERNAME");
-    localStorage.removeItem("ROLE");
-    localStorage.removeItem("TOKEN");
+    storage.removeItem("ID");
+    storage.removeItem("FULL_NAME");
+    storage.removeItem("USERNAME");
+    storage.removeItem("ROLE");
+    storage.removeItem("TOKEN");
+    storage.removeItem("PHONE");
+    storage.removeItem("EMAIL");
     window.location.replace("sign-in.html");
 }

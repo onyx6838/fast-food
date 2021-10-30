@@ -23,10 +23,14 @@ let getNewProduct = () => {
 /**
  * GET Food by id in detail page
  */
-let getProductById = (id) => {
+let getProductById = (id, isCombo) => {
     var get = jqxhr('GET', 'products/' + id);
     get.done((data) => {
-        localStorage.setItem("product-detail", JSON.stringify(data));
+        localStorage.setItem("product-detail", JSON.stringify({
+            ...data,
+            isCombo: isCombo,
+            id: id
+        }));
         window.open("product-details.html");
     }).fail((jqXHR, textStatus, errorThrown) => {
         console.log(textStatus + ': ' + errorThrown);
@@ -49,7 +53,7 @@ let getCombo = () => {
 let getComboMenuPage = () => {
     var getCombos = jqxhr('GET', "combos");
     getCombos.done((data) => {
-        loadProduct(data, 'comboUI'); 
+        loadProduct(data, 'comboUI');
     }).fail((jqXHR, textStatus, errorThrown) => {
         console.log(textStatus + ': ' + errorThrown);
     });
@@ -57,11 +61,15 @@ let getComboMenuPage = () => {
 /**
  * GET Combo By id in detail page
  */
-let getComboById = (id) => {
+let getComboById = (id, isCombo) => {
     console.log(id);
     var get = jqxhr('GET', 'combos/' + id);
     get.done((data) => {
-        localStorage.setItem("product-detail", JSON.stringify(data));
+        localStorage.setItem("product-detail", JSON.stringify({
+            ...data,
+            isCombo: isCombo,
+            id: id
+        }));
         window.open("product-details.html");
     }).fail((jqXHR, textStatus, errorThrown) => {
         console.log(textStatus + ': ' + errorThrown);

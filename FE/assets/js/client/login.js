@@ -1,5 +1,5 @@
 $(function () {
-    //$('#rememberMe').prop('checked', storage.getRememberMe());
+    $('#rememberMe').prop('checked', storage.getRememberMe());
 });
 
 function login() {
@@ -31,13 +31,16 @@ function login() {
             password: password
         }
     }).done((data) => {
-        localStorage.setItem("ID", data.id);
-        localStorage.setItem("FULL_NAME", data.fullName);
-        localStorage.setItem("USERNAME", username);
-        localStorage.setItem("ROLE", data.role);
-        localStorage.setItem("TOKEN", data.jwt);
-        localStorage.setItem("EMAIL", data.email);
-        localStorage.setItem("PHONE", data.phone);
+        var isRememberMe = $('#rememberMe').prop('checked');
+        storage.saveRememberMe(isRememberMe);
+
+        storage.setItem("ID", data.id);
+        storage.setItem("FULL_NAME", data.fullName);
+        storage.setItem("USERNAME", username);
+        storage.setItem("ROLE", data.role);
+        storage.setItem("TOKEN", data.jwt);
+        storage.setItem("EMAIL", data.email);
+        storage.setItem("PHONE", data.phone);
 
         window.location.replace("index.html");
     }).fail((jqXHR, textStatus, errorThrown) => {
@@ -72,11 +75,7 @@ function register() {
         }),
         contentType: "application/json ; charset=utf-8"
     }).done(function (data, status, xhr) {
-        $('.toast').toast('show')
-        //alert("We have sent 1 email. Please check email to active account!");
-        setInterval(() => {
-            window.location.replace("sign-in.html");
-        }, 3000);
+        successRegisSwal().then(window.location.replace("sign-in.html"));
     }).fail(function (jqXHR, textStatus, errorThrown) {
         if (jqXHR.status == 401 || jqXHR.status == 415 || jqXHR.status == 500) {
             showNameErrMsg("Regis fail!");
