@@ -59,8 +59,8 @@
                 <div class="col-lg-12 col-md-12">
                     <div class="user-actions">
                         <i class='flaticon-share'></i>
-                        <span>Returning customer?
-                            <a href="sign-in.html">Click here to login</a>
+                        <span>Đăng nhập
+                            <a href="sign-in.html">Login</a>
                         </span>
                     </div>
                 </div>
@@ -87,21 +87,30 @@
                                     <div class="form-group">
                                         <label>Tỉnh
                                         </label>
-                                        <input type="text" class="form-control" id="ip-province">
+                                        <input type="text" readonly class="form-control" id="ip-province"
+                                            value="Hà Nội">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group">
                                         <label>Quận
                                         </label>
-                                        <input type="text" class="form-control" id="id-district">
+                                        <div class="select-box">
+                                            <select class="form-control" id="ip-checkbox-district">
+
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group">
                                         <label>Phường
                                         </label>
-                                        <input type="text" class="form-control" id="ip-ward">
+                                        <div class="select-box">
+                                            <select class="form-control" id="ip-checkbox-ward">
+
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
@@ -113,12 +122,12 @@
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group">
                                         <label>SĐT</label>
-                                        <input type="text" readonly class="form-control" id="ip-phone">
+                                        <input type="text" class="form-control" id="ip-phone">
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group">
-                                        <textarea name="notes" id="ip-notes" cols="30" rows="5" placeholder="Notes"
+                                        <textarea name="notes" id="ip-notes" cols="30" rows="5" placeholder="Lưu ý"
                                             class="form-control"></textarea>
                                     </div>
                                 </div>
@@ -210,13 +219,18 @@
     <script src="assets/js/client/load.js"></script>
     <script src="assets/js/client/program.js"></script>
     <script src="assets/js/client/base-ajax.js"></script>
-    <script src="assets/js/client/render-ui.js"></script>
+
     <script>
+        let changeTitleHeader = () => $('#title-header').html('Thanh toán');
         $(() => {
             showCheckoutCart();
             showCheckoutOrder();
+            selectionChanged();
+            loadHeader()
+            $('#ip-checkbox-district').change(selectionChanged);
         });
     </script>
+    <script src="assets/js/client/render-ui.js"></script>
     <script src="assets/js/client/effect.js"></script>
     <script src="assets/js/client/base-swal.js"></script>
     <script src="assets/js/client/cart.js"></script>

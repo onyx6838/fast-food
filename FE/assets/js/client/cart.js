@@ -29,13 +29,13 @@ popCart();
 /**
  * Cart handler
  */
-const getIndex = id => cart.indexOf(cart.find(item => item.id === id));
+const getIndex = (id, isCombo) => cart.indexOf(cart.find(item => item.id === id && item.isCombo === isCombo));
 
 const addToCart = (id, isCombo) => {
     successSwal().then(() => {
         if (cart.length > 0) {
-            getIndex(id) > -1 ? cart[getIndex(id)].qty += 1 : cart.push({
-                id,
+            getIndex(id, isCombo) > -1 ? cart[getIndex(id, isCombo)].qty += 1 : cart.push({
+                id: id,
                 qty: 1,
                 isCombo: isCombo
             });
@@ -52,16 +52,17 @@ const addToCart = (id, isCombo) => {
     })
 }
 
-const updateCartItem = (id, stk) => {
-    if (getIndex(id) > -1) {
-        if (cart[getIndex(id)].qty == 1 && stk == -1) {
+const updateCartItem = (id, stk, isCombo) => {
+    if (getIndex(id, isCombo) > -1) {
+        if (cart[getIndex(id, isCombo)].qty == 1 && stk == -1) {
             deleteSwal().then((result) => {
                 if (result.isConfirmed) {
-                    cart.splice(getIndex(id), 1);
+                    cart.splice(getIndex(id, isCombo), 1);
                 }
             })
         } else {
-            cart[getIndex(id)].qty += stk;
+            //cart.find(item => item.id === getIndex(id) && item.isCombo === isCombo).qty += stk;
+            cart[getIndex(id, isCombo)].qty += stk
         }
     }
     localStorage.setItem('cart', JSON.stringify(cart));
@@ -70,11 +71,11 @@ const updateCartItem = (id, stk) => {
     getDetailProduct();
 }
 
-const removeCartItem = id => {
-    if (getIndex(id) > -1) {
+const removeCartItem = (id, isCombo) => {
+    if (getIndex(id, isCombo) > -1) {
         deleteSwal().then((result) => {
             if (result.isConfirmed) {
-                cart.splice(getIndex(id), 1);
+                cart.splice(getIndex(id, isCombo), 1);
                 localStorage.setItem('cart', JSON.stringify(cart));
                 popCart();
                 showCart();
@@ -102,6 +103,8 @@ const redCheckout = () => {
             window.open("sign-in.html")
             return;
         });
+    } else {
+        window.open("checkout.html")
     }
 }
 
@@ -121,18 +124,24 @@ const checkOut = () => {
         });
     } else {
         let address = $('#ip-address').val();
+
         let province = $('#ip-province').val();
-        let ward = $('#ip-ward').val();
+        let district = $('#ip-checkbox-district').children(":selected").text();
+        let ward = $('#ip-checkbox-ward').children(":selected").text();
+
         let notes = $('#ip-notes').val();
-    
+        let contact = $('#ip-phone').val();
+
         let products = JSON.parse(localStorage.getItem('prod'));
         let combos = JSON.parse(localStorage.getItem('comb'));
-    
+
         let orderRequest = {
             order: {
                 customerId: storage.getItem('ID'),
                 name: storage.getItem('FULL_NAME'),
                 address: address,
+                contact: contact,
+                district: district,
                 province: province,
                 ward: ward,
                 note: notes,
@@ -141,7 +150,7 @@ const checkOut = () => {
             },
             cart: cart
         }
-    
+
         $.ajax({
             url: 'http://localhost:8080/api/v1/cart',
             type: 'POST',
@@ -150,6 +159,6 @@ const checkOut = () => {
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("Authorization", "Bearer " + storage.getItem("TOKEN"));
             }
-        }).done(() => successCheckoutSwal()).fail(() => ignoreCheckoutSwal());
+        }).done(() => successCheckoutSwal()).then(() => setInterval(() => window.location.replace("index.html"), 3000)).fail(() => ignoreCheckoutSwal());
     }
 }

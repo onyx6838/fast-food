@@ -44,8 +44,9 @@ function login() {
 
         window.location.replace("index.html");
     }).fail((jqXHR, textStatus, errorThrown) => {
-        if (jqXHR.status == 401) {
-            showNameErrMsg("Login fail!");
+        if (jqXHR.status == 401 || jqXHR.status == 500) {
+            ignoreSwal();
+            //showNameErrMsg("Login fail!");
         } else {
             console.log(jqXHR);
             console.log(textStatus);

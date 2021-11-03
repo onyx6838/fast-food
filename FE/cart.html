@@ -63,11 +63,11 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Product</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Unit Price</th>
-                                        <th scope="col">Quantity</th>
-                                        <th scope="col">Total</th>
+                                        <th scope="col">Sản Phẩm</th>
+                                        <th scope="col">Tên</th>
+                                        <th scope="col">Giá</th>
+                                        <th scope="col">Số Lượng</th>
+                                        <th scope="col">Tổng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -79,7 +79,7 @@
                             <div class="row align-items-center">
                                 <div class="col-lg-8 col-sm-5 col-md-5">
                                     <a class="default-btn" onclick="redCheckout()">
-                                        Checkout
+                                        Thanh toán
                                         <span></span>
                                     </a>
                                     <a class="default-btn" onclick="resetCart()">
@@ -90,9 +90,9 @@
                             </div>
                         </div>
                         <div class="cart-totals">
-                            <h3>Cart Totals</h3>
+                            <h3>Giỏ</h3>
                             <ul>
-                                <li>Total
+                                <li>Tổng
                                     <span><b></b></span>
                                 </li>
                             </ul>
@@ -148,8 +148,10 @@
     <script src="assets/js/client/base-ajax.js"></script>
     <script src="assets/js/client/render-ui.js"></script>
     <script>
+        let changeTitleHeader = () => $('#title-header').html('Giỏ Hàng');
         $(() => {
             showCart();
+            loadHeader()
         });
     </script>
     <script src="assets/js/client/effect.js"></script>

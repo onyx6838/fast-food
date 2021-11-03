@@ -10,13 +10,17 @@ $(() => {
         popCart();
     });
     $("#footer").load("./assets/components/footer.html");
-    $(".page-title-area").load("./assets/components/slider-nd-page.html");
+
     getNewProduct();
     getCombo();
     getCategory();
     getProductByCategory(1);
     //navMenuClick();
     getDetailProduct();
+});
+
+let loadHeader = () => $(".page-title-area").load("./assets/components/slider-nd-page.html", () => {
+    changeTitleHeader()
 });
 
 let navMenuClick = () => getProductByCategory(1);

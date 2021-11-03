@@ -20,7 +20,7 @@ public class Combo extends BaseEntity<String> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "Name", length = 50)
+    @Column(name = "Name")
     private String name;
 
     @Column(name = "TotalPrice", length = 50)

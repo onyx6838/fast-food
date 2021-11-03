@@ -57,27 +57,27 @@
         <div class="container">
             <div class="sign-in-form">
                 <div class="sign-in-title">
-                    <h3>Welcome Back!</h3>
-                    <p>Please Sign In to your account.</p>
+                    <h3>Chào mừng bạn đã trở lại</h3>
+                    <p>Đăng nhập tài khoản</p>
                 </div>
 
                 <form onsubmit="event.preventDefault();">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <input type="text" id="username" class="form-control" placeholder="Username">
+                                <input type="text" id="username" class="form-control" placeholder="Tài Khoản">
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <input type="password" id="password" class="form-control" placeholder="Password">
+                                <input type="password" id="password" class="form-control" placeholder="Mật Khẩu">
                             </div>
                         </div>
                         <p style="color: red;" id="name-err-msg"></p>
                         <div class="col-lg-12">
                             <div class="form-check">
                                 <input type="checkbox" id="rememberMe">
-                                <label class="form-check-label" for="checkme">Keep me Log In</label>
+                                <label class="form-check-label" for="checkme">Ghi nhớ</label>
                             </div>
                         </div>
                         <!-- <div class="col-lg-12">
@@ -86,12 +86,12 @@
                         <div class="col-lg-12">
                             <div class="send-btn">
                                 <button type="submit" class="default-btn" onclick="login()">
-                                    Sign In
+                                    Đăng nhập
                                     <span></span>
                                 </button>
                             </div>
                             <br>
-                            <span>Don't have account? <a href="sign-up.html">Signup!</a></span>
+                            <span>Chưa có tài khoản ? <a href="sign-up.html">Đăng kí</a></span>
                         </div>
                     </div>
                 </form>
@@ -141,6 +141,11 @@
 
     <script src="assets/js/lib/main.js"></script>
     <script src="assets/js/client/load.js"></script>
+    <script>
+        let changeTitleHeader = () => $('#title-header').html('Đăng Nhập');
+        $(() => loadHeader())
+    </script>
+
     <script src="assets/js/client/program.js"></script>
     <script src="assets/js/client/base-ajax.js"></script>
     <script src="assets/js/client/render-ui.js"></script>

@@ -84,7 +84,7 @@ jQuery(function ($) {
     //         }
     //     }
     // });
-    $('select').niceSelect();
+    // $('select').niceSelect();
     $('.popup-youtube').magnificPopup({
         disableOn: 320,
         type: 'iframe',

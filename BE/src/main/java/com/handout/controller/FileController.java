@@ -1,6 +1,9 @@
 package com.handout.controller;
 
+import com.handout.dto.DistrictDto;
+import com.handout.dto.PrecinctDto;
 import com.handout.service.IFileService;
+import com.handout.service.IXmlService;
 import com.handout.utils.FileManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -15,12 +18,17 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1/files")
 public class FileController {
     @Autowired
     private IFileService fileService;
+
+    @Autowired
+    private IXmlService
+            xmlService;
 
     @PostMapping(value = "/image")
     public ResponseEntity<?> upLoadImage(@RequestParam(name = "image") MultipartFile image) throws IOException, URISyntaxException {
@@ -52,5 +60,17 @@ public class FileController {
                 .contentLength(imageFile.length())
                 .contentType(MediaType.parseMediaType("application/txt"))
                 .body(imageStream);
+    }
+
+    @GetMapping(value = "/xml/districts")
+    public ResponseEntity<?> getDistrictFromXML() {
+        List<DistrictDto> districtList = xmlService.getDistrictFromXML();
+        return new ResponseEntity<>(districtList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/xml/districts/{id}")
+    public ResponseEntity<?> getPrecinctByDistrictIDFromXML(@PathVariable(name = "id") int districtID) {
+        List<PrecinctDto> precinctList = xmlService.getPrecinctByDistrictIDFromXML(districtID);
+        return new ResponseEntity<>(precinctList, HttpStatus.OK);
     }
 }

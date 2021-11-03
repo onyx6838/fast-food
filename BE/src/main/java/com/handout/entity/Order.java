@@ -23,6 +23,9 @@ public class Order extends BaseEntity<String> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name = "Contact", length = 20)
+    private String contact;
+
     @Column(name = "Address")
     private String address;
 
@@ -54,11 +57,11 @@ public class Order extends BaseEntity<String> {
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name="EmployeeID")
+    @JoinColumn(name = "EmployeeID")
     private Account employeeAccount;
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name="CustomerID")
+    @JoinColumn(name = "CustomerID")
     private Account customerAccount;
 }

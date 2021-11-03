@@ -22,7 +22,7 @@ let loadProduct = (data, typeUI) => {
                 <div class="product-content">
                     <h3><a>${item.name}</a></h3>
                     <div class="price">
-                        <span class="new">$${price}</span>
+                        <span class="new">${price}<u>đ</u></span>
                     </div>
                 </div>
             </div>
@@ -39,15 +39,17 @@ let loadDetailById = () => {
         let data = JSON.parse(localStorage.getItem("product-detail"));
         let cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
         let quantity = cart.length > 0 ? (
-            cart.find(item => item.isCombo === data.isCombo && item.id === data.id) === undefined ? 0 : 
+            cart.find(item => item.isCombo === data.isCombo && item.id === data.id) === undefined ? 0 :
             cart.find(item => item.isCombo === data.isCombo && item.id === data.id).qty
         ) : 0;
-        
+
         $('.price-detail').empty();
         $('.price-detail').append(`
             <h3>${data.name}</h3>
-                <span class="new-price">$${data.isCombo ? data.totalPrice : data.price}</span>
-            <p>${data.description}</p>`)
+            <span class="new-price">${data.isCombo ? data.totalPrice : data.price}<u>đ</u></span>
+            <span id="desc-detail"></span>`)
+
+        $('#desc-detail').html(data.description)
 
         $('.product-add-to-cart').empty();
         $('.product-add-to-cart').append(
@@ -62,7 +64,7 @@ let loadDetailById = () => {
                 </span>
             </div>
             <button type="submit" class="default-btn" onclick="addToCart(${data.id} , ${data.isCombo})">
-                Add to cart
+                Thêm vào giỏ
                 <span></span>
             </button>
             `
@@ -86,7 +88,7 @@ let loadNewProduct = (data) => {
                 <div class="image">
                     <img src="assets/img/pizza-shop/4.png" alt="image">
                     <div class="pizza-btn">
-                        <a href="menu.html" class="default-btn">Order Online
+                        <a href="menu.html" class="default-btn">Xem ngay
                             <i class="flaticon-play-button"></i>
                             <span></span>
                         </a>
@@ -95,7 +97,7 @@ let loadNewProduct = (data) => {
                 <div class="content">
                     <h3>${item.name}</h3>
                     <p>${item.name}</p>
-                    <span>$${item.price}</span>
+                    <span>${item.price}<u>đ</u></span>
                 </div>
             </div>
         </div>
@@ -116,7 +118,7 @@ let loadCombo = (data) => {
             '<div class="image">' +
             '<img src="assets/img/burger-shop/4.png" alt="image">' +
             '<div class="burger-btn">' +
-            '<a href="menu.html" class="default-btn">Order Online' +
+            '<a href="menu.html" class="default-btn">Xem ngay' +
             '<i class="flaticon-play-button"></i>' +
             '<span></span>' +
             '</a>' +
@@ -125,7 +127,7 @@ let loadCombo = (data) => {
             '<div class="content">' +
             '<h3>' + item.name + '</h3>' +
             '<p>' + item.description + '</p>' +
-            '<span>$' + item.totalPrice + '</span>' +
+            '<span>' + item.totalPrice + '<u>đ</u></span>' +
             '</div>' +
             '</div>';
     });
@@ -182,23 +184,23 @@ let loadCart = (cartInfo) => {
                         <a href="#">${item.isCombo ? combos[item.id - 1].name : products[item.id - 1].name}</a>
                     </td>
                     <td class="product-price">
-                        <span class="unit-amount">$${item.isCombo ? combos[item.id - 1].totalPrice : products[item.id - 1].price}</span>
+                        <span class="unit-amount">${item.isCombo ? combos[item.id - 1].totalPrice : products[item.id - 1].price}<u>đ</u></span>
                     </td>
                     <td class="product-quantity">
                         <div class="input-counter">
                             <span class="minus-btn">
-                                <i class='bx bx-minus' onclick="updateCartItem(${item.id}, -1)"></i>
+                                <i class='bx bx-minus' onclick="updateCartItem(${item.id}, -1, ${item.isCombo})"></i>
                             </span>
                             <input type="text" value="${item.qty}">
                             <span class="plus-btn">
-                                <i class='bx bx-plus' onclick="updateCartItem(${item.id}, 1)"></i>
+                                <i class='bx bx-plus' onclick="updateCartItem(${item.id}, 1, ${item.isCombo})"></i>
                             </span>
                         </div>
                     </td>
                     <td class="product-subtotal">
-                        <span class="subtotal-amount">$${ (item.isCombo ?  combos[item.id - 1].totalPrice : products[item.id - 1].price) * item.qty}</span>
-                        <a class="remove" onclick="removeCartItem(${item.id})">
-                            <i class='bx bx-trash'></i>
+                        <span class="subtotal-amount">${(item.isCombo ?  combos[item.id - 1].totalPrice : products[item.id - 1].price) * item.qty}<u>đ</u></span>
+                        <a class="remove">
+                            <i class='bx bx-trash' onclick="removeCartItem(${item.id}, ${item.isCombo})"></i>
                         </a>
                     </td>
                 </tr>
@@ -206,12 +208,12 @@ let loadCart = (cartInfo) => {
             );
         })
         $('.cart-totals b').append(`${(cart.reduce((accu, item, i) => accu += item.qty * 
-            (item.isCombo ? combos[item.id - 1].totalPrice : products[item.id - 1].price), 0)).toLocaleString('en-US')}`);
+            (item.isCombo ? combos[item.id - 1].totalPrice : products[item.id - 1].price), 0)).toLocaleString('en-US')}<u>đ</u>`);
     } else {
         Swal.fire(
             'Chưa có sản phẩm trong giỏ'
         )
-        $('.cart-totals b').append('0');
+        $('.cart-totals b').append('0<u>đ</u>');
     }
 }
 
@@ -258,4 +260,24 @@ const loadCheckoutOrder = () => {
     $('#ip-fullName').val(storage.getItem('FULL_NAME'));
     $('#ip-email').val(storage.getItem('EMAIL'));
     $('#ip-phone').val(storage.getItem('PHONE'));
+    getDistrictFromXML();
+}
+
+/**
+ * Render UI for District SelectBox from XML for checkout page
+ */
+const loadDistrictFromXML = (data) => {
+    $('#ip-checkbox-district').empty();
+    $('#ip-checkbox-district').append('<option value="">--Chọn Tỉnh Thành--</option>')
+    data.forEach(item => {
+        $('#ip-checkbox-district').append(`<option value="${item.id}">${item.name}</option>`)
+    })
+}
+
+const loadWardFromXML = (data) => {
+    $('#ip-checkbox-ward').empty();
+    $('#ip-checkbox-ward').append('<option value="">--Chọn Quận Huyện--</option>')
+    data.forEach(item => {
+        $('#ip-checkbox-ward').append(`<option value="${item.id}">${item.name}</option>`)
+    })
 }

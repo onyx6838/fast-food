@@ -99,7 +99,32 @@ let getProductByCategory = (id) => {
 }
 
 /**
- * Paging (!recommend)
+ * GET District with XML file to SelectBox
+ */
+let getDistrictFromXML = () => {
+    var districts = jqxhr('GET', 'files/xml/districts');
+    districts.done((data) => {
+        loadDistrictFromXML(data);
+    }).fail((jqXHR, textStatus, errorThrown) => {
+        console.log(textStatus + ': ' + errorThrown);
+    });
+}
+
+/**
+ * GET precinct (ward) from XML file and UI control for selectBox changed
+ */
+const selectionChanged = () => {
+    const districtId = $('#ip-checkbox-district').val() ? $('#ip-checkbox-district').val() : '';
+    var precinct = jqxhr('GET', `files/xml/districts/${districtId && districtId}`);
+    precinct.done((data) => {
+        loadWardFromXML(data);
+    }).fail((jqXHR, textStatus, errorThrown) => {
+        console.log(textStatus + ': ' + errorThrown);
+    });
+}
+
+/**
+ * Paging (unused)
  */
 let pageNumber = 1;
 let size = 3;

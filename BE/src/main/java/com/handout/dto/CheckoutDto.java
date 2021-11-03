@@ -22,8 +22,12 @@ public class CheckoutDto {
         @NotNull
         private String name;
 
+        private String contact;
+
         @NotNull
         private String province;
+
+        private String district;
 
         @NotNull
         private String address;
