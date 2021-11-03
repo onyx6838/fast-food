@@ -5,7 +5,7 @@ $(() => {
     $("#navbar").load("./assets/components/navbar.html", () => {
         if (storage.getItem("ID") != null && storage.getItem("ID") != undefined) {
             $('#login-box').addClass('nav-item');
-            $('#login-box a').first().text(storage.getItem("FULL_NAME").charAt(0));
+            $('#login-box a').first().text(storage.getItem("FULL_NAME").split(' ').slice(-1).join(' '));
         }
         popCart();
     });

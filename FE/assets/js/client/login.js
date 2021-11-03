@@ -6,20 +6,26 @@ function login() {
     var username = $('#username').val();
     var password = $('#password').val();
 
-    // validate
-    if (!username) {
-        showNameErrMsg("Please input username!");
+    if (validator.blank(username)) {
+        showNameErrMsg('Chưa nhập tài khoản')
+        setInterval(() => hideNameErrMsg('none'), 3000)
         return;
     }
 
-    if (!password) {
-        showNameErrMsg("Please input password!");
+    if (!validator.size(username, 6, 18)) {
+        showNameErrMsg('Độ dài từ 6 đến 18 kí tự')
+        setInterval(() => hideNameErrMsg('none'), 3000)
         return;
     }
 
-    if (username.length < 6 || username.length > 50 || password.length < 6 || password.length > 50) {
-        // show error message
-        showNameErrMsg("Login fail!");
+    // if (!validator.email(username)) {
+    //     showNameErrMsg('theo định dạng email', 3000)
+    //     return;
+    // }
+
+    if (validator.pattern(username, /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/)) {
+        showNameErrMsg('không chứa kí tự đặc biệt')
+        setInterval(() => hideNameErrMsg('none'), 3000)
         return;
     }
 
@@ -45,8 +51,10 @@ function login() {
         window.location.replace("index.html");
     }).fail((jqXHR, textStatus, errorThrown) => {
         if (jqXHR.status == 401 || jqXHR.status == 500) {
-            ignoreSwal();
-            //showNameErrMsg("Login fail!");
+            //ignoreSwal();
+            showNameErrMsg("Tài khoản hoặc mật khẩu không đúng");
+            setInterval(() => hideNameErrMsg('none'), 3000)
+            return;
         } else {
             console.log(jqXHR);
             console.log(textStatus);
@@ -63,6 +71,19 @@ function register() {
     var password = $('#register-password').val();
 
     // TODO valid
+
+    if (validator.size(username, 6, 10)) {
+        showNameErrMsg('from 6 10 charaters')
+        setInterval(() => hideNameErrMsg('none'), 3000)
+        return;
+    }
+    if (!validator.pattern(username, /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/)) {
+        showNameErrMsg('not contain special charaters')
+        setInterval(() => hideNameErrMsg('none'), 3000)
+        return;
+    }
+
+
     $.ajax({
         url: 'http://localhost:8080/api/v1/accounts',
         type: 'POST',
@@ -79,7 +100,9 @@ function register() {
         successRegisSwal().then(window.location.replace("sign-in.html"));
     }).fail(function (jqXHR, textStatus, errorThrown) {
         if (jqXHR.status == 401 || jqXHR.status == 415 || jqXHR.status == 500) {
-            showNameErrMsg("Regis fail!");
+            showNameErrMsg("Lỗi hệ thống");
+            setInterval(() => hideNameErrMsg('none'), 3000)
+            return;
         } else {
             console.log(jqXHR);
             console.log(textStatus);

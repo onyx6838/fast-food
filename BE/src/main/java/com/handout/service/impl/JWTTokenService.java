@@ -76,6 +76,7 @@ public class JWTTokenService implements IJWTTokenService {
         String refreshToken = createNewRefreshToken(account);
         //convert account to dto
         LoginInfoDto userDto = modelMapper.map(account, LoginInfoDto.class);
+        userDto.setFullName(account.getFirstName() + " " + account.getLastName());
         userDto.setJwt(jwt);
         userDto.setRefreshToken(refreshToken);
         // convert to json
@@ -151,7 +152,7 @@ public class JWTTokenService implements IJWTTokenService {
         refreshTokenRepository.deleteByToken(refreshToken);
 
         return TokenRefreshResponse.builder().token(newToken).refreshToken(newRefreshToken).id(account.getId())
-                .fullName(account.getFullName()).role(account.getRole()).build();
+                .fullName(account.getFirstName() + " " + account.getLastName()).role(account.getRole()).build();
     }
 
     private boolean isValidJwt(String jwt) {

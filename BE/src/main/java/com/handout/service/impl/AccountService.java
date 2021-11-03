@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -68,6 +69,7 @@ public class AccountService implements IAccountService {
         return repository.findById(id).get();
     }
 
+    @Transactional
     @Override
     public void createAccount(Account account) {
         // create user

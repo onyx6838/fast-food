@@ -56,11 +56,11 @@ let loadDetailById = () => {
             `
             <div class="input-counter">
                 <span class="minus-btn">
-                <i class='bx bx-minus' onclick="updateCartItem(${data.id}, -1)"></i>
+                <i class='bx bx-minus' onclick="updateCartItem(${data.id}, -1, ${data.isCombo})"></i>
                 </span>
                 <input type="text" value="${quantity}">
                 <span class="plus-btn">
-                    <i class='bx bx-plus' onclick="updateCartItem(${data.id}, 1)"></i>
+                    <i class='bx bx-plus' onclick="updateCartItem(${data.id}, 1, ${data.isCombo})"></i>
                 </span>
             </div>
             <button type="submit" class="default-btn" onclick="addToCart(${data.id} , ${data.isCombo})">
@@ -80,7 +80,9 @@ let loadNewProduct = (data) => {
     $('.pizza-shop-area .row').empty();
 
     var pers;
+
     data.forEach((item, index) => {
+        let click = `detailProductClick(${item.id} , false)`;
         pers =
             `
         <div class="col-lg-3 col-md-6">
@@ -88,7 +90,7 @@ let loadNewProduct = (data) => {
                 <div class="image">
                     <img src="assets/img/pizza-shop/4.png" alt="image">
                     <div class="pizza-btn">
-                        <a href="menu.html" class="default-btn">Xem ngay
+                        <a class="default-btn" onclick="${click}">Xem ngay
                             <i class="flaticon-play-button"></i>
                             <span></span>
                         </a>
@@ -113,12 +115,13 @@ let loadCombo = (data) => {
     var pers = '';
 
     data.forEach((item, _) => {
+        let click = `detailComboClick(${item.id} , true)`;
         pers +=
             '<div class="burger-shop-item">' +
             '<div class="image">' +
             '<img src="assets/img/burger-shop/4.png" alt="image">' +
             '<div class="burger-btn">' +
-            '<a href="menu.html" class="default-btn">Xem ngay' +
+            `<a class="default-btn" onclick="${click}">Xem ngay` +
             '<i class="flaticon-play-button"></i>' +
             '<span></span>' +
             '</a>' +

@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.util.List;
@@ -22,13 +23,18 @@ public class Account extends BaseEntity<String> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "`FullName`", length = 50)
-    private String fullName;
+//    @Column(name = "`FullName`", length = 50)
+//    private String fullName;
+    @Column(name = "FirstName", length = 50)
+    private String firstName;
 
-    @Column(name = "`Phone`", length = 30)
+    @Column(name = "LastName", length = 50)
+    private String lastName;
+
+    @Column(name = "Phone", length = 30)
     private String phone;
 
-    @Column(name = "`Email`", length = 50)
+    @Column(name = "Email", length = 50)
     private String email;
 
     @Column(name = "`Username`", length = 50)
