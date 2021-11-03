@@ -100,6 +100,47 @@ INSERT INTO `combo` VALUES (4, 'Combo Burger Cá (Fish Burger Combo)', 64000, NU
 INSERT INTO `combo` VALUES (5, 'Combo Burger Phô Mai (Cheese Burger Combo)', 64000, NULL, '<p>- 01 Burger Phô Mai&nbsp;(Cheese&nbsp;Burger)</p>\r\n<p>- 01 Pepsi (M)</p>\r\n<p>- 01 Khoai Tây Chiên (French Fries) - M</p>', NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
+-- Table structure for product
+-- ----------------------------
+DROP TABLE IF EXISTS `product`;
+CREATE TABLE `product`  (
+  `ProductID` int NOT NULL AUTO_INCREMENT,
+  `Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `Slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `Image` varchar(800) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `Description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `CategoryID` int NULL DEFAULT NULL,
+  `Stock` int NULL DEFAULT NULL,
+  `Price` decimal(19, 4) NULL DEFAULT NULL,
+  `Rating` int NULL DEFAULT NULL,
+  `CreatedBy` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `UpdatedBy` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `CreatedDate` datetime(0) NULL DEFAULT NULL,
+  `UpdatedDate` datetime(0) NULL DEFAULT NULL,
+  `Status` int NULL DEFAULT NULL,
+  PRIMARY KEY (`ProductID`) USING BTREE,
+  INDEX `fk_product_category`(`CategoryID`) USING BTREE,
+  CONSTRAINT `fk_product_category` FOREIGN KEY (`CategoryID`) REFERENCES `category` (`CategoryID`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of product
+-- ----------------------------
+INSERT INTO `product` VALUES (1, 'Gà Rán - 1 miếng (Fried Chicken -1 PC)', NULL, NULL, '', 2, NULL, 36000.0000, 0, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
+INSERT INTO `product` VALUES (2, 'Gà Sốt Phô Mai - 1 miếng (Cheese Chicken - 1 PC)', NULL, NULL, '', 2, NULL, 38000.0000, 3, NULL, NULL, '2021-10-05 23:07:36', NULL, NULL);
+INSERT INTO `product` VALUES (3, 'Gà nướng - 1 miếng (Grilled Chicken - 1 PC)', NULL, NULL, '', 2, NULL, 38000.0000, 1, NULL, NULL, '2021-10-06 23:07:40', NULL, NULL);
+INSERT INTO `product` VALUES (4, 'Gà nướng góc tư (Chicken Quater Leg)', NULL, NULL, '', 2, NULL, 49000.0000, 1, NULL, NULL, '2021-10-06 23:07:40', NULL, NULL);
+INSERT INTO `product` VALUES (5, 'Gà Rán - 3 miếng (Fried Chicken - 3 Pcs)', NULL, NULL, NULL, 2, NULL, 99000.0000, 0, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
+INSERT INTO `product` VALUES (6, 'Burger Bò Teriyaki (Teriyaki Burger)', NULL, NULL, NULL, 2, NULL, 31000.0000, 0, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
+INSERT INTO `product` VALUES (7, 'Burger Phô Mai (Burger Cheese)', NULL, NULL, NULL, 1, NULL, 34000.0000, NULL, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
+INSERT INTO `product` VALUES (8, 'Burger Cá (Fish Burger)', NULL, NULL, NULL, 1, NULL, 34000.0000, NULL, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
+INSERT INTO `product` VALUES (9, 'Burger Gà Thượng Hạng (Premium Chicken Burger)', NULL, NULL, NULL, 1, NULL, 44000.0000, NULL, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
+INSERT INTO `product` VALUES (10, 'Pepsi (M)', NULL, NULL, NULL, 3, NULL, 14000.0000, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `product` VALUES (11, 'Mirinda (M)', NULL, NULL, NULL, 3, NULL, 14000.0000, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `product` VALUES (12, '7 UP (M)', NULL, NULL, NULL, 3, NULL, 14000.0000, NULL, NULL, NULL, NULL, NULL, NULL);
+
+
+-- ----------------------------
 -- Table structure for comboproduct
 -- ----------------------------
 DROP TABLE IF EXISTS `comboproduct`;
@@ -191,46 +232,6 @@ CREATE TABLE `orderdetail`  (
 -- ----------------------------
 -- Records of orderdetail
 -- ----------------------------
-
--- ----------------------------
--- Table structure for product
--- ----------------------------
-DROP TABLE IF EXISTS `product`;
-CREATE TABLE `product`  (
-  `ProductID` int NOT NULL AUTO_INCREMENT,
-  `Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `Slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `Image` varchar(800) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `Description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `CategoryID` int NULL DEFAULT NULL,
-  `Stock` int NULL DEFAULT NULL,
-  `Price` decimal(19, 4) NULL DEFAULT NULL,
-  `Rating` int NULL DEFAULT NULL,
-  `CreatedBy` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `UpdatedBy` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `CreatedDate` datetime(0) NULL DEFAULT NULL,
-  `UpdatedDate` datetime(0) NULL DEFAULT NULL,
-  `Status` int NULL DEFAULT NULL,
-  PRIMARY KEY (`ProductID`) USING BTREE,
-  INDEX `fk_product_category`(`CategoryID`) USING BTREE,
-  CONSTRAINT `fk_product_category` FOREIGN KEY (`CategoryID`) REFERENCES `category` (`CategoryID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of product
--- ----------------------------
-INSERT INTO `product` VALUES (1, 'Gà Rán - 1 miếng (Fried Chicken -1 PC)', NULL, NULL, '', 2, NULL, 36000.0000, 0, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
-INSERT INTO `product` VALUES (2, 'Gà Sốt Phô Mai - 1 miếng (Cheese Chicken - 1 PC)', NULL, NULL, '', 2, NULL, 38000.0000, 3, NULL, NULL, '2021-10-05 23:07:36', NULL, NULL);
-INSERT INTO `product` VALUES (3, 'Gà nướng - 1 miếng (Grilled Chicken - 1 PC)', NULL, NULL, '', 2, NULL, 38000.0000, 1, NULL, NULL, '2021-10-06 23:07:40', NULL, NULL);
-INSERT INTO `product` VALUES (4, 'Gà nướng góc tư (Chicken Quater Leg)', NULL, NULL, '', 2, NULL, 49000.0000, 1, NULL, NULL, '2021-10-06 23:07:40', NULL, NULL);
-INSERT INTO `product` VALUES (5, 'Gà Rán - 3 miếng (Fried Chicken - 3 Pcs)', NULL, NULL, NULL, 2, NULL, 99000.0000, 0, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
-INSERT INTO `product` VALUES (6, 'Burger Bò Teriyaki (Teriyaki Burger)', NULL, NULL, NULL, 2, NULL, 31000.0000, 0, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
-INSERT INTO `product` VALUES (7, 'Burger Phô Mai (Burger Cheese)', NULL, NULL, NULL, 1, NULL, 34000.0000, NULL, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
-INSERT INTO `product` VALUES (8, 'Burger Cá (Fish Burger)', NULL, NULL, NULL, 1, NULL, 34000.0000, NULL, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
-INSERT INTO `product` VALUES (9, 'Burger Gà Thượng Hạng (Premium Chicken Burger)', NULL, NULL, NULL, 1, NULL, 44000.0000, NULL, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
-INSERT INTO `product` VALUES (10, 'Pepsi (M)', NULL, NULL, NULL, 3, NULL, 14000.0000, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `product` VALUES (11, 'Mirinda (M)', NULL, NULL, NULL, 3, NULL, 14000.0000, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `product` VALUES (12, '7 UP (M)', NULL, NULL, NULL, 3, NULL, 14000.0000, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for token
