@@ -13,6 +13,6 @@ public class LoginInfoDto {
     private int id;
     private String fullName;
     private String role;
-    private String token; // token
+    private String token;
     private String refreshToken;
 }

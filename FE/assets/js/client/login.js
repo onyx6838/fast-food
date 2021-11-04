@@ -71,15 +71,49 @@ function register() {
     var password = $('#register-password').val();
 
     // TODO valid
-
-    if (validator.size(username, 6, 10)) {
-        showNameErrMsg('from 6 10 charaters')
+    if (validator.blank(username)) {
+        showNameErrMsg('Chưa nhập tài khoản')
         setInterval(() => hideNameErrMsg('none'), 3000)
         return;
     }
-    if (!validator.pattern(username, /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/)) {
-        showNameErrMsg('not contain special charaters')
-        setInterval(() => hideNameErrMsg('none'), 3000)
+    if (validator.blank(password)) {
+        showNameErrMsgForSignUp('name-err-msg-password', 'Chưa nhập password')
+        setInterval(() => hideNameErrMsgForSignUp('name-err-msg-password', 'none'), 3000)
+        return;
+    }
+
+    if (validator.blank(email)) {
+        showNameErrMsgForSignUp('name-err-msg-email', 'Chưa nhập email')
+        setInterval(() => hideNameErrMsgForSignUp('name-err-msg-email', 'none'), 3000)
+        return;
+    }
+
+    if (validator.blank(firstname)) {
+        showNameErrMsgForSignUp('name-err-msg-firstname', 'Chưa nhập họ/tên đệm')
+        setInterval(() => hideNameErrMsgForSignUp('name-err-msg-firstname', 'none'), 3000)
+        return;
+    }
+    if (validator.blank(lastname)) {
+        showNameErrMsgForSignUp('name-err-msg-lastname', 'Chưa nhập tên')
+        setInterval(() => hideNameErrMsgForSignUp('name-err-msg-lastname', 'none'), 3000)
+        return;
+    }
+
+    if (!validator.size(username, 6, 10)) {
+        showNameErrMsgForSignUp('name-err-msg-username', 'tài khoản độ dài 6 đến 10 kí tự')
+        setInterval(() => hideNameErrMsgForSignUp('name-err-msg-username', 'none'), 3000)
+        return;
+    }
+
+    if (validator.pattern(username, /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/)) {
+        showNameErrMsgForSignUp('name-err-msg-username', 'không chứa kí tự đặc biệt')
+        setInterval(() => hideNameErrMsgForSignUp('name-err-msg-username', 'none'), 3000)
+        return;
+    }
+
+    if (!validator.email(email)) {
+        showNameErrMsgForSignUp('name-err-msg-email', 'theo định dạng email example@xyz.com')
+        setInterval(() => hideNameErrMsgForSignUp('name-err-msg-email', 'none'), 3000)
         return;
     }
 
@@ -109,6 +143,17 @@ function register() {
             console.log(errorThrown);
         }
     })
+}
+
+function showNameErrMsgForSignUp(block, message) {
+    const selector = '#' + block
+    $(selector).html(message);
+    hideNameErrMsg('block');
+}
+
+function hideNameErrMsgForSignUp(block, style) {
+    const selector = '#' + block
+    $(selector).css('display', style);
 }
 
 function showNameErrMsg(message) {

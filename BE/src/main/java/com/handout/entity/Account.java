@@ -23,13 +23,14 @@ public class Account extends BaseEntity<String> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-//    @Column(name = "`FullName`", length = 50)
-//    private String fullName;
     @Column(name = "FirstName", length = 50)
     private String firstName;
 
     @Column(name = "LastName", length = 50)
     private String lastName;
+
+    @Formula("concat(FirstName, ' ', LastName)")
+    private String fullName;
 
     @Column(name = "Phone", length = 30)
     private String phone;
