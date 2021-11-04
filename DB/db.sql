@@ -11,7 +11,7 @@
  Target Server Version : 80025
  File Encoding         : 65001
 
- Date: 03/11/2021 16:02:01
+ Date: 04/11/2021 21:24:53
 */
 
 SET NAMES utf8mb4;
@@ -23,7 +23,8 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `account`;
 CREATE TABLE `account`  (
   `ID` int NOT NULL AUTO_INCREMENT,
-  `FullName` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `FirstName` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `LastName` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `Phone` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `Email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `Username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
@@ -36,14 +37,15 @@ CREATE TABLE `account`  (
   `Role` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `Status` tinyint NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of account
 -- ----------------------------
-INSERT INTO `account` VALUES (1, 'Đoàn Minh Giang', '0388299424', 'giang.mink@gmail.com', 'minkgiang', '$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi', NULL, NULL, NULL, NULL, NULL, 'Admin', NULL);
-INSERT INTO `account` VALUES (2, 'Nguyễn Văn Khánh', NULL, NULL, 'onyxzt123', '$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi', NULL, NULL, NULL, NULL, NULL, 'Admin', NULL);
-INSERT INTO `account` VALUES (8, 'Đặng Thị Lan Hương', NULL, 'lanhuong2k@gmail.com', 'lanhuong', '$2a$10$u0O2RLOcBKPDPIuiez0wdO7YlkjW0luiAmJs5GhA6mxQIvyIXyoBK', NULL, 'not apply this time after security', 'not apply this time after security', '2021-10-24 23:45:24', '2021-10-24 23:45:39', 'User', 1);
+INSERT INTO `account` VALUES (1, 'Đoàn Minh', 'Giang', '0388299424', 'giang.mink@gmail.com', 'minkgiang', '$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi', NULL, NULL, NULL, NULL, NULL, 'Admin', NULL);
+INSERT INTO `account` VALUES (2, 'Nguyễn Văn', 'Khánh', NULL, NULL, 'onyxzt123', '$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi', NULL, NULL, NULL, NULL, NULL, 'Admin', NULL);
+INSERT INTO `account` VALUES (8, 'Đặng Thị Lan', 'Hương', NULL, 'lanhuong2k@gmail.com', 'lanhuong', '$2a$10$u0O2RLOcBKPDPIuiez0wdO7YlkjW0luiAmJs5GhA6mxQIvyIXyoBK', NULL, 'not apply this time after security', 'not apply this time after security', '2021-10-24 23:45:24', '2021-10-24 23:45:39', 'User', 1);
+INSERT INTO `account` VALUES (12, 'Đoàn Minh', 'Giang', NULL, 'mink.giang@gmail.com', 'giangzxc123', '$2a$10$aMpCbkJtGL6I8y8DW9S90OmQvBj4S79cUNl8GN7eLgw/hfbMkVZLm', NULL, 'anonymous', 'anonymous', '2021-11-03 22:49:14', '2021-11-03 22:49:56', 'User', 1);
 
 -- ----------------------------
 -- Table structure for category
@@ -61,7 +63,7 @@ CREATE TABLE `category`  (
   `UpdatedDate` datetime(0) NULL DEFAULT NULL,
   `Status` int NULL DEFAULT NULL,
   PRIMARY KEY (`CategoryID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of category
@@ -98,47 +100,6 @@ INSERT INTO `combo` VALUES (2, 'Combo Burger Tôm (Shrimp Burger Combo)', 77000,
 INSERT INTO `combo` VALUES (3, 'Combo Burger Gà Thượng Hạng (Premium Chicken Burger Combo)', 74000, NULL, '<p>- 01 Burger Gà Thượng Hạng (Premium Chicken&nbsp;Burger)</p>\r\n<p>- 01 Pepsi (M)</p>\r\n<p>- 01 Khoai Tây Chiên (French Fries) - M</p', NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `combo` VALUES (4, 'Combo Burger Cá (Fish Burger Combo)', 64000, NULL, '<p>- 01 Burger Cá (Fish Burger)</p>\r\n<p>- 01 Pepsi (M)</p>\r\n<p>- 01 Khoai Tây Chiên (French Fries) - M</p>', NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `combo` VALUES (5, 'Combo Burger Phô Mai (Cheese Burger Combo)', 64000, NULL, '<p>- 01 Burger Phô Mai&nbsp;(Cheese&nbsp;Burger)</p>\r\n<p>- 01 Pepsi (M)</p>\r\n<p>- 01 Khoai Tây Chiên (French Fries) - M</p>', NULL, NULL, NULL, NULL, NULL);
-
--- ----------------------------
--- Table structure for product
--- ----------------------------
-DROP TABLE IF EXISTS `product`;
-CREATE TABLE `product`  (
-  `ProductID` int NOT NULL AUTO_INCREMENT,
-  `Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `Slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `Image` varchar(800) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `Description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `CategoryID` int NULL DEFAULT NULL,
-  `Stock` int NULL DEFAULT NULL,
-  `Price` decimal(19, 4) NULL DEFAULT NULL,
-  `Rating` int NULL DEFAULT NULL,
-  `CreatedBy` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `UpdatedBy` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `CreatedDate` datetime(0) NULL DEFAULT NULL,
-  `UpdatedDate` datetime(0) NULL DEFAULT NULL,
-  `Status` int NULL DEFAULT NULL,
-  PRIMARY KEY (`ProductID`) USING BTREE,
-  INDEX `fk_product_category`(`CategoryID`) USING BTREE,
-  CONSTRAINT `fk_product_category` FOREIGN KEY (`CategoryID`) REFERENCES `category` (`CategoryID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of product
--- ----------------------------
-INSERT INTO `product` VALUES (1, 'Gà Rán - 1 miếng (Fried Chicken -1 PC)', NULL, NULL, '', 2, NULL, 36000.0000, 0, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
-INSERT INTO `product` VALUES (2, 'Gà Sốt Phô Mai - 1 miếng (Cheese Chicken - 1 PC)', NULL, NULL, '', 2, NULL, 38000.0000, 3, NULL, NULL, '2021-10-05 23:07:36', NULL, NULL);
-INSERT INTO `product` VALUES (3, 'Gà nướng - 1 miếng (Grilled Chicken - 1 PC)', NULL, NULL, '', 2, NULL, 38000.0000, 1, NULL, NULL, '2021-10-06 23:07:40', NULL, NULL);
-INSERT INTO `product` VALUES (4, 'Gà nướng góc tư (Chicken Quater Leg)', NULL, NULL, '', 2, NULL, 49000.0000, 1, NULL, NULL, '2021-10-06 23:07:40', NULL, NULL);
-INSERT INTO `product` VALUES (5, 'Gà Rán - 3 miếng (Fried Chicken - 3 Pcs)', NULL, NULL, NULL, 2, NULL, 99000.0000, 0, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
-INSERT INTO `product` VALUES (6, 'Burger Bò Teriyaki (Teriyaki Burger)', NULL, NULL, NULL, 2, NULL, 31000.0000, 0, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
-INSERT INTO `product` VALUES (7, 'Burger Phô Mai (Burger Cheese)', NULL, NULL, NULL, 1, NULL, 34000.0000, NULL, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
-INSERT INTO `product` VALUES (8, 'Burger Cá (Fish Burger)', NULL, NULL, NULL, 1, NULL, 34000.0000, NULL, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
-INSERT INTO `product` VALUES (9, 'Burger Gà Thượng Hạng (Premium Chicken Burger)', NULL, NULL, NULL, 1, NULL, 44000.0000, NULL, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
-INSERT INTO `product` VALUES (10, 'Pepsi (M)', NULL, NULL, NULL, 3, NULL, 14000.0000, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `product` VALUES (11, 'Mirinda (M)', NULL, NULL, NULL, 3, NULL, 14000.0000, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `product` VALUES (12, '7 UP (M)', NULL, NULL, NULL, 3, NULL, 14000.0000, NULL, NULL, NULL, NULL, NULL, NULL);
-
 
 -- ----------------------------
 -- Table structure for comboproduct
@@ -195,7 +156,7 @@ CREATE TABLE `order`  (
   INDEX `fk_order_employee_account`(`EmployeeID`) USING BTREE,
   CONSTRAINT `fk_order_customer_account` FOREIGN KEY (`CustomerID`) REFERENCES `account` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_order_employee_account` FOREIGN KEY (`EmployeeID`) REFERENCES `account` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of order
@@ -227,11 +188,51 @@ CREATE TABLE `orderdetail`  (
   CONSTRAINT `fk_orderdetail_combo` FOREIGN KEY (`ComboID`) REFERENCES `combo` (`ComboID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_orderdetail_order` FOREIGN KEY (`OrderID`) REFERENCES `order` (`OrderID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_orderdetail_product` FOREIGN KEY (`ProductID`) REFERENCES `product` (`ProductID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of orderdetail
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for product
+-- ----------------------------
+DROP TABLE IF EXISTS `product`;
+CREATE TABLE `product`  (
+  `ProductID` int NOT NULL AUTO_INCREMENT,
+  `Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `Slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `Image` varchar(800) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `Description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `CategoryID` int NULL DEFAULT NULL,
+  `Stock` int NULL DEFAULT NULL,
+  `Price` decimal(19, 4) NULL DEFAULT NULL,
+  `Rating` int NULL DEFAULT NULL,
+  `CreatedBy` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `UpdatedBy` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `CreatedDate` datetime(0) NULL DEFAULT NULL,
+  `UpdatedDate` datetime(0) NULL DEFAULT NULL,
+  `Status` int NULL DEFAULT NULL,
+  PRIMARY KEY (`ProductID`) USING BTREE,
+  INDEX `fk_product_category`(`CategoryID`) USING BTREE,
+  CONSTRAINT `fk_product_category` FOREIGN KEY (`CategoryID`) REFERENCES `category` (`CategoryID`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of product
+-- ----------------------------
+INSERT INTO `product` VALUES (1, 'Gà Rán - 1 miếng (Fried Chicken -1 PC)', NULL, NULL, '', 2, NULL, 36000.0000, 0, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
+INSERT INTO `product` VALUES (2, 'Gà Sốt Phô Mai - 1 miếng (Cheese Chicken - 1 PC)', NULL, NULL, '', 2, NULL, 38000.0000, 3, NULL, NULL, '2021-10-05 23:07:36', NULL, NULL);
+INSERT INTO `product` VALUES (3, 'Gà nướng - 1 miếng (Grilled Chicken - 1 PC)', NULL, NULL, '', 2, NULL, 38000.0000, 1, NULL, NULL, '2021-10-06 23:07:40', NULL, NULL);
+INSERT INTO `product` VALUES (4, 'Gà nướng góc tư (Chicken Quater Leg)', NULL, NULL, '', 2, NULL, 49000.0000, 1, NULL, NULL, '2021-10-06 23:07:40', NULL, NULL);
+INSERT INTO `product` VALUES (5, 'Gà Rán - 3 miếng (Fried Chicken - 3 Pcs)', NULL, NULL, NULL, 2, NULL, 99000.0000, 0, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
+INSERT INTO `product` VALUES (6, 'Burger Bò Teriyaki (Teriyaki Burger)', NULL, NULL, NULL, 2, NULL, 31000.0000, 0, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
+INSERT INTO `product` VALUES (7, 'Burger Phô Mai (Burger Cheese)', NULL, NULL, NULL, 1, NULL, 34000.0000, NULL, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
+INSERT INTO `product` VALUES (8, 'Burger Cá (Fish Burger)', NULL, NULL, NULL, 1, NULL, 34000.0000, NULL, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
+INSERT INTO `product` VALUES (9, 'Burger Gà Thượng Hạng (Premium Chicken Burger)', NULL, NULL, NULL, 1, NULL, 44000.0000, NULL, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
+INSERT INTO `product` VALUES (10, 'Pepsi (M)', NULL, NULL, NULL, 3, NULL, 14000.0000, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `product` VALUES (11, 'Mirinda (M)', NULL, NULL, NULL, 3, NULL, 14000.0000, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `product` VALUES (12, '7 UP (M)', NULL, NULL, NULL, 3, NULL, 14000.0000, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for token
@@ -246,10 +247,19 @@ CREATE TABLE `token`  (
   PRIMARY KEY (`ID`) USING BTREE,
   INDEX `fk_accountid_to_account`(`AccountID`) USING BTREE,
   CONSTRAINT `fk_accountid_to_account` FOREIGN KEY (`AccountID`) REFERENCES `account` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 38 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 57 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of token
 -- ----------------------------
+INSERT INTO `token` VALUES (48, '347acf8d-4b45-4316-ac65-5dd2a44d3c12', 12, '2021-11-13 22:55:11', 'RefreshToken');
+INSERT INTO `token` VALUES (49, 'ef789def-3c8a-49dc-9c0a-2e32a97ad604', 12, '2021-11-13 22:55:19', 'RefreshToken');
+INSERT INTO `token` VALUES (50, '2e71d178-9c39-421f-9e9a-c6bd4809681f', 1, '2021-11-14 00:17:06', 'RefreshToken');
+INSERT INTO `token` VALUES (51, 'cc7358fe-d34d-42cd-8d4a-6834b387a62e', 2, '2021-11-14 00:17:22', 'RefreshToken');
+INSERT INTO `token` VALUES (52, '91073181-6efe-42c6-81e8-4c2de68217a3', 1, '2021-11-14 00:18:21', 'RefreshToken');
+INSERT INTO `token` VALUES (53, '510c9edc-8140-454d-bb0e-c36850a5a164', 12, '2021-11-14 09:22:27', 'RefreshToken');
+INSERT INTO `token` VALUES (54, '9bb5a4d6-d4ee-4da7-85a2-dcf146a53f2c', 12, '2021-11-14 09:25:28', 'RefreshToken');
+INSERT INTO `token` VALUES (55, '6d19eb32-2ece-4ab4-a67f-3e8e261f6bbe', 12, '2021-11-14 09:26:50', 'RefreshToken');
+INSERT INTO `token` VALUES (56, '090e6bf6-a5db-4b4d-b9ed-3b8c12bcead5', 1, '2021-11-14 09:49:17', 'RefreshToken');
 
 SET FOREIGN_KEY_CHECKS = 1;
