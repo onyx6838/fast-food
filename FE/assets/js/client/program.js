@@ -40,20 +40,28 @@ let getProductById = (id, isCombo) => {
  * GET Combo in main page
  */
 let getCombo = () => {
-    var get = jqxhr('GET', 'combos');
+    var get = jqxhr('GET', 'combos?page=1&size=5');
     get.done((data) => {
-        loadCombo(data);
+        loadCombo(data.content);
     }).fail((jqXHR, textStatus, errorThrown) => {
         console.log(textStatus + ': ' + errorThrown);
     });
 }
 /**
- * GET Combo in menu page
+ * GET Combo in menu page (updated)
  */
 let getComboMenuPage = () => {
-    var getCombos = jqxhr('GET', "combos");
+    var query = `combos?page=${pageNumber}&size=${size}`;
+
+    var name = $('#search-product-with-cate').val();
+
+    if (name) query += `&name=${name}`
+
+    var getCombos = jqxhr('GET', query);
     getCombos.done((data) => {
-        loadProduct(data, 'comboUI');
+        loadProduct(data.content, 'comboUI');   
+        loadSearchBar(0);   // 0 value for outside category product (category id at least 1)
+        paging(data.totalPages, 0)  // equivalent
     }).fail((jqXHR, textStatus, errorThrown) => {
         console.log(textStatus + ': ' + errorThrown);
     });
@@ -124,63 +132,77 @@ const selectionChanged = () => {
 }
 
 /**
- * Paging (unused)
+ * GET Product by category in menu page (with paging and search name)
  */
-let pageNumber = 1;
-let size = 3;
-let maxPage = 2;
+let getProductByCategoryV1 = (id) => {
+    var query = `categories/${id}/products?page=${pageNumber}&size=${size}&sort=${sortField}`;
 
-let pagingTable = (pageCount, pageOn) => {
-    var pagingStr = "";
+    var name = $('#search-product-with-cate').val();
 
-    var startPageIndex = Math.max(1, pageNumber - maxPage / 2);
-    var endPageIndex = Math.min(pageCount, pageNumber + maxPage / 2);
-    //console.log(startPageIndex + " -- " + endPageIndex);
+    if (name) query += `&name=${name}`
+    var products = jqxhr('GET', query);
+    products.done((data) => {
+        loadSearchBar(id);  // clear button with cateId and assign new id to onclick
+        loadProduct(data.content);  // load new product
+        paging(data.totalPages, id) // paging
+    }).fail((jqXHR, textStatus, errorThrown) => {
+        console.log(textStatus + ': ' + errorThrown);
+    });
+}
+
+let handleSearch = (id) => {
+    resetPaging();
+    id === 0 ? getComboMenuPage() : getProductByCategoryV1(id);
+}
+
+/**
+ * Paging for product with cateId
+ */
+var pageNumber = 1;
+var size = 2;
+var maxPage = 2;
+var sortField = 'name';
+
+let paging = (pageCount, id) => {
+    $('.pagination-area').empty();
+    let pagingStr = '';
+
+    let startPageIndex = Math.max(1, pageNumber - maxPage / 2);
+    let endPageIndex = Math.min(pageCount, pageNumber + maxPage / 2);
 
     if (pageNumber != 1) {
         pagingStr +=
-            '<a class="prev page-numbers">' +
-            '<i class="flaticon-left-arrow-1"> onClick="prevPaging()">Previous</i>' +
-            '</a>';
+            `
+            <a class="prev page-numbers" onclick="prevPaging(${id})">
+                <i class="flaticon-left-arrow-1"></i>
+             </a>
+            `
     }
 
     for (i = startPageIndex; i <= endPageIndex; i++) {
-        pagingStr +=
-            '<a class="page-numbers ' + (pageNumber == i ? 'current" aria-current="page' : "") +
-            '" ' + 'onClick="changePage(' + i + "," + pageOn + ')">' + "</a>";
+        pagingStr += `<a class="page-numbers ${pageNumber == i ? 'current' : ''}" onclick="changePage(${i})">${i}</a>`;
     }
 
-    if (pageNumber != pageCount) {
+    if (pageNumber != pageCount && pageCount > 0) { // avoid category has no item
         pagingStr +=
-            '<a class="next page-numbers">' +
-            '<i class="flaticon-right-arrow-1" onClick="nextPaging()">Next</i>' +
-            '</a>';
+            `
+            <a class="prev page-numbers" onclick="nextPaging(${id})">
+                <i class="flaticon-right-arrow-1"></i>
+             </a>
+            `
     }
 
-    $('.pagination-area').empty();
     $('.pagination-area').append(pagingStr);
 }
 
 let resetPaging = () => pageNumber = 1;
 
-let prevPaging = () => changePage(pageNumber - 1);
+let prevPaging = id => changePage(pageNumber - 1, id);
 
-let nextPaging = () => changePage(pageNumber + 1);
+let nextPaging = id => changePage(pageNumber + 1, id);
 
-let changePage = (page, pageOn) => {
-    if (page == pageNumber) {
-        return;
-    }
+let changePage = (page, id) => {
+    if (page == pageNumber) return;
     pageNumber = page;
-    switch (pageOn) {
-        case 'products':
-            getProductByCategory();
-            break;
-        case 'combos':
-            getComboMenuPage();
-            break;
-        default:
-            break;
-    }
-
+    id === 0 ? getComboMenuPage() : getProductByCategoryV1(id);
 }

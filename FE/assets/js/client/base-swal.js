@@ -37,7 +37,7 @@ const ignoreSwal = () => Swal.fire({
 const successRegisSwal = () => Swal.fire({
     position: 'top-end',
     icon: 'success',
-    title: 'Đăng Kí Thành Công',
+    title: 'Đăng Kí Thành Công, Kiểm tra email của bạn',
     showConfirmButton: false,
     timer: 1000
 })

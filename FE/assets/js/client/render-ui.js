@@ -4,6 +4,7 @@
 let loadProduct = (data, typeUI) => {
     $('.menu-list-tab .row').empty();
     var pers;
+    console.log(data);
     data.forEach((item, index) => {
         let price = !typeUI ? item.price : item.totalPrice;
         let isCombo = !typeUI ? false : true;
@@ -13,7 +14,7 @@ let loadProduct = (data, typeUI) => {
             <div class="single-product">
                 <div class="product-image">
                     <a onclick="${click}">
-                        <img src="assets/img/shop/image1.jpg" alt="image">
+                        <img src="${item.image}" alt="image">
                     </a>
                     <a class="add-to-cart-btn" onclick="addToCart(${item.id} , ${isCombo})">Add To Cart
                         <i class="flaticon-shopping-cart"></i>
@@ -144,24 +145,39 @@ let loadCategory = (data) => {
     var pers = '';
     data.forEach((item, index) => {
         pers +=
-            '<li>' +
-            '<a onclick="getProductByCategory(' + (index + 1) + ')">' +
-            '<i class="' + item.image + '"></i>' +
-            '<span>' + item.name + '</span>' +
-            '</a>' +
-            '</li>';
+            `
+            <li>
+                <a onclick="getProductByCategoryV1(${item.id})">
+                    <i class="${item.image}"></i>
+                    <span>${item.name}</span>
+                </a>
+            </li>
+            `
     });
     // combo load
     pers +=
-        '<li>' +
-        '<a onclick=getComboMenuPage()>' +
-        '<i class="flaticon-hamburger"></i>' +
-        '<span>' + "Combo" + '</span>' +
-        '</a>' +
-        '</li>';
+        `<li>
+            <a onclick=getComboMenuPage()>
+            <i class="flaticon-hamburger"></i>
+            <span>Combo</span>
+            </a>
+        </li>`;
 
     $("#category-list ul").append(pers);
     categoryEffect();
+}
+/**
+ * Render search bar for menu page 
+ */
+let loadSearchBar = (id) => {
+    $('#button-search').empty();
+    $('#button-search').append(
+        `
+        <button onclick="handleSearch(${id})">
+            <i class='bx bx-search-alt'></i>
+        </button>
+        `
+    )
 }
 
 /**
@@ -262,7 +278,7 @@ const loadCartCheckout = (cartInfo) => {
 const loadCheckoutOrder = () => {
     $('#ip-fullName').val(storage.getItem('FULL_NAME'));
     $('#ip-email').val(storage.getItem('EMAIL'));
-    $('#ip-phone').val(storage.getItem('PHONE'));
+    $('#ip-phone').val(storage.getItem('PHONE') === null || storage.getItem('PHONE') === undefined ? storage.getItem('PHONE') : '');
     getDistrictFromXML();
 }
 

@@ -117,7 +117,6 @@ function register() {
         return;
     }
 
-
     $.ajax({
         url: 'http://localhost:8080/api/v1/accounts',
         type: 'POST',
@@ -131,7 +130,8 @@ function register() {
         }),
         contentType: "application/json ; charset=utf-8"
     }).done(function (data, status, xhr) {
-        successRegisSwal().then(window.location.replace("sign-in.html"));
+        successRegisSwal()
+        setInterval(() => window.location.replace("sign-in.html"), 2000)
     }).fail(function (jqXHR, textStatus, errorThrown) {
         if (jqXHR.status == 401 || jqXHR.status == 415 || jqXHR.status == 500) {
             showNameErrMsg("Lỗi hệ thống");

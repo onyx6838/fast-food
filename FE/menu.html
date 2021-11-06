@@ -60,6 +60,31 @@
                     <span>Danh sách Đồ Ăn</span>
                     <h2>Chọn và đặt hàng ngay !</h2>
                 </div>
+                <!-- Search Section -->
+                <div class="section-title">
+                    <div class="col-lg-4">
+                        <aside class="widget-area" id="secondary">
+                            <section class="widget widget_search">
+                                <form class="search-form search-top" id="search-product-form"
+                                    onsubmit="event.preventDefault();">
+                                    <label>
+                                        <span class="screen-reader-text">Search for:</span>
+                                        <input type="search" class="search-field" placeholder="Search..."
+                                            id="search-product-with-cate">
+                                    </label>
+                                    <div id="button-search">
+                                        <button type="submit">
+                                            <i class='bx bx-search-alt'></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </section>
+                        </aside>
+                    </div>
+                    <div class="col-lg-8"></div>
+                </div>
+                <!-- //Search Section -->
+
                 <div class="tab menu-list-tab">
                     <div id="category-list">
                         <ul class="tabs">
@@ -71,20 +96,22 @@
                     </div>
                 </div>
             </div>
+            <!-- Paginate -->
             <div class="col-lg-12 col-md-12">
                 <div class="pagination-area">
-                    <!-- <a href="#" class="prev page-numbers">
+                    <!-- <a class="prev page-numbers">
                         <i class="flaticon-left-arrow-1"></i>
                     </a>
-                    <a href="#" class="page-numbers">1</a>
+                    <a class="page-numbers">1</a>
                     <a class="page-numbers current" aria-current="page">2</a>
-                    <a href="#" class="page-numbers">3</a>
-                    <a href="#" class="page-numbers">4</a>
-                    <a href="#" class="next page-numbers">
+                    <a class="page-numbers">3</a>
+                    <a class="page-numbers">4</a>
+                    <a class="next page-numbers">
                         <i class="flaticon-right-arrow-1"></i>
                     </a> -->
                 </div>
             </div>
+            <!-- //Paginate -->
             <div class="menu-shape">
                 <div class="shape1">
                     <img src="assets/img/image-icon/7.png" alt="image">
@@ -145,7 +172,10 @@
     <script src="assets/js/lib/main.js"></script>
     <script>
         let changeTitleHeader = () => $('#title-header').html('Thực Đơn');
-        $(() => loadHeader())
+        $(() => {
+            loadHeader();
+            loadSearchBar(1);
+        })
     </script>
     <script src="assets/js/client/load.js"></script>
     <script src="assets/js/client/program.js"></script>

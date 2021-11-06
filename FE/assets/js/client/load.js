@@ -14,7 +14,8 @@ $(() => {
     getNewProduct();
     getCombo();
     getCategory();
-    getProductByCategory(1);
+    //getProductByCategory(1);
+    getProductByCategoryV1(1);
     //navMenuClick();
     getDetailProduct();
 });
@@ -23,7 +24,7 @@ let loadHeader = () => $(".page-title-area").load("./assets/components/slider-nd
     changeTitleHeader()
 });
 
-let navMenuClick = () => getProductByCategory(1);
+let navMenuClick = () => getProductByCategoryV1(1);
 
 let detailProductClick = (id, isCombo) => getProductById(id, isCombo);
 

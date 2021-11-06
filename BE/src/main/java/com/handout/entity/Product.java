@@ -33,9 +33,6 @@ public class Product extends BaseEntity<String> {
     @Column(name = "`Description`")
     private String description;
 
-    @Column(name = "`Stock`")
-    private Integer stock;
-
     @Column(name = "`Price`", precision = 19, scale = 4)
     private Double price;
 

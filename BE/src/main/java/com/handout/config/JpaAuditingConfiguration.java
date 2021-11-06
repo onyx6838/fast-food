@@ -26,7 +26,7 @@ public class JpaAuditingConfiguration {
             if (Objects.isNull(authentication) || !authentication.isAuthenticated() || !(authentication.getPrincipal() instanceof Principal)) {
                 return Optional.of("anonymous");
             }
-            return Optional.of(authentication.getName());
+            return Optional.ofNullable(authentication.getName());
         };
     }
 }

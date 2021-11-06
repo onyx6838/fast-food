@@ -7,7 +7,7 @@ let productsHandler = data => localStorage.setItem('prod', JSON.stringify([...da
 
 let ApiCombos = jqxhr('GET', 'combos').then((result) => combosHandler(result));
 
-let combosHandler = data => localStorage.setItem('comb', JSON.stringify([...data]));
+let combosHandler = data => localStorage.setItem('comb', JSON.stringify([...data.content]));
 
 /**
  * Setup cart localstr

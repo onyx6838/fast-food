@@ -38,4 +38,5 @@ public class ProductController {
         DetailProductDto dto = modelMapper.map(entity, DetailProductDto.class);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
+
 }
