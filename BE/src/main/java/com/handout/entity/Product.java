@@ -47,6 +47,10 @@ public class Product extends BaseEntity<String> {
     @ManyToOne
     @JoinColumn(name = "CategoryID")
     private Category category;
+//
+//    @OneToMany(mappedBy = "product")
+//    @JsonManagedReference
+//    private List<ProdCombDesc> descList;
 
 //    avoid hell call
 //    @OneToMany(mappedBy = "product")

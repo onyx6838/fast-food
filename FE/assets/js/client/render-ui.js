@@ -22,6 +22,7 @@ let loadProduct = (data, typeUI) => {
                 </div>
                 <div class="product-content">
                     <h3><a>${item.name}</a></h3>
+                    
                     <div class="price">
                         <span class="new">${price}<u>đ</u></span>
                     </div>

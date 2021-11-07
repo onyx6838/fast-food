@@ -36,6 +36,10 @@ public class Combo extends BaseEntity<String> {
     @Enumerated(EnumType.ORDINAL)
     private Status status;
 
+//    @OneToMany(mappedBy = "combo")
+//    @JsonManagedReference
+//    private List<ProdCombDesc> descList;
+
 //    @OneToMany(mappedBy = "combo", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<ComboProduct> comboProducts;
 //
