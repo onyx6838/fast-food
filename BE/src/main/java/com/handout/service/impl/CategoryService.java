@@ -5,13 +5,11 @@ import com.handout.entity.Product;
 import com.handout.repository.ICategoryRepository;
 import com.handout.service.ICategoryService;
 import com.handout.service.IProductService;
-import com.handout.utils.UrlUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.io.UnsupportedEncodingException;
 
 @Service
 public class CategoryService implements ICategoryService {
@@ -23,7 +21,6 @@ public class CategoryService implements ICategoryService {
     public CategoryService(ICategoryRepository categoryRepository, IProductService productService) {
         this.categoryRepository = categoryRepository;
         this.productService = productService;
-
     }
 
     @Override
@@ -38,8 +35,7 @@ public class CategoryService implements ICategoryService {
 
     // catId
     @Override
-    public Page<Product> getProductsByCategoryIdAndFindByName(String name, int id, Pageable pageable) throws UnsupportedEncodingException {
-        UrlUtils urlUtils = new UrlUtils();
+    public Page<Product> getProductsByCategoryIdAndFindByName(String name, int id, Pageable pageable) {
         return productService.getProductsByCategoryIdAndFindByName(name, id , pageable);
     }
 }

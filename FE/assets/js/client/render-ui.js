@@ -4,7 +4,6 @@
 let loadProduct = (data, typeUI) => {
     $('.menu-list-tab .row').empty();
     var pers;
-    console.log(data);
     data.forEach((item, index) => {
         let price = !typeUI ? item.price : item.totalPrice;
         let isCombo = !typeUI ? false : true;
@@ -44,28 +43,29 @@ let loadDetailById = () => {
             cart.find(item => item.isCombo === data.isCombo && item.id === data.id) === undefined ? 0 :
             cart.find(item => item.isCombo === data.isCombo && item.id === data.id).qty
         ) : 0;
+        $('.product-details-image').append(`<img src="${data.image}" style="height: 500px;width: 500px;" alt="image">`)
 
         $('.price-detail').empty();
         $('.price-detail').append(`
             <h3>${data.name}</h3>
             <span class="new-price">${data.isCombo ? data.totalPrice : data.price}<u>đ</u></span>
             <span id="desc-detail"></span>`)
-
-        $('#desc-detail').html(data.description)
+        data.description_list.forEach((item, _) => $('#desc-detail').append(`<p>-${item.description}</p>`))
+        //$('#desc-detail').html(data.description)  load with html data store
 
         $('.product-add-to-cart').empty();
         $('.product-add-to-cart').append(
             `
             <div class="input-counter">
                 <span class="minus-btn">
-                <i class='bx bx-minus' onclick="updateCartItem(${data.id}, -1, ${data.isCombo})"></i>
+                    <i class='bx bx-minus' onclick="changeQuantity(-1)"></i>
                 </span>
-                <input type="text" value="${quantity}">
+                <input type="number" step="1" min="0" value="0" readonly="readonly">
                 <span class="plus-btn">
-                    <i class='bx bx-plus' onclick="updateCartItem(${data.id}, 1, ${data.isCombo})"></i>
+                    <i class='bx bx-plus' onclick="changeQuantity(1)"></i>
                 </span>
             </div>
-            <button type="submit" class="default-btn" onclick="addToCart(${data.id} , ${data.isCombo})">
+            <button type="submit" class="default-btn" onclick="addToCartFromDetail(${data.id} , ${data.isCombo})">
                 Thêm vào giỏ
                 <span></span>
             </button>
@@ -75,6 +75,18 @@ let loadDetailById = () => {
         alert("Browser does not support Web Storage.");
     }
 }
+
+const changeQuantity = (qt) => {
+    const curQty = Number.parseInt($('.input-counter input').val());
+    if (curQty == 0 && qt == -1) return;
+    $('.input-counter input').val(curQty + qt);
+}
+
+const addToCartFromDetail = (id, isCombo) => {
+    const curQty = Number.parseInt($('.input-counter input').val());
+    addToCart(id, isCombo, curQty);
+}
+
 /**
  * Render UI New Product for main page
  */
@@ -83,14 +95,14 @@ let loadNewProduct = (data) => {
 
     var pers;
 
-    data.forEach((item, index) => {
+    data.forEach((item, _) => {
         let click = `detailProductClick(${item.id} , false)`;
         pers =
             `
         <div class="col-lg-3 col-md-6">
             <div class="pizza-shop-item">
                 <div class="image">
-                    <img src="assets/img/pizza-shop/4.png" alt="image">
+                    <img src="${item.image}" alt="image">
                     <div class="pizza-btn">
                         <a class="default-btn" onclick="${click}">Xem ngay
                             <i class="flaticon-play-button"></i>
@@ -118,23 +130,26 @@ let loadCombo = (data) => {
 
     data.forEach((item, _) => {
         let click = `detailComboClick(${item.id} , true)`;
+        let short_desc_item = item.description_list.find(item => item.short_desc.length > 0)
         pers +=
-            '<div class="burger-shop-item">' +
-            '<div class="image">' +
-            '<img src="assets/img/burger-shop/4.png" alt="image">' +
-            '<div class="burger-btn">' +
-            `<a class="default-btn" onclick="${click}">Xem ngay` +
-            '<i class="flaticon-play-button"></i>' +
-            '<span></span>' +
-            '</a>' +
-            '</div>' +
-            '</div>' +
-            '<div class="content">' +
-            '<h3>' + item.name + '</h3>' +
-            '<p>' + item.description + '</p>' +
-            '<span>' + item.totalPrice + '<u>đ</u></span>' +
-            '</div>' +
-            '</div>';
+            `
+        <div class="burger-shop-item">
+            <div class="image">
+                <img src="${item.image}" alt="image">
+                <div class="burger-btn">
+                    <a class="default-btn" onclick="${click}">Xem ngay
+                    <i class="flaticon-play-button"></i>
+                    <span></span>
+                    </a>
+                </div>
+            </div>
+            <div class="content">
+                <h3>${item.name}</h3>
+                <p>${short_desc_item.short_desc === undefined ? '' : short_desc_item.short_desc}</p>
+                <span>${item.totalPrice}<u>đ</u></span>
+            </div>
+        </div>
+        `
     });
     $('.burger-shop-slider').append(pers);
     comboEffect();
@@ -148,7 +163,7 @@ let loadCategory = (data) => {
         pers +=
             `
             <li>
-                <a onclick="getProductByCategoryV1(${item.id})">
+                <a onclick="swPaging(${item.id}, true)">
                     <i class="${item.image}"></i>
                     <span>${item.name}</span>
                 </a>
@@ -158,7 +173,7 @@ let loadCategory = (data) => {
     // combo load
     pers +=
         `<li>
-            <a onclick=getComboMenuPage()>
+            <a onclick=swPagingCombo(true)>
             <i class="flaticon-hamburger"></i>
             <span>Combo</span>
             </a>
@@ -197,7 +212,7 @@ let loadCart = (cartInfo) => {
                 <tr>
                     <td class="product-thumbnail">
                         <a href="#">
-                            <img src="assets/img/shop/image1.jpg" alt="item">
+                            <img src="${item.isCombo ? combos[item.id - 1].image : products[item.id - 1].image}" alt="item">
                         </a>
                     </td>
                     <td class="product-name">
@@ -211,7 +226,7 @@ let loadCart = (cartInfo) => {
                             <span class="minus-btn">
                                 <i class='bx bx-minus' onclick="updateCartItem(${item.id}, -1, ${item.isCombo})"></i>
                             </span>
-                            <input type="text" value="${item.qty}">
+                            <input type="text" value="${item.qty}" readonly="readonly">
                             <span class="plus-btn">
                                 <i class='bx bx-plus' onclick="updateCartItem(${item.id}, 1, ${item.isCombo})"></i>
                             </span>
@@ -230,9 +245,6 @@ let loadCart = (cartInfo) => {
         $('.cart-totals b').append(`${(cart.reduce((accu, item, i) => accu += item.qty * 
             (item.isCombo ? combos[item.id - 1].totalPrice : products[item.id - 1].price), 0)).toLocaleString('en-US')}<u>đ</u>`);
     } else {
-        Swal.fire(
-            'Chưa có sản phẩm trong giỏ'
-        )
         $('.cart-totals b').append('0<u>đ</u>');
     }
 }

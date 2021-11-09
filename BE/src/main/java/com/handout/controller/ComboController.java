@@ -10,8 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping(value = "api/v1/combos")
 @CrossOrigin("*")
@@ -24,12 +22,6 @@ public class ComboController {
         this.comboService = comboService;
     }
 
-//    @GetMapping()
-//    public ResponseEntity<List<Combo>> getAllCombos() {
-//        List<Combo> entities = comboService.getAllCombos();
-//        return new ResponseEntity<>(entities, HttpStatus.OK);
-//    }
-
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getComboById(@PathVariable(name = "id") int id) {
         Combo entity = comboService.getComboByID(id);
@@ -37,8 +29,10 @@ public class ComboController {
     }
 
     @GetMapping()
-    public ResponseEntity<Page<Combo>> getAllCombos(@RequestParam(required = false) String name,@PageableDefault Pageable pageable) {
-        Page<Combo> entities = comboService.getCombosByName(name, pageable);
+    public ResponseEntity<Page<Combo>> getAllCombos(@RequestParam(required = false) String name,
+                                                    @PageableDefault(value = 100) Pageable pageable) {
+        //Page<Combo> entities = comboService.getCombosByName(name, pageable);
+        Page<Combo> entities = comboService.getAllCombos(name, pageable);
         return new ResponseEntity<>(entities, HttpStatus.OK);
     }
 }

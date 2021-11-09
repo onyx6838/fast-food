@@ -10,4 +10,6 @@ public interface IProductService {
     Product getProductById(int id);
 
     Page<Product> getProductsByCategoryIdAndFindByName(String name, int id, Pageable pageable);
+
+    Page<Product> getAllProductsBySpec(Pageable pageable, String name, int id);
 }

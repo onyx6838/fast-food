@@ -1,13 +1,17 @@
 package com.handout.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.handout.entity.desc.ProdDesc;
 import com.handout.entity.enumerate.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -47,10 +51,12 @@ public class Product extends BaseEntity<String> {
     @ManyToOne
     @JoinColumn(name = "CategoryID")
     private Category category;
-//
-//    @OneToMany(mappedBy = "product")
-//    @JsonManagedReference
-//    private List<ProdCombDesc> descList;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "item_id", nullable = false)
+    @OrderColumn(name = "list_index")
+    @Where(clause = "type='Prod_Desc'")
+    private List<ProdDesc> description_list = new ArrayList<>();
 
 //    avoid hell call
 //    @OneToMany(mappedBy = "product")

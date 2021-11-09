@@ -59,9 +59,9 @@ let getComboMenuPage = () => {
 
     var getCombos = jqxhr('GET', query);
     getCombos.done((data) => {
-        loadProduct(data.content, 'comboUI');   
-        loadSearchBar(0);   // 0 value for outside category product (category id at least 1)
-        paging(data.totalPages, 0)  // equivalent
+        loadProduct(data.content, 'comboUI');
+        loadSearchBar(0); // 0 value for outside category product (category id at least 1)
+        paging(data.totalPages, 0) // equivalent
     }).fail((jqXHR, textStatus, errorThrown) => {
         console.log(textStatus + ': ' + errorThrown);
     });
@@ -142,8 +142,8 @@ let getProductByCategoryV1 = (id) => {
     if (name) query += `&name=${name}`
     var products = jqxhr('GET', query);
     products.done((data) => {
-        loadSearchBar(id);  // clear button with cateId and assign new id to onclick
-        loadProduct(data.content);  // load new product
+        loadSearchBar(id); // clear button with cateId and assign new id to onclick
+        loadProduct(data.content); // load new product
         paging(data.totalPages, id) // paging
     }).fail((jqXHR, textStatus, errorThrown) => {
         console.log(textStatus + ': ' + errorThrown);
@@ -155,6 +155,18 @@ let handleSearch = (id) => {
     id === 0 ? getComboMenuPage() : getProductByCategoryV1(id);
 }
 
+let swPaging = (id, changePaging) => {
+    newPaging = changePaging;
+    if (newPaging) resetPaging();
+    getProductByCategoryV1(id);
+}
+
+let swPagingCombo = (changePaging) => {
+    newPaging = changePaging;
+    if (newPaging) resetPaging();
+    getComboMenuPage();
+}
+
 /**
  * Paging for product with cateId
  */
@@ -162,6 +174,7 @@ var pageNumber = 1;
 var size = 2;
 var maxPage = 2;
 var sortField = 'name';
+var newPaging = false;  // switch between category and combo
 
 let paging = (pageCount, id) => {
     $('.pagination-area').empty();
@@ -180,7 +193,9 @@ let paging = (pageCount, id) => {
     }
 
     for (i = startPageIndex; i <= endPageIndex; i++) {
-        pagingStr += `<a class="page-numbers ${pageNumber == i ? 'current' : ''}" onclick="changePage(${i})">${i}</a>`;
+        pagingStr +=
+            `<a class="page-numbers ${pageNumber == i ? 'current' : ''}" 
+        onclick="changePage(${i}, ${id})">${i}</a>`;
     }
 
     if (pageNumber != pageCount && pageCount > 0) { // avoid category has no item
@@ -204,5 +219,6 @@ let nextPaging = id => changePage(pageNumber + 1, id);
 let changePage = (page, id) => {
     if (page == pageNumber) return;
     pageNumber = page;
-    id === 0 ? getComboMenuPage() : getProductByCategoryV1(id);
+    if (id === 0 || id === undefined) getComboMenuPage()
+    else getProductByCategoryV1(id);
 }

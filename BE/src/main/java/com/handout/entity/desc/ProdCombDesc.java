@@ -1,8 +1,9 @@
 package com.handout.entity.desc;
 
-import com.handout.entity.Combo;
-import com.handout.entity.Product;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -28,13 +29,4 @@ public class ProdCombDesc {
 
     @Column(name = "lang", length = 20)
     private String lang;
-
-//    @OneToOne
-//    @JoinColumn(name = "item_id", referencedColumnName = "id", nullable = false)
-//    protected Product product;
-//
-//    @OneToOne
-//    @JoinColumn(name = "item_id", referencedColumnName = "id", nullable = false)
-//    protected Combo combo;
-
 }

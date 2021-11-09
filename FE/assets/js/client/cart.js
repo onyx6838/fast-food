@@ -31,24 +31,30 @@ popCart();
  */
 const getIndex = (id, isCombo) => cart.indexOf(cart.find(item => item.id === id && item.isCombo === isCombo));
 
-const addToCart = (id, isCombo) => {
+const addToCart = (id, isCombo, quantity) => {
     successSwal().then(() => {
         if (cart.length > 0) {
-            getIndex(id, isCombo) > -1 ? cart[getIndex(id, isCombo)].qty += 1 : cart.push({
+            getIndex(id, isCombo) > -1 ? (quantity ? cart[getIndex(id, isCombo)].qty += quantity :
+                cart[getIndex(id, isCombo)].qty += 1) : cart.push({
                 id: id,
-                qty: 1,
+                qty: quantity ? quantity : 1,
                 isCombo: isCombo
             });
         } else {
-            cart.push({
-                id,
-                qty: 1,
-                isCombo: isCombo
-            });
+            quantity ? cart.push({
+                    id,
+                    qty: quantity,
+                    isCombo: isCombo
+                }) :
+                cart.push({
+                    id,
+                    qty: 1,
+                    isCombo: isCombo
+                });
         }
         localStorage.setItem('cart', JSON.stringify(cart));
         popCart();
-        getDetailProduct();
+        //getDetailProduct();
     })
 }
 
@@ -103,6 +109,11 @@ const redCheckout = () => {
             window.open("sign-in.html")
             return;
         });
+    } else if (storage.getItem("ID") !== null &&
+        JSON.parse(localStorage.getItem('cart')).length === 0) {
+        Swal.fire(
+            'Chưa có sản phẩm trong giỏ'
+        )
     } else {
         window.open("checkout.html")
     }

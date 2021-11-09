@@ -1,12 +1,16 @@
 package com.handout.entity;
 
+import com.handout.entity.desc.CombDesc;
 import com.handout.entity.enumerate.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -36,9 +40,11 @@ public class Combo extends BaseEntity<String> {
     @Enumerated(EnumType.ORDINAL)
     private Status status;
 
-//    @OneToMany(mappedBy = "combo")
-//    @JsonManagedReference
-//    private List<ProdCombDesc> descList;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "item_id", nullable = false)
+    @OrderColumn(name = "list_index")
+    @Where(clause = "type='Comb_Desc'")
+    private List<CombDesc> description_list = new ArrayList<>();
 
 //    @OneToMany(mappedBy = "combo", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<ComboProduct> comboProducts;

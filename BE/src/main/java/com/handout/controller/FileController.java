@@ -27,8 +27,7 @@ public class FileController {
     private IFileService fileService;
 
     @Autowired
-    private IXmlService
-            xmlService;
+    private IXmlService xmlService;
 
     @PostMapping(value = "/image")
     public ResponseEntity<?> upLoadImage(@RequestParam(name = "image") MultipartFile image) throws IOException, URISyntaxException {
