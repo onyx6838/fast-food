@@ -50,7 +50,6 @@ const successCheckoutSwal = () => Swal.fire({
     timer: 1000
 })
 
-
 const ignoreCheckoutSwal = () => Swal.fire({
     position: 'top-end',
     icon: 'error',

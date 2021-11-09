@@ -50,7 +50,7 @@ public class ProductService implements IProductService {
         Specification<Product> where = new ProductSpecification("category.id", "=", id);
         if (!ObjectUtils.isEmpty(name)) {
             Specification<Product> nameSpec = new ProductSpecification("name", "LIKE", name);
-            where = Specification.where(nameSpec);
+            where = where.and(nameSpec);
         }
         Page<Product> products = productRepository.findAll(where, pageable);
         products.forEach(x -> x.setImage(imagesPath + x.getImage()));
