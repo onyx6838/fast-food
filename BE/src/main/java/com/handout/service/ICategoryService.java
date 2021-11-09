@@ -10,5 +10,4 @@ public interface ICategoryService {
 
     Category getCategoryByID(int id);
 
-    Page<Product> getProductsByCategoryIdAndFindByName(String name, int id, Pageable pageable);
 }

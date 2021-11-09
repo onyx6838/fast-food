@@ -45,10 +45,4 @@ public class Combo extends BaseEntity<String> {
     @OrderColumn(name = "list_index")
     @Where(clause = "type='Comb_Desc'")
     private List<CombDesc> description_list = new ArrayList<>();
-
-//    @OneToMany(mappedBy = "combo", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<ComboProduct> comboProducts;
-//
-//    @OneToMany(mappedBy = "combo", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<OrderDetail> orderDetails;
 }

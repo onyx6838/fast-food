@@ -31,13 +31,6 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Page<Product> getProductsByCategoryIdAndFindByName(String name, int id, Pageable pageable) {
-        Page<Product> products = productRepository.getProductsByCategoryIdAndFindByName(name, id, pageable);
-        products.forEach(x -> x.setImage(imagesPath + x.getImage()));
-        return products;
-    }
-
-    @Override
     public Product getProductById(int id) {
         Product product = productRepository.findById(id).get();
         product.setImage(imagesPath + product.getImage());
@@ -46,7 +39,7 @@ public class ProductService implements IProductService {
 
     // search products belong to specific categories with {id}
     @Override
-    public Page<Product> getAllProductsBySpec(Pageable pageable, String name, int id) {
+    public Page<Product> getAllProductsByCatIdAndFindByName(Pageable pageable, String name, int id) {
         Specification<Product> where = new ProductSpecification("category.id", "=", id);
         if (!ObjectUtils.isEmpty(name)) {
             Specification<Product> nameSpec = new ProductSpecification("name", "LIKE", name);
