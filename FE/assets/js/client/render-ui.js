@@ -60,7 +60,7 @@ let loadDetailById = () => {
                 <span class="minus-btn">
                     <i class='bx bx-minus' onclick="changeQuantity(-1)"></i>
                 </span>
-                <input type="number" step="1" min="0" value="0" readonly="readonly">
+                <input type="number" step="1" min="0" value="1" readonly="readonly">
                 <span class="plus-btn">
                     <i class='bx bx-plus' onclick="changeQuantity(1)"></i>
                 </span>
@@ -302,7 +302,7 @@ const loadCheckoutOrder = () => {
  */
 const loadDistrictFromXML = (data) => {
     $('#ip-checkbox-district').empty();
-    $('#ip-checkbox-district').append('<option value="">--Chọn Tỉnh Thành--</option>')
+    $('#ip-checkbox-district').append('<option value="">--Chọn Quận Huyện--</option>')
     data.forEach(item => {
         $('#ip-checkbox-district').append(`<option value="${item.id}">${item.name}</option>`)
     })
@@ -310,7 +310,7 @@ const loadDistrictFromXML = (data) => {
 
 const loadWardFromXML = (data) => {
     $('#ip-checkbox-ward').empty();
-    $('#ip-checkbox-ward').append('<option value="">--Chọn Quận Huyện--</option>')
+    $('#ip-checkbox-ward').append('<option value="">--Chọn Phường Xã--</option>')
     data.forEach(item => {
         $('#ip-checkbox-ward').append(`<option value="${item.id}">${item.name}</option>`)
     })

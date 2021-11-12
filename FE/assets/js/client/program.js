@@ -28,21 +28,17 @@ let getNewProduct = () => {
  * GET Food by id in detail page
  */
 let getProductById = (id, isCombo) => {
-  var get = jqxhr("GET", "products/" + id);
-  get
-    .done((data) => {
-      localStorage.setItem(
-        "product-detail",
-        JSON.stringify({
-          ...data,
-          isCombo: isCombo,
-          id: id,
-        })
-      );
-      window.location.replace("product-details.html");
-    })
-    .fail((jqXHR, textStatus, errorThrown) => {
-      console.log(textStatus + ": " + errorThrown);
+
+    var get = jqxhr('GET', 'products/' + id);
+    get.done((data) => {
+        localStorage.setItem("product-detail", JSON.stringify({
+            ...data,
+            isCombo: isCombo,
+            id: id
+        }));
+        window.location.replace("product-details.html");
+    }).fail((jqXHR, textStatus, errorThrown) => {
+        console.log(textStatus + ': ' + errorThrown);
     });
 };
 /**
@@ -83,21 +79,17 @@ let getComboMenuPage = () => {
  * GET Combo By id in detail page
  */
 let getComboById = (id, isCombo) => {
-  var get = jqxhr("GET", "combos/" + id);
-  get
-    .done((data) => {
-      localStorage.setItem(
-        "product-detail",
-        JSON.stringify({
-          ...data,
-          isCombo: isCombo,
-          id: id,
-        })
-      );
-      window.open("product-details.html");
-    })
-    .fail((jqXHR, textStatus, errorThrown) => {
-      console.log(textStatus + ": " + errorThrown);
+
+    var get = jqxhr('GET', 'combos/' + id);
+    get.done((data) => {
+        localStorage.setItem("product-detail", JSON.stringify({
+            ...data,
+            isCombo: isCombo,
+            id: id
+        }));
+        window.open("product-details.html");
+    }).fail((jqXHR, textStatus, errorThrown) => {
+        console.log(textStatus + ': ' + errorThrown);
     });
 };
 /**
@@ -145,21 +137,20 @@ let getDistrictFromXML = () => {
  * GET precinct (ward) from XML file and UI control for selectBox changed
  */
 const selectionChanged = () => {
-  const districtId = $("#ip-checkbox-district").val()
-    ? $("#ip-checkbox-district").val()
-    : "";
-  var precinct = jqxhr(
-    "GET",
-    `files/xml/districts/${districtId && districtId}`
-  );
-  precinct
-    .done((data) => {
-      loadWardFromXML(data);
-    })
-    .fail((jqXHR, textStatus, errorThrown) => {
-      console.log(textStatus + ": " + errorThrown);
-    });
-};
+
+    if ($('#ip-checkbox-district').val()) {
+        const districtId = $('#ip-checkbox-district').val()
+        var precinct = jqxhr('GET', `files/xml/districts/${districtId}`);
+        precinct.done((data) => {
+            loadWardFromXML(data);
+        }).fail((jqXHR, textStatus, errorThrown) => {
+            console.log(textStatus + ': ' + errorThrown);
+        });
+    } else {
+        loadWardFromXML([])
+    }
+}
+
 
 /**
  * GET Product by category in menu page (with paging and search name)
@@ -183,19 +174,21 @@ let getProductByCategoryV1 = (id) => {
 };
 
 let handleSearch = (id) => {
-  resetPaging();
-  id === 0 ? getComboMenuPage() : getProductByCategoryV1(id);
-};
 
-let swPaging = (id) => {
-  resetPaging();
-  getProductByCategoryV1(id);
-};
+    resetPaging();
+    id === 0 ? getComboMenuPage() : getProductByCategoryV1(id);
+}
+
+let swPaging = (id) => {   
+    resetPaging();
+    getProductByCategoryV1(id);
+}
 
 let swPagingCombo = () => {
-  resetPaging();
-  getComboMenuPage();
-};
+    resetPaging();
+    getComboMenuPage();
+}
+
 
 /**
  * Paging for product with cateId
@@ -205,6 +198,7 @@ var size = 2;
 var maxPage = 2;
 var sortField = "name";
 var newPaging = false; // switch between category and combo
+
 
 let paging = (pageCount, id) => {
   $(".pagination-area").empty();
