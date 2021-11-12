@@ -1,4 +1,5 @@
 $(() => {
+    //Load slider
     $(".home-slider").load("./assets/components/main-slider.html", () => {
         sliderEffect();
     });

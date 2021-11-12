@@ -36,8 +36,7 @@ public class CategoryController {
     public ResponseEntity<?> getProductsByCategory(@PathVariable(name = "id") int id,
                                                    @RequestParam(required = false) String name,
                                                    Pageable pageable){
-        //Page<Product> products = categoryService.getProductsByCategoryIdAndFindByName(name, id, pageable);
-        Page<Product> products = productService.getAllProductsBySpec(pageable, name, id);
+        Page<Product> products = productService.getAllProductsByCatIdAndFindByName(pageable, name, id);
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 

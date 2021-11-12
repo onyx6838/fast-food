@@ -1,5 +1,5 @@
 const successSwal = () => Swal.fire({
-    position: 'top-end',
+    position: 'middle',
     icon: 'success',
     title: 'Đã thêm vào giỏ hàng',
     showConfirmButton: false,
@@ -49,7 +49,6 @@ const successCheckoutSwal = () => Swal.fire({
     showConfirmButton: false,
     timer: 1000
 })
-
 
 const ignoreCheckoutSwal = () => Swal.fire({
     position: 'top-end',

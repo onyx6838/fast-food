@@ -1,10 +1,8 @@
 package com.handout.service.impl;
 
 import com.handout.entity.Category;
-import com.handout.entity.Product;
 import com.handout.repository.ICategoryRepository;
 import com.handout.service.ICategoryService;
-import com.handout.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,12 +13,9 @@ import org.springframework.stereotype.Service;
 public class CategoryService implements ICategoryService {
     private final ICategoryRepository categoryRepository;
 
-    private final IProductService productService;
-
     @Autowired
-    public CategoryService(ICategoryRepository categoryRepository, IProductService productService) {
+    public CategoryService(ICategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
-        this.productService = productService;
     }
 
     @Override
@@ -33,9 +28,4 @@ public class CategoryService implements ICategoryService {
         return categoryRepository.findById(id).get();
     }
 
-    // catId
-    @Override
-    public Page<Product> getProductsByCategoryIdAndFindByName(String name, int id, Pageable pageable) {
-        return productService.getProductsByCategoryIdAndFindByName(name, id , pageable);
-    }
 }
