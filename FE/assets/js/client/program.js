@@ -31,7 +31,7 @@ let getProductById = (id, isCombo) => {
             isCombo: isCombo,
             id: id
         }));
-        window.open("product-details.html");
+        window.location.replace("product-details.html");
     }).fail((jqXHR, textStatus, errorThrown) => {
         console.log(textStatus + ': ' + errorThrown);
     });
@@ -121,13 +121,17 @@ let getDistrictFromXML = () => {
  * GET precinct (ward) from XML file and UI control for selectBox changed
  */
 const selectionChanged = () => {
-    const districtId = $('#ip-checkbox-district').val() ? $('#ip-checkbox-district').val() : '';
-    var precinct = jqxhr('GET', `files/xml/districts/${districtId && districtId}`);
-    precinct.done((data) => {
-        loadWardFromXML(data);
-    }).fail((jqXHR, textStatus, errorThrown) => {
-        console.log(textStatus + ': ' + errorThrown);
-    });
+    if ($('#ip-checkbox-district').val()) {
+        const districtId = $('#ip-checkbox-district').val()
+        var precinct = jqxhr('GET', `files/xml/districts/${districtId}`);
+        precinct.done((data) => {
+            loadWardFromXML(data);
+        }).fail((jqXHR, textStatus, errorThrown) => {
+            console.log(textStatus + ': ' + errorThrown);
+        });
+    } else {
+        loadWardFromXML([])
+    }
 }
 
 /**
@@ -154,15 +158,13 @@ let handleSearch = (id) => {
     id === 0 ? getComboMenuPage() : getProductByCategoryV1(id);
 }
 
-let swPaging = (id, changePaging) => {
-    newPaging = changePaging;
-    if (newPaging) resetPaging();
+let swPaging = (id) => {   
+    resetPaging();
     getProductByCategoryV1(id);
 }
 
-let swPagingCombo = (changePaging) => {
-    newPaging = changePaging;
-    if (newPaging) resetPaging();
+let swPagingCombo = () => {
+    resetPaging();
     getComboMenuPage();
 }
 
@@ -173,7 +175,6 @@ var pageNumber = 1;
 var size = 2;
 var maxPage = 2;
 var sortField = 'name';
-var newPaging = false;  // switch between category and combo
 
 let paging = (pageCount, id) => {
     $('.pagination-area').empty();

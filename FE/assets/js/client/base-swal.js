@@ -27,7 +27,7 @@ const deleteAllSwal = () => Swal.fire({
 })
 
 const ignoreSwal = () => Swal.fire({
-    position: 'top-end',
+    position: 'middle',
     icon: 'warning',
     title: 'Chưa Login',
     showConfirmButton: false,
@@ -35,7 +35,7 @@ const ignoreSwal = () => Swal.fire({
 })
 
 const successRegisSwal = () => Swal.fire({
-    position: 'top-end',
+    position: 'middle',
     icon: 'success',
     title: 'Đăng Kí Thành Công, Kiểm tra email của bạn',
     showConfirmButton: false,
@@ -43,7 +43,7 @@ const successRegisSwal = () => Swal.fire({
 })
 
 const successCheckoutSwal = () => Swal.fire({
-    position: 'top-end',
+    position: 'middle',
     icon: 'success',
     title: 'Đặt hàng thành công',
     showConfirmButton: false,
@@ -51,7 +51,7 @@ const successCheckoutSwal = () => Swal.fire({
 })
 
 const ignoreCheckoutSwal = () => Swal.fire({
-    position: 'top-end',
+    position: 'middle',
     icon: 'error',
     title: 'Đặt hàng không thành công',
     showConfirmButton: false,
