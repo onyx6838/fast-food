@@ -70,7 +70,6 @@ let getComboMenuPage = () => {
  * GET Combo By id in detail page
  */
 let getComboById = (id, isCombo) => {
-    console.log(id);
     var get = jqxhr('GET', 'combos/' + id);
     get.done((data) => {
         localStorage.setItem("product-detail", JSON.stringify({

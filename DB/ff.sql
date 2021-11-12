@@ -11,7 +11,7 @@
  Target Server Version : 80025
  File Encoding         : 65001
 
- Date: 09/11/2021 15:30:30
+ Date: 09/11/2021 23:25:28
 */
 
 SET NAMES utf8mb4;
@@ -72,7 +72,7 @@ INSERT INTO `category` VALUES (1, 'Burgers', NULL, NULL, 'flaticon-hamburger', N
 INSERT INTO `category` VALUES (2, 'Chicken', NULL, NULL, 'flaticon-boiled', NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `category` VALUES (3, 'Drinks', NULL, NULL, 'flaticon-frappe', NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `category` VALUES (4, 'Coffee', NULL, NULL, 'flaticon-tea-cup', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `category` VALUES (5, 'Pizzas', NULL, NULL, 'flaticon-pizza-slice', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `category` VALUES (5, 'Chicken Set', NULL, NULL, 'flaticon-boiled', NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for combo
@@ -101,6 +101,59 @@ INSERT INTO `combo` VALUES (3, 'Combo Burger Gà Thượng Hạng (Premium Chick
 INSERT INTO `combo` VALUES (4, 'Combo Burger Cá (Fish Burger Combo)', 64000, 'combo_burger_c__update.jpg', '<p>- 01 Burger Cá (Fish Burger)</p>\r\n<p>- 01 Pepsi (M)</p>\r\n<p>- 01 Khoai Tây Chiên (French Fries) - M</p>', NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `combo` VALUES (5, 'Combo Burger Phô Mai (Cheese Burger Combo)', 64000, 'combo_burger_ph_mai_update.jpg', '<p>- 01 Burger Phô Mai&nbsp;(Cheese&nbsp;Burger)</p>\r\n<p>- 01 Pepsi (M)</p>\r\n<p>- 01 Khoai Tây Chiên (French Fries) - M</p>', NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `combo` VALUES (6, 'Combo Burger Bò Teriyaki (Teriyaki Burger Combo)', 61000, 'combo-burger-app-2292x2292px_beef-teriyaki-burger.jpg', '<p>- 01 Burger Bò Teriyaki (Teriyaki Burger)</p>\r\n<p>- 01 Pepsi (M)</p>\r\n<p>- 01 Khoai Tây Chiên (French Fries) - M</p>', NULL, NULL, NULL, NULL, NULL);
+
+
+-- ----------------------------
+-- Table structure for product
+-- ----------------------------
+DROP TABLE IF EXISTS `product`;
+CREATE TABLE `product`  (
+  `ProductID` int NOT NULL AUTO_INCREMENT,
+  `Name` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `Slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `Image` varchar(800) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `Description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `CategoryID` int NULL DEFAULT NULL,
+  `Price` decimal(19, 4) NULL DEFAULT NULL,
+  `Rating` int NULL DEFAULT NULL,
+  `CreatedBy` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `UpdatedBy` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `CreatedDate` datetime(0) NULL DEFAULT NULL,
+  `UpdatedDate` datetime(0) NULL DEFAULT NULL,
+  `Status` int NULL DEFAULT NULL,
+  PRIMARY KEY (`ProductID`) USING BTREE,
+  INDEX `fk_product_category`(`CategoryID`) USING BTREE,
+  CONSTRAINT `fk_product_category` FOREIGN KEY (`CategoryID`) REFERENCES `category` (`CategoryID`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of product
+-- ----------------------------
+INSERT INTO `product` VALUES (1, 'Gà Rán - 1 miếng (Fried Chicken -1 PC)', NULL, 'z1921445934290_1a09a8072d9fa62189c5cdea0b83d2ff.jpg', NULL, 2, 36000.0000, 0, 'minkgiang', NULL, '2021-10-04 23:07:32', NULL, NULL);
+INSERT INTO `product` VALUES (2, 'Gà Sốt Phô Mai - 1 miếng (Cheese Chicken - 1 PC)', NULL, 'z1921445934290_1a09a8072d9fa62189c5cdea0b83d2ff.jpg', NULL, 2, 38000.0000, 3, 'minkgiang', NULL, '2021-10-05 23:07:36', NULL, NULL);
+INSERT INTO `product` VALUES (3, 'Gà nướng - 1 miếng (Grilled Chicken - 1 PC)', NULL, 'g_n_ng_1_mi_ng_s_t_hs_s_t_cay.jpg', NULL, 2, 38000.0000, 1, 'minkgiang', NULL, '2021-10-06 23:07:40', NULL, NULL);
+INSERT INTO `product` VALUES (4, 'Gà nướng góc tư (Chicken Quater Leg)', NULL, 'g_g_c_t_.png', NULL, 2, 49000.0000, 1, 'minkgiang', NULL, '2021-10-06 23:07:40', NULL, NULL);
+INSERT INTO `product` VALUES (5, 'Gà Rán - 3 miếng (Fried Chicken - 3 Pcs)', NULL, 'g_r_n_3_6_9_mi_ng.jpg', NULL, 2, 99000.0000, 0, 'minkgiang', NULL, '2021-10-04 23:07:32', NULL, NULL);
+INSERT INTO `product` VALUES (6, 'Burger Bò Teriyaki (Teriyaki Burger)', NULL, 'image1.jpg', NULL, 1, 31000.0000, 0, 'minkgiang', NULL, '2021-10-04 23:07:32', NULL, NULL);
+INSERT INTO `product` VALUES (7, 'Burger Phô Mai (Burger Cheese)', NULL, 'burger_cheese_10.png', NULL, 1, 34000.0000, NULL, 'minkgiang', NULL, '2021-10-04 23:07:32', NULL, NULL);
+INSERT INTO `product` VALUES (8, 'Burger Cá (Fish Burger)', NULL, 'burger_fish_5.png', NULL, 1, 34000.0000, NULL, 'minkgiang', NULL, '2021-10-04 23:07:32', NULL, NULL);
+INSERT INTO `product` VALUES (9, 'Burger Gà Thượng Hạng (Premium Chicken Burger)', NULL, 'image3.jpg', NULL, 1, 44000.0000, NULL, 'minkgiang', NULL, '2021-10-04 23:07:32', NULL, NULL);
+INSERT INTO `product` VALUES (10, 'Pepsi (M)', NULL, 'pepsi_m_l_1__update_1.jpg', NULL, 3, 14000.0000, NULL, 'minkgiang', NULL, NULL, NULL, NULL);
+INSERT INTO `product` VALUES (11, 'Mirinda (M)', NULL, 'mirinda_m_l__update.jpg', NULL, 3, 14000.0000, NULL, 'minkgiang', NULL, NULL, NULL, NULL);
+INSERT INTO `product` VALUES (12, '7 UP (M)', NULL, '7_up_m_.jpg', NULL, 3, 14000.0000, NULL, 'minkgiang', NULL, NULL, NULL, NULL);
+INSERT INTO `product` VALUES (13, 'Burger Bulgogi', NULL, 'image4.jpg', NULL, 1, 44000.0000, NULL, 'minkgiang', NULL, '2021-10-04 23:07:32', NULL, NULL);
+INSERT INTO `product` VALUES (14, 'Burger Bò Trứng', NULL, 'image2.jpg', NULL, 1, 44000.0000, NULL, 'minkgiang', NULL, '2021-10-04 23:07:32', NULL, NULL);
+INSERT INTO `product` VALUES (15, 'Burger Tôm', NULL, 'burgers-app-2292x2292pxpx_shrimp-burger_1.jpg', NULL, 1, 47000.0000, NULL, 'minkgiang', NULL, '2021-10-04 23:07:32', NULL, NULL);
+INSERT INTO `product` VALUES (16, 'Burger Mozzarella', NULL, 'image3.jpg', NULL, 1, 60000.0000, NULL, 'minkgiang', NULL, '2021-10-04 23:07:32', NULL, NULL);
+INSERT INTO `product` VALUES (17, 'Burger Jumbo', NULL, 'image1.jpg', NULL, 1, 60000.0000, NULL, 'minkgiang', NULL, '2021-10-04 23:07:32', NULL, NULL);
+INSERT INTO `product` VALUES (18, 'Pepsi không Calories vị chanh (Pepsi Zero Calories)', NULL, 'z2054228259338_f983ac7b886fccbe1772ccc551532ca2_1.jpg', NULL, 3, 18000.0000, NULL, 'minkgiang', NULL, NULL, NULL, NULL);
+INSERT INTO `product` VALUES (19, 'Tornado Yogurt Strawberry', NULL, 'drink-app-2292x2292px_tornado-strawberryyogurt.jpg', NULL, 3, 25000.0000, NULL, 'minkgiang', NULL, NULL, NULL, NULL);
+INSERT INTO `product` VALUES (20, 'Nestea', NULL, 'drink-app-2292x2292px_fruittea.jpg', NULL, 3, 18000.0000, NULL, 'minkgiang', NULL, NULL, NULL, NULL);
+INSERT INTO `product` VALUES (21, '7 Up Cherry', NULL, 'drink-app-2292x2292px_7upcherry.jpg', NULL, 3, 25000.0000, NULL, 'minkgiang', NULL, NULL, NULL, NULL);
+INSERT INTO `product` VALUES (22, 'Gà Rán Phần (Fried Chicken Set)', NULL, 'chickenset-app-2292x2292px_friedchicken-set.jpg', NULL, 5, 83000.0000, NULL, 'minkgiang', NULL, NULL, NULL, NULL);
+INSERT INTO `product` VALUES (23, 'Gà nướng phần (Grilled Chicken Set)', NULL, 'chickenset-app-2292x2292px_grilled-set.jpg', NULL, 5, 87000.0000, NULL, 'minkgiang', NULL, NULL, NULL, NULL);
+INSERT INTO `product` VALUES (24, 'Gà Sốt Phô Mai Phần (Cheese Chicken Set)', NULL, 'chickenset-app-2292x2292px_cheese-set.jpg', NULL, 5, 87000.0000, NULL, 'minkgiang', NULL, NULL, NULL, NULL);
+
 
 -- ----------------------------
 -- Table structure for comboproduct
@@ -210,88 +263,56 @@ INSERT INTO `orderdetail` VALUES (34, 27, 7, NULL, NULL, 3, 'anonymous', 'anonym
 DROP TABLE IF EXISTS `prod_comb_desc`;
 CREATE TABLE `prod_comb_desc`  (
   `id` int NOT NULL AUTO_INCREMENT,
-  `item_id` int NOT NULL,
+  `item_id` int NULL DEFAULT 0,
   `short_desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `list_index` int NULL DEFAULT NULL,
   `lang` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `item_id_prod` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_item_id_comb`(`item_id`) USING BTREE,
-  CONSTRAINT `fk_item_id_comb` FOREIGN KEY (`item_id`) REFERENCES `combo` (`ComboID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `fk_item_id_product` FOREIGN KEY (`item_id`) REFERENCES `product` (`ProductID`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  INDEX `fk_item_id_product`(`item_id_prod`) USING BTREE,
+  CONSTRAINT `fk_item_id_product` FOREIGN KEY (`item_id_prod`) REFERENCES `product` (`ProductID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_item_id_comb` FOREIGN KEY (`item_id`) REFERENCES `combo` (`ComboID`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of prod_comb_desc
 -- ----------------------------
-INSERT INTO `prod_comb_desc` VALUES (1, 1, '', '01 Bulgogi Burger', 0, 'vi', 'Comb_Desc');
-INSERT INTO `prod_comb_desc` VALUES (5, 1, '', '01 Pepsi (M)', 1, 'vi', 'Comb_Desc');
-INSERT INTO `prod_comb_desc` VALUES (6, 1, '', '01 Khoai Tây Chiên (French Fries) - M', 2, 'vi', 'Comb_Desc');
-INSERT INTO `prod_comb_desc` VALUES (7, 2, '', '01 Burger Tôm (Shrimp Burger)', 0, 'vi', 'Comb_Desc');
-INSERT INTO `prod_comb_desc` VALUES (8, 2, '', '01 Pepsi (M)', 1, 'vi', 'Comb_Desc');
-INSERT INTO `prod_comb_desc` VALUES (9, 2, '', '01 Khoai Tây Chiên (French Fries) - M', 2, 'vi', 'Comb_Desc');
-INSERT INTO `prod_comb_desc` VALUES (10, 3, '', '01 Burger Gà Thượng Hạng (Premium Chicken Burger)', 0, 'vi', 'Comb_Desc');
-INSERT INTO `prod_comb_desc` VALUES (11, 3, '', '01 Pepsi (M)', 1, 'vi', 'Comb_Desc');
-INSERT INTO `prod_comb_desc` VALUES (12, 3, '', '01 Khoai Tây Chiên (French Fries) - M', 2, 'vi', 'Comb_Desc');
-INSERT INTO `prod_comb_desc` VALUES (13, 4, '', '01 Burger Cá (Fish Burger)', 0, 'vi', 'Comb_Desc');
-INSERT INTO `prod_comb_desc` VALUES (14, 4, '', '01 Pepsi (M)', 1, 'vi', 'Comb_Desc');
-INSERT INTO `prod_comb_desc` VALUES (15, 4, '', '01 Khoai Tây Chiên (French Fries) - M', 2, 'vi', 'Comb_Desc');
-INSERT INTO `prod_comb_desc` VALUES (16, 5, '', '01 Burger Phô Mai (Cheese Burger)', 0, 'vi', 'Comb_Desc');
-INSERT INTO `prod_comb_desc` VALUES (17, 5, '', '01 Pepsi (M)', 1, 'vi', 'Comb_Desc');
-INSERT INTO `prod_comb_desc` VALUES (18, 5, '', '01 Khoai Tây Chiên (French Fries) - M', 2, 'vi', 'Comb_Desc');
-INSERT INTO `prod_comb_desc` VALUES (19, 6, '', '01 Burger Bò Teriyaki (Teriyaki Burger)', 0, 'vi', 'Comb_Desc');
-INSERT INTO `prod_comb_desc` VALUES (20, 6, '', '01 Pepsi (M)', 1, 'vi', 'Comb_Desc');
-INSERT INTO `prod_comb_desc` VALUES (21, 6, '', '01 Khoai Tây Chiên (French Fries) - M', 2, 'vi', 'Comb_Desc');
-INSERT INTO `prod_comb_desc` VALUES (22, 1, 'Bulbogi lạ, thú vị', '', 3, 'vi', 'Comb_Desc');
-INSERT INTO `prod_comb_desc` VALUES (23, 2, 'Combo có \"hải sản\"', '', 3, 'vi', 'Comb_Desc');
-INSERT INTO `prod_comb_desc` VALUES (24, 3, 'Combo gà thượng hạng giòn tan đến mọi người', '', 3, 'vi', 'Comb_Desc');
-INSERT INTO `prod_comb_desc` VALUES (25, 4, 'Burger nay có cả cá !!!', '', 3, 'vi', 'Comb_Desc');
-INSERT INTO `prod_comb_desc` VALUES (26, 5, 'Combo có thêm tôm giòn thơm ngon', '', 3, 'vi', 'Comb_Desc');
+INSERT INTO `prod_comb_desc` VALUES (1, 1, NULL, '01 Bulgogi Burger', 0, 'vi', 'Comb_Desc', NULL);
+INSERT INTO `prod_comb_desc` VALUES (5, 1, NULL, '01 Pepsi (M)', 1, 'vi', 'Comb_Desc', NULL);
+INSERT INTO `prod_comb_desc` VALUES (6, 1, NULL, '01 Khoai Tây Chiên (French Fries) - M', 2, 'vi', 'Comb_Desc', NULL);
+INSERT INTO `prod_comb_desc` VALUES (7, 2, NULL, '01 Burger Tôm (Shrimp Burger)', 0, 'vi', 'Comb_Desc', NULL);
+INSERT INTO `prod_comb_desc` VALUES (8, 2, NULL, '01 Pepsi (M)', 1, 'vi', 'Comb_Desc', NULL);
+INSERT INTO `prod_comb_desc` VALUES (9, 2, NULL, '01 Khoai Tây Chiên (French Fries) - M', 2, 'vi', 'Comb_Desc', NULL);
+INSERT INTO `prod_comb_desc` VALUES (10, 3, NULL, '01 Burger Gà Thượng Hạng (Premium Chicken Burger)', 0, 'vi', 'Comb_Desc', NULL);
+INSERT INTO `prod_comb_desc` VALUES (11, 3, NULL, '01 Pepsi (M)', 1, 'vi', 'Comb_Desc', NULL);
+INSERT INTO `prod_comb_desc` VALUES (12, 3, NULL, '01 Khoai Tây Chiên (French Fries) - M', 2, 'vi', 'Comb_Desc', NULL);
+INSERT INTO `prod_comb_desc` VALUES (13, 4, NULL, '01 Burger Cá (Fish Burger)', 0, 'vi', 'Comb_Desc', NULL);
+INSERT INTO `prod_comb_desc` VALUES (14, 4, NULL, '01 Pepsi (M)', 1, 'vi', 'Comb_Desc', NULL);
+INSERT INTO `prod_comb_desc` VALUES (15, 4, NULL, '01 Khoai Tây Chiên (French Fries) - M', 2, 'vi', 'Comb_Desc', NULL);
+INSERT INTO `prod_comb_desc` VALUES (16, 5, NULL, '01 Burger Phô Mai (Cheese Burger)', 0, 'vi', 'Comb_Desc', NULL);
+INSERT INTO `prod_comb_desc` VALUES (17, 5, NULL, '01 Pepsi (M)', 1, 'vi', 'Comb_Desc', NULL);
+INSERT INTO `prod_comb_desc` VALUES (18, 5, NULL, '01 Khoai Tây Chiên (French Fries) - M', 2, 'vi', 'Comb_Desc', NULL);
+INSERT INTO `prod_comb_desc` VALUES (19, 6, NULL, '01 Burger Bò Teriyaki (Teriyaki Burger)', 0, 'vi', 'Comb_Desc', NULL);
+INSERT INTO `prod_comb_desc` VALUES (20, 6, NULL, '01 Pepsi (M)', 1, 'vi', 'Comb_Desc', NULL);
+INSERT INTO `prod_comb_desc` VALUES (21, 6, NULL, '01 Khoai Tây Chiên (French Fries) - M', 2, 'vi', 'Comb_Desc', NULL);
+INSERT INTO `prod_comb_desc` VALUES (22, 1, 'Bulbogi lạ, thú vị', NULL, 3, 'vi', 'Comb_Desc', NULL);
+INSERT INTO `prod_comb_desc` VALUES (23, 2, 'Combo có \"hải sản\"', NULL, 3, 'vi', 'Comb_Desc', NULL);
+INSERT INTO `prod_comb_desc` VALUES (24, 3, 'Combo gà thượng hạng giòn tan đến mọi người', NULL, 3, 'vi', 'Comb_Desc', NULL);
+INSERT INTO `prod_comb_desc` VALUES (25, 4, 'Burger nay có cả cá !!!', NULL, 3, 'vi', 'Comb_Desc', NULL);
+INSERT INTO `prod_comb_desc` VALUES (26, 5, 'Combo có thêm tôm giòn thơm ngon', NULL, 3, 'vi', 'Comb_Desc', NULL);
+INSERT INTO `prod_comb_desc` VALUES (30, NULL, NULL, '02 miếng Gà Rán (Fried Chicken - 2 Pcs)', 0, 'vi', 'Prod_Desc', 22);
+INSERT INTO `prod_comb_desc` VALUES (31, NULL, NULL, '01 Khoai Tây Chiên - S (French Fries - S)', 1, 'vi', 'Prod_Desc', 22);
+INSERT INTO `prod_comb_desc` VALUES (32, NULL, NULL, '01 Pepsi (M)', 2, 'vi', 'Prod_Desc', 22);
+INSERT INTO `prod_comb_desc` VALUES (33, NULL, NULL, '02 miếng Gà Nướng (Grilled Chicken - 2 Pcs)', 0, 'vi', 'Prod_Desc', 23);
+INSERT INTO `prod_comb_desc` VALUES (34, NULL, NULL, '01 Khoai Tây Chiên - S (French Fries - S)', 1, 'vi', 'Prod_Desc', 23);
+INSERT INTO `prod_comb_desc` VALUES (35, NULL, NULL, '01 Pepsi (M)', 2, 'vi', 'Prod_Desc', 23);
+INSERT INTO `prod_comb_desc` VALUES (36, NULL, NULL, '02 miếng Gà Sốt Phô Mai (Cheese Chicken - 2 Pcs)', 0, 'vi', 'Prod_Desc', 24);
+INSERT INTO `prod_comb_desc` VALUES (37, NULL, NULL, '01 Khoai Tây Chiên - S (French Fries - S)', 1, 'vi', 'Prod_Desc', 24);
+INSERT INTO `prod_comb_desc` VALUES (38, NULL, NULL, '01 Pepsi (M)', 2, 'vi', 'Prod_Desc', 24);
 
--- ----------------------------
--- Table structure for product
--- ----------------------------
-DROP TABLE IF EXISTS `product`;
-CREATE TABLE `product`  (
-  `ProductID` int NOT NULL AUTO_INCREMENT,
-  `Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `Slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `Image` varchar(800) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `Description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `CategoryID` int NULL DEFAULT NULL,
-  `Price` decimal(19, 4) NULL DEFAULT NULL,
-  `Rating` int NULL DEFAULT NULL,
-  `CreatedBy` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `UpdatedBy` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `CreatedDate` datetime(0) NULL DEFAULT NULL,
-  `UpdatedDate` datetime(0) NULL DEFAULT NULL,
-  `Status` int NULL DEFAULT NULL,
-  PRIMARY KEY (`ProductID`) USING BTREE,
-  INDEX `fk_product_category`(`CategoryID`) USING BTREE,
-  CONSTRAINT `fk_product_category` FOREIGN KEY (`CategoryID`) REFERENCES `category` (`CategoryID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of product
--- ----------------------------
-INSERT INTO `product` VALUES (1, 'Gà Rán - 1 miếng (Fried Chicken -1 PC)', NULL, 'z1921445934290_1a09a8072d9fa62189c5cdea0b83d2ff.jpg', '', 2, 36000.0000, 0, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
-INSERT INTO `product` VALUES (2, 'Gà Sốt Phô Mai - 1 miếng (Cheese Chicken - 1 PC)', NULL, 'z1921445934290_1a09a8072d9fa62189c5cdea0b83d2ff.jpg', '', 2, 38000.0000, 3, NULL, NULL, '2021-10-05 23:07:36', NULL, NULL);
-INSERT INTO `product` VALUES (3, 'Gà nướng - 1 miếng (Grilled Chicken - 1 PC)', NULL, 'g_n_ng_1_mi_ng_s_t_hs_s_t_cay.jpg', '', 2, 38000.0000, 1, NULL, NULL, '2021-10-06 23:07:40', NULL, NULL);
-INSERT INTO `product` VALUES (4, 'Gà nướng góc tư (Chicken Quater Leg)', NULL, 'g_g_c_t_.png', '', 2, 49000.0000, 1, NULL, NULL, '2021-10-06 23:07:40', NULL, NULL);
-INSERT INTO `product` VALUES (5, 'Gà Rán - 3 miếng (Fried Chicken - 3 Pcs)', NULL, 'g_r_n_3_6_9_mi_ng.jpg', NULL, 2, 99000.0000, 0, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
-INSERT INTO `product` VALUES (6, 'Burger Bò Teriyaki (Teriyaki Burger)', NULL, 'image1.jpg', NULL, 1, 31000.0000, 0, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
-INSERT INTO `product` VALUES (7, 'Burger Phô Mai (Burger Cheese)', NULL, 'burger_cheese_10.png', NULL, 1, 34000.0000, NULL, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
-INSERT INTO `product` VALUES (8, 'Burger Cá (Fish Burger)', NULL, 'burger_fish_5.png', NULL, 1, 34000.0000, NULL, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
-INSERT INTO `product` VALUES (9, 'Burger Gà Thượng Hạng (Premium Chicken Burger)', NULL, 'image3.jpg', NULL, 1, 44000.0000, NULL, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
-INSERT INTO `product` VALUES (10, 'Pepsi (M)', NULL, 'pepsi_m_l_1__update_1.jpg', NULL, 3, 14000.0000, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `product` VALUES (11, 'Mirinda (M)', NULL, 'mirinda_m_l__update.jpg', NULL, 3, 14000.0000, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `product` VALUES (12, '7 UP (M)', NULL, '7_up_m_.jpg', NULL, 3, 14000.0000, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `product` VALUES (13, 'Burger Bulgogi', NULL, 'image4.jpg', NULL, 1, 44000.0000, NULL, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
-INSERT INTO `product` VALUES (14, 'Burger Bò Trứng', NULL, 'image2.jpg', NULL, 1, 44000.0000, NULL, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
-INSERT INTO `product` VALUES (15, 'Burger Tôm', NULL, 'burgers-app-2292x2292pxpx_shrimp-burger_1.jpg', NULL, 1, 47000.0000, NULL, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
-INSERT INTO `product` VALUES (16, 'Burger Mozzarella', NULL, 'image3.jpg', NULL, 1, 60000.0000, NULL, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
-INSERT INTO `product` VALUES (17, 'Burger Jumbo', NULL, 'image1.jpg', NULL, 1, 60000.0000, NULL, NULL, NULL, '2021-10-04 23:07:32', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for token

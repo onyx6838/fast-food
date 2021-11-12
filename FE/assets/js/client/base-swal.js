@@ -1,5 +1,5 @@
 const successSwal = () => Swal.fire({
-    position: 'top-end',
+    position: 'middle',
     icon: 'success',
     title: 'Đã thêm vào giỏ hàng',
     showConfirmButton: false,

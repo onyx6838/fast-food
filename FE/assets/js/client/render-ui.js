@@ -50,7 +50,7 @@ let loadDetailById = () => {
             <h3>${data.name}</h3>
             <span class="new-price">${data.isCombo ? data.totalPrice : data.price}<u>đ</u></span>
             <span id="desc-detail"></span>`)
-        data.description_list.forEach((item, _) => $('#desc-detail').append(`<p>-${item.description}</p>`))
+        data.description_list.forEach((item, _) => $('#desc-detail').append(`<p>${item.description ? item.description : ''}</p>`))
         //$('#desc-detail').html(data.description)  load with html data store
 
         $('.product-add-to-cart').empty();
@@ -127,10 +127,9 @@ let loadNewProduct = (data) => {
 let loadCombo = (data) => {
     $('.burger-shop-slider').empty();
     var pers = '';
-
     data.forEach((item, _) => {
         let click = `detailComboClick(${item.id} , true)`;
-        let short_desc_item = item.description_list.find(item => item.short_desc.length > 0)
+        let short_desc_item = item.description_list.find(item => item.short_desc !== null)
         pers +=
             `
         <div class="burger-shop-item">
@@ -197,7 +196,7 @@ let loadSearchBar = (id) => {
 }
 
 /**
- * Render UI Product in Cart for Cart page
+ * Render UI Product and combo in Cart for Cart page
  */
 let loadCart = (cartInfo) => {
     $('.cart-table tbody').empty();
@@ -207,16 +206,19 @@ let loadCart = (cartInfo) => {
 
     if (cartInfo.length > 0) {
         cartInfo.forEach((item, _) => {
+            let click = !item.isCombo ? `detailProductClick(${item.id} , ${item.isCombo})` :
+                `detailComboClick(${item.id} , ${item.isCombo})`;
+
             $('.cart-table tbody').append(
                 `
                 <tr>
                     <td class="product-thumbnail">
-                        <a href="#">
+                        <a onclick="${click}">
                             <img src="${item.isCombo ? combos[item.id - 1].image : products[item.id - 1].image}" alt="item">
                         </a>
                     </td>
                     <td class="product-name">
-                        <a href="#">${item.isCombo ? combos[item.id - 1].name : products[item.id - 1].name}</a>
+                        <a onclick="${click}">${item.isCombo ? combos[item.id - 1].name : products[item.id - 1].name}</a>
                     </td>
                     <td class="product-price">
                         <span class="unit-amount">${item.isCombo ? combos[item.id - 1].totalPrice : products[item.id - 1].price}<u>đ</u></span>

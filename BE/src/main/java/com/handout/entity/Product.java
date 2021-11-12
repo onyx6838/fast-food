@@ -53,15 +53,8 @@ public class Product extends BaseEntity<String> {
     private Category category;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(name = "item_id", nullable = false)
+    @JoinColumn(name = "item_id_prod", nullable = false)
     @OrderColumn(name = "list_index")
     @Where(clause = "type='Prod_Desc'")
     private List<ProdDesc> description_list = new ArrayList<>();
-
-//    avoid hell call
-//    @OneToMany(mappedBy = "product")
-//    private List<ComboProduct> comboProducts;
-//
-//    @OneToMany(mappedBy = "product")
-//    private List<OrderDetail> orderDetails;
 }
