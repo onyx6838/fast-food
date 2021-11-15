@@ -1,175 +1,233 @@
 /**
  * Api handler
  */
-let ApiProducts = jqxhr('GET', 'products').then((result) => productsHandler(result.content));
+let ApiProducts = jqxhr("GET", "products").then((result) =>
+  productsHandler(result.content)
+);
 
-let productsHandler = data => localStorage.setItem('prod', JSON.stringify([...data]));
+let productsHandler = (data) =>
+  localStorage.setItem("prod", JSON.stringify([...data]));
 
-let ApiCombos = jqxhr('GET', 'combos').then((result) => combosHandler(result));
+let ApiCombos = jqxhr("GET", "combos").then((result) => combosHandler(result));
 
-let combosHandler = data => localStorage.setItem('comb', JSON.stringify([...data.content]));
+let combosHandler = (data) =>
+  localStorage.setItem("comb", JSON.stringify([...data.content]));
 
 /**
  * Setup cart localstr
  */
-let cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
+let cart = localStorage.getItem("cart")
+  ? JSON.parse(localStorage.getItem("cart"))
+  : [];
 
 /**
  * UI handler
  */
 const showCart = () => {
-    loadCart(cart);
-}
-
+  loadCart(cart);
+};
+/**
+ * quantity product
+ */
 const popCart = () => {
-    $('div.cart-btn span').text(cart.reduce((accu, item) => accu += item.qty, 0));
-}
+  $("div.cart-btn span").text(
+    cart.reduce((accu, item) => (accu += item.qty), 0)
+  );
+};
 
 popCart();
 /**
  * Cart handler
+ * @param {id product} id
+ * @param {có phải combo?} isCombo
+ * @returns
  */
-const getIndex = (id, isCombo) => cart.indexOf(cart.find(item => item.id === id && item.isCombo === isCombo));
-
+const getIndex = (id, isCombo) =>
+  cart.indexOf(cart.find((item) => item.id === id && item.isCombo === isCombo));
+/**
+ * call api add cart
+ * @param {*} id
+ * @param {*} isCombo
+ * @param {*} quantity
+ */
 const addToCart = (id, isCombo, quantity) => {
-    successSwal().then(() => {
-        if (cart.length > 0) {
-            getIndex(id, isCombo) > -1 ? (quantity ? cart[getIndex(id, isCombo)].qty += quantity :
-                cart[getIndex(id, isCombo)].qty += 1) : cart.push({
-                id: id,
-                qty: quantity ? quantity : 1,
-                isCombo: isCombo
-            });
-        } else {
-            quantity ? cart.push({
-                    id,
-                    qty: quantity,
-                    isCombo: isCombo
-                }) :
-                cart.push({
-                    id,
-                    qty: 1,
-                    isCombo: isCombo
-                });
-        }
-        localStorage.setItem('cart', JSON.stringify(cart));
-        popCart();
-        //getDetailProduct();
-    })
-}
-
-const updateCartItem = (id, stk, isCombo) => {
-    if (getIndex(id, isCombo) > -1) {
-        if (cart[getIndex(id, isCombo)].qty == 1 && stk == -1) {
-            deleteSwal().then((result) => {
-                if (result.isConfirmed) {
-                    cart.splice(getIndex(id, isCombo), 1);
-                }
-            })
-        } else {
-            //cart.find(item => item.id === getIndex(id) && item.isCombo === isCombo).qty += stk;
-            cart[getIndex(id, isCombo)].qty += stk
-        }
+  //notification add to cart success
+  successSwal().then(() => {
+    //If the cart already has products, check if there are products to add, add the quantity, otherwise, add a new item to the cart.
+    if (cart.length > 0) {
+      getIndex(id, isCombo) > -1
+        ? quantity
+          ? (cart[getIndex(id, isCombo)].qty += quantity)
+          : (cart[getIndex(id, isCombo)].qty += 1)
+        : cart.push({
+            id: id,
+            qty: quantity ? quantity : 1,
+            isCombo: isCombo,
+          });
+    } else {
+      quantity
+        ? cart.push({
+            id,
+            qty: quantity,
+            isCombo: isCombo,
+          })
+        : cart.push({
+            id,
+            qty: 1,
+            isCombo: isCombo,
+          });
     }
-    localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem("cart", JSON.stringify(cart));
     popCart();
-    showCart();
-    getDetailProduct();
-}
-
-const removeCartItem = (id, isCombo) => {
-    if (getIndex(id, isCombo) > -1) {
-        deleteSwal().then((result) => {
-            if (result.isConfirmed) {
-                cart.splice(getIndex(id, isCombo), 1);
-                localStorage.setItem('cart', JSON.stringify(cart));
-                popCart();
-                showCart();
-            }
-        })
-    }
-}
-
-const resetCart = () => {
-    deleteAllSwal().then((result) => {
+    //getDetailProduct();
+  });
+};
+/**
+ * update item cart (tăng giảm số lượng)
+ * @param {id product} id
+ * @param {tăng hoặc giảm} stk
+ * @param {có là combo?} isCombo
+ */
+const updateCartItem = (id, stk, isCombo) => {
+  if (getIndex(id, isCombo) > -1) {
+    if (cart[getIndex(id, isCombo)].qty == 1 && stk == -1) {
+      deleteSwal().then((result) => {
         if (result.isConfirmed) {
-            cart.splice(0, cart.length);
-            localStorage.setItem('cart', cart);
-            popCart();
-            showCart();
+          cart.splice(getIndex(id, isCombo), 1);
         }
-    })
-}
+      });
+    } else {
+      //cart.find(item => item.id === getIndex(id) && item.isCombo === isCombo).qty += stk;
+      cart[getIndex(id, isCombo)].qty += stk;
+    }
+  }
+  localStorage.setItem("cart", JSON.stringify(cart));
+  popCart();
+  showCart();
+  getDetailProduct();
+};
+/**
+ * delete item cart
+ * @param {id product} id
+ * @param {có là combo?} isCombo
+ */
+const removeCartItem = (id, isCombo) => {
+  deleteSwal().then((result) => {
+    if (result.isConfirmed) {
+      cart.splice(getIndex(id, isCombo), 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      popCart();
+      showCart();
+    }
+  });
+};
+/**
+ * delete All cart
+ */
+const resetCart = () => {
+  deleteAllSwal().then((result) => {
+    if (result.isConfirmed) {
+      cart.splice(0, cart.length);
+      localStorage.setItem("cart", cart);
+      popCart();
+      showCart();
+    }
+  });
+};
 /**
  * Checkout handler
  */
 const redCheckout = () => {
-    if (storage.getItem("ID") == null && storage.getItem("ID") == undefined) {
-        ignoreSwal().then(() => {
-            window.open("sign-in.html")
-            return;
-        });
-    } else if (storage.getItem("ID") !== null &&
-        JSON.parse(localStorage.getItem('cart')).length === 0) {
-        Swal.fire(
-            'Chưa có sản phẩm trong giỏ'
-        )
-    } else {
-        window.open("checkout.html")
-    }
-}
-
+  if (
+    JSON.parse(localStorage.getItem("cart")).length === 0
+  ) {
+    Swal.fire("Chưa có sản phẩm trong giỏ");
+  } else if (
+    storage.getItem("ID") == null &&
+    storage.getItem("ID") == undefined
+  ) {
+    ignoreSwal().then(() => {
+      window.open("sign-in.html");
+      return;
+    });
+  } else {
+    window.open("checkout.html");
+  }
+};
+/**
+ * display checkout form info order
+ */
 const showCheckoutCart = () => {
-    loadCartCheckout(cart);
-}
-
+  loadCartCheckout(cart);
+};
+/**
+ * display checkout form info customer
+ */
 const showCheckoutOrder = () => {
-    loadCheckoutOrder();
-}
-
+  loadCheckoutOrder();
+};
+/**
+ * sự kiện thanh toán
+ */
 const checkOut = () => {
-    if (storage.getItem("ID") == null && storage.getItem("ID") == undefined) {
-        ignoreSwal().then(() => {
-            window.open("sign-in.html")
-            return;
-        });
-    } else {
-        let address = $('#ip-address').val();
+  if (storage.getItem("ID") == null && storage.getItem("ID") == undefined) {
+    ignoreSwal().then(() => {
+      window.open("sign-in.html");
+      return;
+    });
+  } else {
+    let address = $("#ip-address").val();
 
-        let province = $('#ip-province').val();
-        let district = $('#ip-checkbox-district').children(":selected").text();
-        let ward = $('#ip-checkbox-ward').children(":selected").text();
+    let province = $("#ip-province").val();
+    let district = $("#ip-checkbox-district").children(":selected").text();
+    let ward = $("#ip-checkbox-ward").children(":selected").text();
 
-        let notes = $('#ip-notes').val();
-        let contact = $('#ip-phone').val();
+    let notes = $("#ip-notes").val();
+    let contact = $("#ip-phone").val();
 
-        let products = JSON.parse(localStorage.getItem('prod'));
-        let combos = JSON.parse(localStorage.getItem('comb'));
+    let products = JSON.parse(localStorage.getItem("prod"));
+    let combos = JSON.parse(localStorage.getItem("comb"));
 
-        let orderRequest = {
-            order: {
-                customerId: storage.getItem('ID'),
-                name: storage.getItem('FULL_NAME'),
-                address: address,
-                contact: contact,
-                district: district,
-                province: province,
-                ward: ward,
-                note: notes,
-                username: storage.getItem('USERNAME'),
-                totalPrice: cart.reduce((accu, item, i) => accu += item.qty * (item.isCombo ? combos[item.id - 1].totalPrice : products[item.id - 1].price), 0)
-            },
-            cart: cart
-        }
+    let orderRequest = {
+      order: {
+        customerId: storage.getItem("ID"),
+        name: storage.getItem("FULL_NAME"),
+        address: address,
+        contact: contact,
+        district: district,
+        province: province,
+        ward: ward,
+        note: notes,
+        username: storage.getItem("USERNAME"),
+        totalPrice: cart.reduce(
+          (accu, item, i) =>
+            (accu +=
+              item.qty *
+              (item.isCombo
+                ? combos[item.id - 1].totalPrice
+                : products[item.id - 1].price)),
+          0
+        ),
+      },
+      cart: cart,
+    };
 
-        $.ajax({
-            url: 'http://localhost:8080/api/v1/cart',
-            type: 'POST',
-            data: JSON.stringify(orderRequest),
-            contentType: "application/json",
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader("Authorization", "Bearer " + storage.getItem("TOKEN"));
-            }
-        }).done(() => successCheckoutSwal()).then(() => setInterval(() => window.location.replace("index.html"), 3000)).fail(() => ignoreCheckoutSwal());
-    }
-}
+    $.ajax({
+      url: "http://localhost:8080/api/v1/cart",
+      type: "POST",
+      data: JSON.stringify(orderRequest),
+      contentType: "application/json",
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader(
+          "Authorization",
+          "Bearer " + storage.getItem("TOKEN")
+        );
+      },
+    })
+      .done(() => successCheckoutSwal())
+      .then(() =>
+        setInterval(() => window.location.replace("index.html"), 3000)
+      )
+      .fail(() => ignoreCheckoutSwal());
+  }
+};

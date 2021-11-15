@@ -57,3 +57,11 @@ const ignoreCheckoutSwal = () => Swal.fire({
     showConfirmButton: false,
     timer: 1000
 })
+
+const ignoreAddToCartSwal = () => Swal.fire({
+    position: 'middle',
+    icon: 'warning',
+    title: 'Hãy chọn số lượng muốn thêm vào giỏ',
+    showConfirmButton: false,
+    timer: 1000
+})
