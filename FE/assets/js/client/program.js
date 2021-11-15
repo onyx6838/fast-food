@@ -172,18 +172,26 @@ let getProductByCategoryV1 = (id) => {
       console.log(textStatus + ": " + errorThrown);
     });
 };
-
+/**
+ * search product
+ * @param {id category} id 
+ */
 let handleSearch = (id) => {
 
     resetPaging();
     id === 0 ? getComboMenuPage() : getProductByCategoryV1(id);
 }
-
+/**
+ * transfer category
+ * @param {id category} id 
+ */
 let swPaging = (id) => {   
     resetPaging();
     getProductByCategoryV1(id);
 }
-
+/**
+ * transfer to combo
+ */
 let swPagingCombo = () => {
     resetPaging();
     getComboMenuPage();
@@ -199,7 +207,11 @@ var maxPage = 2;
 var sortField = "name";
 var newPaging = false; // switch between category and combo
 
-
+/**
+ * load paging
+ * @param {total page} pageCount 
+ * @param {id product} id 
+ */
 let paging = (pageCount, id) => {
   $(".pagination-area").empty();
   let pagingStr = "";
@@ -220,7 +232,7 @@ let paging = (pageCount, id) => {
         onclick="changePage(${i}, ${id})">${i}</a>`;
   }
 
-  if (pageNumber != pageCount && pageCount > 0) {
+  if (pageNumber < pageCount) {
     // avoid category has no item
     pagingStr += `
             <a class="prev page-numbers" onclick="nextPaging(${id})">
@@ -231,11 +243,20 @@ let paging = (pageCount, id) => {
 
   $(".pagination-area").append(pagingStr);
 };
-
+/**
+ * reset to first page
+ * @returns first page
+ */
 let resetPaging = () => (pageNumber = 1);
-
+/**
+ * transfer to previous page
+ * @returns current page - 1
+ */
 let prevPaging = (id) => changePage(pageNumber - 1, id);
-
+/**
+ * transfer to next page
+ * @returns current page + 1
+ */
 let nextPaging = (id) => changePage(pageNumber + 1, id);
 
 let changePage = (page, id) => {

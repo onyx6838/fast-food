@@ -4,33 +4,39 @@
 let loadProduct = (data, typeUI) => {
     $('.menu-list-tab .row').empty();
     var pers;
-    data.forEach((item, index) => {
-        let price = !typeUI ? item.price : item.totalPrice;
-        let isCombo = !typeUI ? false : true;
-        let click = !typeUI ? `detailProductClick(${item.id} , ${isCombo})` : `detailComboClick(${item.id} , ${isCombo})`;
-        pers = `
-        <div class="col-lg-3 col-md-6">
-            <div class="single-product">
-                <div class="product-image">
-                    <a onclick="${click}">
-                        <img src="${item.image}" alt="image">
-                    </a>
-                    <a class="add-to-cart-btn" onclick="addToCart(${item.id} , ${isCombo})">Add To Cart
-                        <i class="flaticon-shopping-cart"></i>
-                    </a>
-                </div>
-                <div class="product-content">
-                    <h3><a>${item.name}</a></h3>
-                    
-                    <div class="price">
-                        <span class="new">${price}<u>đ</u></span>
+    if(data.length>0){
+        data.forEach((item, index) => {
+            let price = !typeUI ? item.price : item.totalPrice;
+            let isCombo = !typeUI ? false : true;
+            let click = !typeUI ? `detailProductClick(${item.id} , ${isCombo})` : `detailComboClick(${item.id} , ${isCombo})`;
+            pers = `
+            <div class="col-lg-3 col-md-6">
+                <div class="single-product">
+                    <div class="product-image">
+                        <a onclick="${click}">
+                            <img src="${item.image}" alt="image">
+                        </a>
+                        <a class="add-to-cart-btn" onclick="addToCart(${item.id} , ${isCombo})">Add To Cart
+                            <i class="flaticon-shopping-cart"></i>
+                        </a>
+                    </div>
+                    <div class="product-content">
+                        <h3><a>${item.name}</a></h3>
+                        
+                        <div class="price">
+                            <span class="new">${price}<u>đ</u></span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        `;
-        $(pers).appendTo($('.menu-list-tab .row'));
-    });
+            `;
+            $(pers).appendTo($('.menu-list-tab .row'));
+        });
+    }
+    else{
+        $('.menu-list-tab .row').append(`<h3>Hết hàng!!!</h3>`);
+    }
+    
 }
 /**
  * Render UI Product or Combo Detail by Id for Detail Page
@@ -52,7 +58,6 @@ let loadDetailById = () => {
             <span id="desc-detail"></span>`)
         data.description_list.forEach((item, _) => $('#desc-detail').append(`<p>${item.description ? item.description : ''}</p>`))
         //$('#desc-detail').html(data.description)  load with html data store
-
         $('.product-add-to-cart').empty();
         $('.product-add-to-cart').append(
             `
@@ -76,15 +81,28 @@ let loadDetailById = () => {
     }
 }
 
+/**
+ * change the number of products added to the cart
+ */
 const changeQuantity = (qt) => {
     const curQty = Number.parseInt($('.input-counter input').val());
     if (curQty == 0 && qt == -1) return;
     $('.input-counter input').val(curQty + qt);
 }
-
+/**
+ * add product to cart
+ * @param {*} id 
+ * @param {*} isCombo 
+ */
 const addToCartFromDetail = (id, isCombo) => {
     const curQty = Number.parseInt($('.input-counter input').val());
-    addToCart(id, isCombo, curQty);
+    if(curQty===0){
+        ignoreAddToCartSwal();
+    }
+    else{
+        addToCart(id, isCombo, curQty);
+    }
+    
 }
 
 /**
