@@ -60,22 +60,22 @@ const addToCart = (id, isCombo, quantity) => {
           ? (cart[getIndex(id, isCombo)].qty += quantity)
           : (cart[getIndex(id, isCombo)].qty += 1)
         : cart.push({
-            id: id,
-            qty: quantity ? quantity : 1,
-            isCombo: isCombo,
-          });
+          id: id,
+          qty: quantity ? quantity : 1,
+          isCombo: isCombo,
+        });
     } else {
       quantity
         ? cart.push({
-            id,
-            qty: quantity,
-            isCombo: isCombo,
-          })
+          id,
+          qty: quantity,
+          isCombo: isCombo,
+        })
         : cart.push({
-            id,
-            qty: 1,
-            isCombo: isCombo,
-          });
+          id,
+          qty: 1,
+          isCombo: isCombo,
+        });
     }
     localStorage.setItem("cart", JSON.stringify(cart));
     popCart();
@@ -177,13 +177,43 @@ const checkOut = () => {
     });
   } else {
     let address = $("#ip-address").val();
-
     let province = $("#ip-province").val();
     let district = $("#ip-checkbox-district").children(":selected").text();
     let ward = $("#ip-checkbox-ward").children(":selected").text();
 
     let notes = $("#ip-notes").val();
     let contact = $("#ip-phone").val();
+
+    // valid address (blank, empty)
+    if (validator.blank(address) || !address.replace(/\s/g, '').length) {
+      showNameErrMsgForCheckout('name-err-msg-address', 'Chưa nhập địa chỉ')
+      setInterval(() => hideNameErrMsgForCheckout('name-err-msg-address', 'none'), 3000)
+      return;
+    }
+    // valid address (blank, empty, regex)
+    if (validator.blank(contact) || !contact.replace(/\s/g, '').length) {
+      showNameErrMsgForCheckout('name-err-msg-phone', 'Chưa nhập sdt')
+      setInterval(() => hideNameErrMsgForCheckout('name-err-msg-phone', 'none'), 3000)
+      return;
+    }
+
+    if (validator.phone(contact)) {
+      showNameErrMsgForCheckout('name-err-msg-phone', 'theo định dạng sdt Viet Nam')
+      setInterval(() => hideNameErrMsgForCheckout('name-err-msg-phone', 'none'), 3000)
+      return;
+    }
+
+    if($("#ip-checkbox-district").val() === ""){
+      showNameErrMsgForCheckout('name-err-msg-district', 'Chưa chọn Quận')
+      setInterval(() => hideNameErrMsgForCheckout('name-err-msg-district', 'none'), 3000)
+      return;
+    }
+
+    if($("#ip-checkbox-ward").val() === ""){
+      showNameErrMsgForCheckout('name-err-msg-ward', 'Chưa chọn Phường')
+      setInterval(() => hideNameErrMsgForCheckout('name-err-msg-ward', 'none'), 3000)
+      return;
+    }
 
     let products = JSON.parse(localStorage.getItem("prod"));
     let combos = JSON.parse(localStorage.getItem("comb"));
@@ -201,11 +231,11 @@ const checkOut = () => {
         username: storage.getItem("USERNAME"),
         totalPrice: cart.reduce(
           (accu, item, i) =>
-            (accu +=
-              item.qty *
-              (item.isCombo
-                ? combos[item.id - 1].totalPrice
-                : products[item.id - 1].price)),
+          (accu +=
+            item.qty *
+            (item.isCombo
+              ? combos[item.id - 1].totalPrice
+              : products[item.id - 1].price)),
           0
         ),
       },
@@ -231,3 +261,18 @@ const checkOut = () => {
       .fail(() => ignoreCheckoutSwal());
   }
 };
+
+function showNameErrMsgForCheckout(block, message) {
+  const selector = '#' + block
+  $(selector).html(message);
+  toggleErrMsg(selector, 'block');
+}
+
+function hideNameErrMsgForCheckout(block, style) {
+  const selector = '#' + block
+  $(selector).css('display', style);
+}
+
+function toggleErrMsg(block, style) {
+  $(block).css('display', style);
+}

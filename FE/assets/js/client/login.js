@@ -6,15 +6,15 @@ function login() {
     var username = $('#username').val();
     var password = $('#password').val();
 
-    if (validator.blank(username)) {
+    if (validator.blank(username) || !username.replace(/\s/g, '').length) {
         showNameErrMsg('Chưa nhập tài khoản')
-        setInterval(() => hideNameErrMsg('none'), 3000)
+        setInterval(() => toggleErrMsg('none'), 3000)
         return;
     }
 
     if (!validator.size(username, 6, 18)) {
         showNameErrMsg('Độ dài từ 6 đến 18 kí tự')
-        setInterval(() => hideNameErrMsg('none'), 3000)
+        setInterval(() => toggleErrMsg('none'), 3000)
         return;
     }
 
@@ -25,7 +25,7 @@ function login() {
 
     if (validator.pattern(username, /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/)) {
         showNameErrMsg('không chứa kí tự đặc biệt')
-        setInterval(() => hideNameErrMsg('none'), 3000)
+        setInterval(() => toggleErrMsg('none'), 3000)
         return;
     }
 
@@ -53,7 +53,7 @@ function login() {
         if (jqXHR.status == 401 || jqXHR.status == 500) {
             //ignoreSwal();
             showNameErrMsg("Tài khoản hoặc mật khẩu không đúng");
-            setInterval(() => hideNameErrMsg('none'), 3000)
+            setInterval(() => toggleErrMsg('none'), 3000)
             return;
         } else {
             console.log(jqXHR);
@@ -71,29 +71,29 @@ function register() {
     var password = $('#register-password').val();
 
     // TODO valid
-    if (validator.blank(username)) {
+    if (validator.blank(username) || !username.replace(/\s/g, '').length) {
         showNameErrMsg('Chưa nhập tài khoản')
-        setInterval(() => hideNameErrMsg('none'), 3000)
+        setInterval(() => toggleErrMsg('none'), 3000)
         return;
     }
-    if (validator.blank(password)) {
+    if (validator.blank(password) || !password.replace(/\s/g, '').length) {
         showNameErrMsgForSignUp('name-err-msg-password', 'Chưa nhập password')
         setInterval(() => hideNameErrMsgForSignUp('name-err-msg-password', 'none'), 3000)
         return;
     }
 
-    if (validator.blank(email)) {
+    if (validator.blank(email) || !email.replace(/\s/g, '').length) {
         showNameErrMsgForSignUp('name-err-msg-email', 'Chưa nhập email')
         setInterval(() => hideNameErrMsgForSignUp('name-err-msg-email', 'none'), 3000)
         return;
     }
 
-    if (validator.blank(firstname)) {
+    if (validator.blank(firstname) || !firstname.replace(/\s/g, '').length) {
         showNameErrMsgForSignUp('name-err-msg-firstname', 'Chưa nhập họ/tên đệm')
         setInterval(() => hideNameErrMsgForSignUp('name-err-msg-firstname', 'none'), 3000)
         return;
     }
-    if (validator.blank(lastname)) {
+    if (validator.blank(lastname) || !lastname.replace(/\s/g, '').length) {
         showNameErrMsgForSignUp('name-err-msg-lastname', 'Chưa nhập tên')
         setInterval(() => hideNameErrMsgForSignUp('name-err-msg-lastname', 'none'), 3000)
         return;
@@ -135,7 +135,7 @@ function register() {
     }).fail(function (jqXHR, textStatus, errorThrown) {
         if (jqXHR.status == 401 || jqXHR.status == 415 || jqXHR.status == 500) {
             showNameErrMsg("Lỗi hệ thống");
-            setInterval(() => hideNameErrMsg('none'), 3000)
+            setInterval(() => toggleErrMsg('none'), 3000)
             return;
         } else {
             console.log(jqXHR);
@@ -148,7 +148,7 @@ function register() {
 function showNameErrMsgForSignUp(block, message) {
     const selector = '#' + block
     $(selector).html(message);
-    hideNameErrMsg('block');
+    toggleErrMsg('block');
 }
 
 function hideNameErrMsgForSignUp(block, style) {
@@ -158,9 +158,9 @@ function hideNameErrMsgForSignUp(block, style) {
 
 function showNameErrMsg(message) {
     $('#name-err-msg').html(message);
-    hideNameErrMsg('block');
+    toggleErrMsg('block');
 }
 
-function hideNameErrMsg(style) {
+function toggleErrMsg(style) {
     $('#name-err-msg').css('display', style);
 }

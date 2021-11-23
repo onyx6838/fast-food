@@ -36,7 +36,7 @@ let getProductById = (id, isCombo) => {
             isCombo: isCombo,
             id: id
         }));
-        window.location.replace("product-details.html");
+        window.location = "product-details.html";
     }).fail((jqXHR, textStatus, errorThrown) => {
         console.log(textStatus + ': ' + errorThrown);
     });
