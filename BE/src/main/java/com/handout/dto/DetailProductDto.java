@@ -23,5 +23,7 @@ public class DetailProductDto {
 
     private Integer rating;
 
+    private Integer quantity;
+
     private List<ProdDesc> description_list;
 }

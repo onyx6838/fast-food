@@ -16,9 +16,8 @@ let combosHandler = (data) =>
 /**
  * Setup cart localstr
  */
-let cart = localStorage.getItem("cart")
-  ? JSON.parse(localStorage.getItem("cart"))
-  : [];
+let cart = localStorage.getItem("cart") ?
+  JSON.parse(localStorage.getItem("cart")) : [];
 
 /**
  * UI handler
@@ -51,36 +50,59 @@ const getIndex = (id, isCombo) =>
  * @param {*} quantity
  */
 const addToCart = (id, isCombo, quantity) => {
-  //notification add to cart success
-  successSwal().then(() => {
-    //If the cart already has products, check if there are products to add, add the quantity, otherwise, add a new item to the cart.
-    if (cart.length > 0) {
-      getIndex(id, isCombo) > -1
-        ? quantity
-          ? (cart[getIndex(id, isCombo)].qty += quantity)
-          : (cart[getIndex(id, isCombo)].qty += 1)
-        : cart.push({
-          id: id,
-          qty: quantity ? quantity : 1,
-          isCombo: isCombo,
-        });
-    } else {
-      quantity
-        ? cart.push({
-          id,
-          qty: quantity,
-          isCombo: isCombo,
-        })
-        : cart.push({
-          id,
-          qty: 1,
-          isCombo: isCombo,
-        });
-    }
-    localStorage.setItem("cart", JSON.stringify(cart));
-    popCart();
-    //getDetailProduct();
-  });
+  let data = JSON.parse(localStorage.getItem("product-detail"));
+  let products = JSON.parse(localStorage.getItem("prod"));
+  let combos = JSON.parse(localStorage.getItem("comb"));
+
+  // if (isCombo === true) {
+  //   let comboQuantity = combos.find(item => item.id === id);
+  //   if (comboQuantity === 0) {
+  //     outOfQuantity()
+  //   }
+  // } else if (isCombo === false) {
+  //   let productQuantity = products.find(item => item.id === id);
+  //   if (productQuantity === 0) {
+  //     outOfQuantity()
+  //   }
+  // }
+
+  if (data.quantity === null || data.quantity === undefined || data.quantity === 0) {
+    outOfQuantity()
+  } else if (quantity > data.quantity) {
+    overQuantity();
+  } else {
+    //notification add to cart success
+    successSwal().then(() => {
+      //If the cart already has products, check if there are products to add, add the quantity, otherwise, add a new item to the cart.
+      if (cart.length > 0) {
+        getIndex(id, isCombo) > -1 ?
+          quantity ?
+          (cart[getIndex(id, isCombo)].qty += quantity) :
+          (cart[getIndex(id, isCombo)].qty += 1) :
+          cart.push({
+            id: id,
+            qty: quantity ? quantity : 1,
+            isCombo: isCombo,
+          });
+      } else {
+        quantity
+          ?
+          cart.push({
+            id,
+            qty: quantity,
+            isCombo: isCombo,
+          }) :
+          cart.push({
+            id,
+            qty: 1,
+            isCombo: isCombo,
+          });
+      }
+      localStorage.setItem("cart", JSON.stringify(cart));
+      popCart();
+      //getDetailProduct();
+    });
+  }
 };
 /**
  * update item cart (tăng giảm số lượng)
@@ -203,13 +225,13 @@ const checkOut = () => {
       return;
     }
 
-    if($("#ip-checkbox-district").val() === ""){
+    if ($("#ip-checkbox-district").val() === "") {
       showNameErrMsgForCheckout('name-err-msg-district', 'Chưa chọn Quận')
       setInterval(() => hideNameErrMsgForCheckout('name-err-msg-district', 'none'), 3000)
       return;
     }
 
-    if($("#ip-checkbox-ward").val() === ""){
+    if ($("#ip-checkbox-ward").val() === "") {
       showNameErrMsgForCheckout('name-err-msg-ward', 'Chưa chọn Phường')
       setInterval(() => hideNameErrMsgForCheckout('name-err-msg-ward', 'none'), 3000)
       return;
@@ -233,9 +255,9 @@ const checkOut = () => {
           (accu, item, i) =>
           (accu +=
             item.qty *
-            (item.isCombo
-              ? combos[item.id - 1].totalPrice
-              : products[item.id - 1].price)),
+            (item.isCombo ?
+              combos[item.id - 1].totalPrice :
+              products[item.id - 1].price)),
           0
         ),
       },
@@ -243,17 +265,17 @@ const checkOut = () => {
     };
 
     $.ajax({
-      url: "http://localhost:8080/api/v1/cart",
-      type: "POST",
-      data: JSON.stringify(orderRequest),
-      contentType: "application/json",
-      beforeSend: function (xhr) {
-        xhr.setRequestHeader(
-          "Authorization",
-          "Bearer " + storage.getItem("TOKEN")
-        );
-      },
-    })
+        url: "http://localhost:8080/api/v1/cart",
+        type: "POST",
+        data: JSON.stringify(orderRequest),
+        contentType: "application/json",
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader(
+            "Authorization",
+            "Bearer " + storage.getItem("TOKEN")
+          );
+        },
+      })
       .done(() => successCheckoutSwal())
       .then(() =>
         setInterval(() => window.location.replace("index.html"), 3000)

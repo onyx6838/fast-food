@@ -65,3 +65,19 @@ const ignoreAddToCartSwal = () => Swal.fire({
     showConfirmButton: false,
     timer: 1000
 })
+
+const outOfQuantity = () => Swal.fire({
+    position: 'middle',
+    icon: 'warning',
+    title: 'Sản phẩm này hết hàng',
+    showConfirmButton: false,
+    timer: 1000
+})
+
+const overQuantity = () => Swal.fire({
+    position: 'middle',
+    icon: 'warning',
+    title: 'Sản phẩm không đủ hàng',
+    showConfirmButton: false,
+    timer: 1000
+})

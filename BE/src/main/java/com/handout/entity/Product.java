@@ -43,6 +43,9 @@ public class Product extends BaseEntity<String> {
     @Column(name = "`Rating`")
     private Integer rating;
 
+    @Column(name = "`Quantity`")
+    private Integer quantity;
+
     @Column(name = "`Status`")
     @Enumerated(EnumType.ORDINAL)
     private Status status;

@@ -4,7 +4,7 @@
 let loadProduct = (data, typeUI) => {
     $('.menu-list-tab .row').empty();
     var pers;
-    if(data.length>0){
+    if (data.length > 0) {
         data.forEach((item, index) => {
             let price = !typeUI ? item.price : item.totalPrice;
             let isCombo = !typeUI ? false : true;
@@ -32,11 +32,10 @@ let loadProduct = (data, typeUI) => {
             `;
             $(pers).appendTo($('.menu-list-tab .row'));
         });
-    }
-    else{
+    } else {
         $('.menu-list-tab .row').append(`<h3>Hết hàng!!!</h3>`);
     }
-    
+
 }
 /**
  * Render UI Product or Combo Detail by Id for Detail Page
@@ -50,7 +49,6 @@ let loadDetailById = () => {
             cart.find(item => item.isCombo === data.isCombo && item.id === data.id).qty
         ) : 0;
         $('.product-details-image').append(`<img src="${data.image}" style="height: 500px;width: 500px;" alt="image">`)
-
         $('.price-detail').empty();
         $('.price-detail').append(`
             <h3>${data.name}</h3>
@@ -96,13 +94,11 @@ const changeQuantity = (qt) => {
  */
 const addToCartFromDetail = (id, isCombo) => {
     const curQty = Number.parseInt($('.input-counter input').val());
-    if(curQty===0){
+    if (curQty === 0) {
         ignoreAddToCartSwal();
-    }
-    else{
+    } else {
         addToCart(id, isCombo, curQty);
     }
-    
 }
 
 /**

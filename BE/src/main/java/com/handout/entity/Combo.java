@@ -36,6 +36,9 @@ public class Combo extends BaseEntity<String> {
     @Column(name = "Description")
     private String description;
 
+    @Column(name = "`Quantity`")
+    private Integer quantity;
+
     @Column(name = "Status")
     @Enumerated(EnumType.ORDINAL)
     private Status status;
